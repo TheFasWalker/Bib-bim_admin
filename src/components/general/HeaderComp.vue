@@ -2,8 +2,18 @@
 import { ref } from 'vue';
 import UserMenu from './header/UserMenu.vue';
 import ButtonType1 from '../ui/ButtonType1.vue';
+import PopUpLauout from '../lauouts/PopUpLauout.vue'
 const userMenuState = ref(false);
 const loginState = ref(false);
+const loginPopupState = ref(false);
+
+const closePopup = ()=> {
+  loginPopupState.value = false
+}
+
+const openLoginForm =()=>{
+  loginPopupState.value = true
+}
 const toggleHeaderMenu = ()=>{
   userMenuState.value = !userMenuState.value
 }
@@ -61,13 +71,18 @@ const toggleHeaderMenu = ()=>{
           </Transition>
         </div>
         <div v-else class="flex items-center lg:order-2 relative ">
-         <ButtonType1>
+         <ButtonType1 @click="openLoginForm">
           Войти
         </ButtonType1>
         </div>
       </div>
     </nav>
-
+      <PopUpLauout
+      v-if="loginPopupState"
+      @close-popup="closePopup"
+      >
+        asdfaa
+      </PopUpLauout>
 </template>
 <style scoped >
 .slide-fade-enter-active {
