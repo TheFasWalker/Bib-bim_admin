@@ -1,5 +1,9 @@
+<script setup lang="ts">
+import MainLauout from '../components/lauouts/MainLauout.vue';
+</script>
+
 <template>
-    <div>
+   <MainLauout>
         <h1>aboutPage</h1>
-    </div>
+    </MainLauout>
 </template>
