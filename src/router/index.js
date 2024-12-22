@@ -2,13 +2,14 @@ import {createRouter,createWebHistory} from 'vue-router'
 import HomePage from '../pages/HomePage.vue';
 import AboutPage from '../pages/AboutPage.vue';
 import CatalogPage from '../pages/CatalogPage.vue';
+import BasketPage from '../pages/BasketPage.vue';
 
 
 const router = createRouter({
     history:createWebHistory(import.meta.env.BASE_URL),
     routes:[
         {
-            path:'',
+            path:'/',
             name:'home',
             component:HomePage
         },
@@ -21,6 +22,11 @@ const router = createRouter({
             path:'/catalog',
             name:'catalog',
             component:CatalogPage
+        },
+        {
+            path:'/basket',
+            name:'basket',
+            component:BasketPage
         },
     ]
 })

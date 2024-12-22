@@ -1,6 +1,9 @@
 <script setup lang="ts">
+import { SiteState } from '../../store/SiteState';
 import HeaderComp from '../general/HeaderComp.vue';
 import Sidebar from '../general/Sidebar.vue';
+
+const store = SiteState()
 </script>
 
 <template>
@@ -10,7 +13,9 @@ import Sidebar from '../general/Sidebar.vue';
 
 <Sidebar/>
 
-    <main class="p-4 md:ml-64 h-auto pt-20">
+    <main 
+    :class="store.sidebarState ? 'ml-64':'ml-[65px]'"
+    class="p-4 h-auto pt-20">
       <slot></slot>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
         <div
