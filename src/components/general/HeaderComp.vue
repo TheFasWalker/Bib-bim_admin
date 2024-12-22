@@ -2,7 +2,8 @@
 import { ref } from 'vue';
 import UserMenu from './header/UserMenu.vue';
 import ButtonType1 from '../ui/ButtonType1.vue';
-import PopUpLauout from '../lauouts/PopUpLauout.vue'
+import LoginForm from '../forms/LoginForm.vue';
+
 const userMenuState = ref(false);
 const loginState = ref(false);
 const loginPopupState = ref(false);
@@ -77,12 +78,11 @@ const toggleHeaderMenu = ()=>{
         </div>
       </div>
     </nav>
-      <PopUpLauout
-      v-if="loginPopupState"
-      @close-popup="closePopup"
-      >
-        asdfaa
-      </PopUpLauout>
+    
+      <LoginForm
+      @close-popup-wrapper="closePopup()"
+      :loginPopupState="loginPopupState"
+      />
 </template>
 <style scoped >
 .slide-fade-enter-active {
