@@ -3,6 +3,7 @@ import HomePage from '../pages/HomePage.vue';
 import AboutPage from '../pages/AboutPage.vue';
 import CatalogPage from '../pages/CatalogPage.vue';
 import BasketPage from '../pages/BasketPage.vue';
+import LoginPage from '../pages/LoginPage.vue';
 
 
 const router = createRouter({
@@ -28,6 +29,12 @@ const router = createRouter({
             name:'basket',
             component:BasketPage
         },
+        {
+            path:'/login',
+            name:'login',
+            component:LoginPage
+        },
+
     ]
 })
 
