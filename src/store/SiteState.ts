@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const SiteState = defineStore('siteStates', {
     state: () => ({
-      sidebarState: false,
+      sidebarState: true,
      }),
     getters: {
       getSidebarState :(state)=>state.sidebarState
