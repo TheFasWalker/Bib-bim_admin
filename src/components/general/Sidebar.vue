@@ -20,9 +20,16 @@ const store = SiteState()
           </li>
           <li>
             <SidebarMainLink
-              title="Каталог"
-              nav="catalog"
+              title="Уроки"
+              nav="lessons"
               iconName="contacts"
+              />
+          </li>
+          <li>
+            <SidebarMainLink
+              title="Пользователи"
+              nav="users"
+              iconName="users"
               />
           </li>
           <li>
@@ -34,10 +41,23 @@ const store = SiteState()
           </li>
           <li>
             <SidebarMainLink
-              title="Корзина"
-              nav="basket"
-              count=10
-              iconName="help"
+              title="Партнёрам"
+              nav="partners"
+              iconName="home"
+              />
+          </li>
+          <li>
+            <SidebarMainLink
+              title="Посты"
+              nav="posts"
+              iconName="generate"
+              />
+          </li>
+          <li>
+            <SidebarMainLink
+              title="UI/docks"
+              nav="ui"
+              iconName="generate"
               />
           </li>
         </ul>
