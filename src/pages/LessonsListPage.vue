@@ -9,7 +9,8 @@ import LessonPreview from '../components/lessons/LessonPreview.vue';
     <MainLauout>
         <SubHeader
             title="Уроки"
-            nav="home"/>
+            nav="home"
+            createPage="createLesson"/>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
             <LessonPreview
             title="title1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil beatae ratione adipisci? At molestias culpa possimus aspernatur qui in distinctio."/> 

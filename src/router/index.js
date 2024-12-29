@@ -9,6 +9,7 @@ import PartnersPage from '../pages/PartnersPage.vue';
 import PostsListPage from '../pages/PostsListPage.vue';
 import UiPage from '../pages/UiPage.vue';
 import UserListPage from '../pages/UserListPage.vue';
+import LessonCreatePage from '../pages/LessonCreatePage.vue';
 
 
 const router = createRouter({
@@ -33,8 +34,18 @@ const router = createRouter({
 
         {
             path:'/lessons',
-            name:'lessons',
-            component:LessonsListPage
+            children:[
+                {
+                    path: '', 
+                    name:'lessons',
+                    component: LessonsListPage
+                },
+                {
+                    path:'create',
+                    name:'createLesson',
+                    component:LessonCreatePage
+                }
+            ]
         },
         {
             path:'/partners',
