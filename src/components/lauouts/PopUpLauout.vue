@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+ <script lang="ts" setup>
     import { ref,onMounted, onUnmounted,watch } from 'vue';
     import CloseButton from '../ui/CloseButton.vue';
     const popupContainer = ref<HTMLElement | null>(null)
@@ -6,6 +6,7 @@
     const missCkick =()=>{
         if(event?.target == popupContainer.value){
             emit('close-popup')
+            console.log('close')
         }
     }
     const handleEsc = (event:KeyboardEvent)=>{

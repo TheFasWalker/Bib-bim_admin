@@ -22,15 +22,12 @@ import UsersPreview from '../components/users/usersPreview.vue';
                     <div class=" py-2 px-2"> управление</div>
                 </div>
             </div>
-
             <UsersPreview
                 id="userId"
                 name="UserName"
                 email="email@email.email"
                 role="admin"
             />
-
-
         </div>
     </section>
 
