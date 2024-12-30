@@ -68,7 +68,7 @@ const toggleHeaderMenu = ()=>{
           </a>
 
         </div>
-        <div v-if="loginState" class="flex items-center lg:order-2 relative ">
+        <div  class="flex items-center lg:order-2 relative ">
           <ButtonType1 @click="toggleHeaderMenu">
             {{ userMenuState ?  'Закрыть' :'Открыть' }} меню
           </ButtonType1>
@@ -76,18 +76,11 @@ const toggleHeaderMenu = ()=>{
             <UserMenu v-if="userMenuState"/>
           </Transition>
         </div>
-        <div v-else class="flex items-center lg:order-2 relative ">
-         <ButtonType1 @click="openLoginForm">
-          Войти
-        </ButtonType1>
-        </div>
+
       </div>
     </nav>
     
-      <LoginForm
-      @close-popup-wrapper="closePopup()"
-      :loginPopupState="loginPopupState"
-      />
+
 </template>
 <style scoped >
 .slide-fade-enter-active {
