@@ -10,6 +10,7 @@ import PostsListPage from '../pages/PostsListPage.vue';
 import UiPage from '../pages/UiPage.vue';
 import UserListPage from '../pages/UserListPage.vue';
 import LessonCreatePage from '../pages/LessonCreatePage.vue';
+import CreateUser from '../pages/CreateUser.vue';
 
 
 const router = createRouter({
@@ -25,7 +26,7 @@ const router = createRouter({
             name:'login',
             component:LoginPage
         },
-        
+
         {
             path:'/about',
             name:'about',
@@ -36,7 +37,7 @@ const router = createRouter({
             path:'/lessons',
             children:[
                 {
-                    path: '', 
+                    path: '',
                     name:'lessons',
                     component: LessonsListPage
                 },
@@ -64,8 +65,19 @@ const router = createRouter({
         },
         {
             path:'/users',
-            name:'users',
-            component:UserListPage
+            children: [
+                {
+                    path: '',
+                    name:'users',
+                    component:UserListPage
+                },
+                {
+                    path: 'create',
+                    name: 'createUser',
+                    component:CreateUser
+
+                }
+            ]
         },
         {
             path:'/404',
