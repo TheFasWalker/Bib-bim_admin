@@ -28,6 +28,19 @@ import UsersPreview from '../components/users/usersPreview.vue';
                 email="email@email.email"
                 role="admin"
             />
+
+            <UsersPreview
+                id="userId"
+                name="UserName2"
+                email="email@email2.email2"
+                role="manager"
+            />
+            <UsersPreview
+                id="userId"
+                name="UserName2"
+                email="email@email2.email2"
+                role="partner"
+            />
         </div>
     </section>
 

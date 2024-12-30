@@ -1,10 +1,12 @@
 <template>
 <div class=" relative">
     <button
-    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center "
+    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 flex flex-row justify-between items-center w-full"
     type="button"
-    @click="toggleDropDown()">
-        {{ userRole }}
+    @click="toggleDropDown"
+
+    >
+        {{ firstState !=''? firstState: 'Выберите роль' }}
         <svg
         :class="`${dropDownState? 'rotate-180' : ''}`"
         class="w-2.5 h-2.5 ms-3"
@@ -15,31 +17,61 @@
     </button>
 
 
-    <div v-show="dropDownState" class="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute left-0 top-full">
-        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" >
+    <div v-show="dropDownState" class="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow absolute left-0 top-full w-full">
+        <ul class="py-2 text-sm text-gray-700 " >
         <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+            <button
+                @click="elemClicked"
+                data-role="Dashboard1212"
+                class="block px-4 py-2 hover:bg-gray-100  w-full text-left"
+            >
+            Администратор
+            </button>
         </li>
         <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+            <button
+                @click="elemClicked"
+                data-role="Dashboard212"
+                class="block px-4 py-2 hover:bg-gray-100 w-full text-left"
+            >
+            Манагер
+            </button>
         </li>
         <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+            <button
+                @click="elemClicked"
+                data-role="Dashboard2122"
+                class="block px-4 py-2 hover:bg-gray-100 w-full text-left"
+            >
+            Манагер22
+            </button>
         </li>
-        <li>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
-        </li>
+
         </ul>
     </div>
 </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
+interface Props{
+    roleValue?:String
+}
 
-const userRole = ref('Выберите роль')
+const props = defineProps<Props>()
+const emit = defineEmits<{ (e: 'update:roleValue', value: string): void }>();
+
+const firstState = ref(props.roleValue ?? 'Выберите роль')
 const dropDownState = ref(false)
 const toggleDropDown = () => {
-    console.log('asdaa')
     dropDownState.value= !dropDownState.value
 }
+const elemClicked = (event: MouseEvent) => {
+    const target = event.target as HTMLElement;
+  const role = target.getAttribute('data-role')
+  if (role) {
+      firstState.value = target.textContent ?? 'Выберите роль'
+    emit('update:roleValue', role);
+  }
+  dropDownState.value = false;
+};
 </script>
