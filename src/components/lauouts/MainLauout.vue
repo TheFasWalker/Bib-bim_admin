@@ -2,6 +2,7 @@
 import { SiteState } from '../../store/SiteState';
 import HeaderComp from '../general/HeaderComp.vue';
 import Sidebar from '../general/Sidebar.vue';
+import ErrorToast from '../Toasts/ErrorToast.vue';
 
 const store = SiteState()
 </script>
@@ -20,4 +21,5 @@ const store = SiteState()
 
     </main>
   </div>
+<ErrorToast/>
 </template>
