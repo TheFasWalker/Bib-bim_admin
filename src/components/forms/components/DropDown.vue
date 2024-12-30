@@ -22,7 +22,7 @@
         <li>
             <button
                 @click="elemClicked"
-                data-role="Dashboard1212"
+                :data-role="adminKey"
                 class="block px-4 py-2 hover:bg-gray-100  w-full text-left"
             >
             Администратор
@@ -31,7 +31,7 @@
         <li>
             <button
                 @click="elemClicked"
-                data-role="Dashboard212"
+                :data-role="managerKey"
                 class="block px-4 py-2 hover:bg-gray-100 w-full text-left"
             >
             Манагер
@@ -40,7 +40,7 @@
         <li>
             <button
                 @click="elemClicked"
-                data-role="Dashboard2122"
+                :data-role="partnerKey"
                 class="block px-4 py-2 hover:bg-gray-100 w-full text-left"
             >
             Манагер22
@@ -56,6 +56,10 @@ import { ref } from 'vue';
 interface Props{
     roleValue?:String
 }
+
+const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
+const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
+const partnerKey = import.meta.env.VITE_PARTNER_ROLE_CODE
 
 const props = defineProps<Props>()
 const emit = defineEmits<{ (e: 'update:roleValue', value: string): void }>();
