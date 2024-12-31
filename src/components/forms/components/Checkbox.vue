@@ -1,5 +1,5 @@
 <template>
-    <label class="flex items-center mb-4 cursor-pointer w-fit self-start">
+    <label class="flex items-center cursor-pointer w-fit self-start">
       <input
         type="checkbox"
         :name="name"
@@ -12,7 +12,7 @@
       }}</span>
     </label>
   </template>
-  
+
   <script setup lang="ts">
   import { defineEmits, defineProps } from 'vue';
   interface Props {
@@ -20,16 +20,15 @@
     name: string;
     modelValue?: boolean;
   }
-  
+
   const props = defineProps<Props>();
   const emit = defineEmits<{
     (e: 'update:modelValue', value: boolean): void;
   }>();
-  
+
   function onCheckboxChange(event: Event) {
     const target = event.target as HTMLInputElement;
     emit('update:modelValue', target.checked);
   }
   </script>
-  
-  
+

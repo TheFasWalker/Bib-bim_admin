@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const togglerState = ref(true)
+const togglerState = ref(false)
 interface Props{
     title:String
 }

@@ -1,7 +1,7 @@
 <template>
     <label class="w-full flex flex-col gap-1">
       <div :class="{ 'flex flex-row justify-between items-center': error }">
-        <span class="block mb-2 text-lg font-bold text-gray-900">{{ title }}</span>
+        <span class="block text-lg font-bold text-gray-900">{{ title }}</span>
         <p class="text-red-600 text-sm font-bold" v-if="error">
           {{ error }}
         </p>
