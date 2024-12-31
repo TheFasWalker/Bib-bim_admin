@@ -11,6 +11,7 @@ import Checkbox from '../components/forms/components/Checkbox.vue';
 import InputField from '../components/forms/components/InputField.vue';
 import Loader from '../components/ui/Loader.vue'
 import { SiteState } from '../store/SiteState';
+import Icons from '../components/ui/Icons.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
@@ -174,9 +175,70 @@ const state = SiteState()
 
             </div>
         </div>
+
     </div>
 
 </Toggler>
+<Toggler title="Иконки"></Toggler>
+<span>название компонента: Icons</span>
+<span>iconName : 'users' | 'info' | 'home' | 'help' | 'contacts' | 'exit' | 'left' | 'generate' | 'search' | 'trash' | 'gear'</span>
+<div class="flex flex-wrap gap-3">
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="users"/>
+        <span>users</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="info"/>
+        <span>info</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="help"/>
+        <span>help</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="contacts"/>
+        <span>contacts</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="exit"/>
+        <span>exit</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="left"/>
+        <span>left</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="generate"/>
+        <span>generate</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="home"/>
+        <span>home</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="search"/>
+        <span>search</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="trash"/>
+        <span>trash</span>
+    </div>
+    <div class="flex flex-col items-center">
+        <Icons
+        iconName="gear"/>
+        <span>gear</span>
+    </div>
+</div>
 </div>
     </MainLauout>
 </template>
