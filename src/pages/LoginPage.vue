@@ -22,12 +22,12 @@
                     </div>
                     <div class="flex items-center justify-between">
 
-                        
+
                     </div>
                     <ButtonType2
-                        class=" w-full ">
-                        LogIn
-                    </ButtonType2>
+                        title="LogIn"
+                        class=" w-full "/>
+
 
                 </form>
             </div>
