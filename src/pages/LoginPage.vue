@@ -23,9 +23,9 @@
                         v-model="email"
                         v-bind="emailAttrs"
                         :error="errors.email"
-                        
+
                         />
-                       
+
                     </div>
                     <div>
                         <InputComp
@@ -36,7 +36,7 @@
                         v-model="password"
                         v-bind="passwordAttrs"
                         :error="errors.password"
-                        
+
                         />
                     </div>
                     <ButtonType2
@@ -62,7 +62,13 @@ import Loader from '../components/ui/Loader.vue'
 import ErrorToast from '../components/Toasts/ErrorToast.vue';
 import useAuth from '../api/useAuth';
 import { SiteState } from '../store/SiteState';
-const store = SiteState()
+
+import { useRouter } from 'vue-router';
+import { UserSate } from '../store/UserState';
+import checkAcessByRole from '../functions/checkAcessByRole';
+const store = SiteState();
+const userData = UserSate();
+const router = useRouter();
 
 const schema = toTypedSchema(yup.object({
     email:yup.string().email('Невалидный email').required('Обязательное поле'),
@@ -70,7 +76,7 @@ const schema = toTypedSchema(yup.object({
 }))
 const {errors,defineField,handleSubmit,resetForm}= useForm({
     validationSchema:schema,
-    validateOnInput:true, 
+    validateOnInput:true,
     validateOnChange:true,
     strategy: 'individual'
 })
@@ -79,9 +85,18 @@ const [password, passwordAttrs]= defineField('password')
 const {loading, auth,error} = useAuth()
 
 const formSubmit = handleSubmit(()=>{
-     auth(email.value, password.value)
+    auth(email.value, password.value)
+
      if(error){
         store.errorText = error
+     }
+    if (error.value == '') {
+        userData.userRole = 'partner'
+        if (checkAcessByRole(userData.userRole)) {
+            router.push({ name: 'home' })
+        } else {
+            store.errorText = 'ошибка авторизации'
+        }
      }
 })
 
