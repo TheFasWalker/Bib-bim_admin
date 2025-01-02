@@ -22,7 +22,7 @@ export const UserSate = defineStore('userState',{
         },
         clearUserData() {
             localStorage.removeItem('bim-role')
-            localStorage.setremoveItemItem('bim-userId')
+            localStorage.removeItem('bim-userId')
             localStorage.removeItem('bim-token')
             localStorage.removeItem('bim-userData')
             this.userRole = null,
