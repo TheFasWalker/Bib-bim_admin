@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const SiteState = defineStore('siteStates', {
     state: () => ({
       sidebarState: true,
-      errorText:'' 
+      errorText:''
      }),
     getters: {
       getSidebarState :(state)=>state.sidebarState,

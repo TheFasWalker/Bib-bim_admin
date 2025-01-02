@@ -16,13 +16,13 @@
                 <form class="space-y-4 md:space-y-6" @submit.prevent="formSubmit">
                     <div>
                         <InputComp
-                        title="Ваш email"
-                        name="email"
-                        placeholder="email"
-                        type="email"
-                        v-model="email"
-                        v-bind="emailAttrs"
-                        :error="errors.email"
+                        title="Ваш логин"
+                        name="login"
+                        placeholder="ваш логин"
+                        type="text"
+                        v-model="login"
+                        v-bind="loginAttrs"
+                        :error="errors.login"
 
                         />
 
@@ -65,14 +65,13 @@ import { SiteState } from '../store/SiteState';
 
 import { useRouter } from 'vue-router';
 import { UserSate } from '../store/UserState';
-import checkAcessByRole from '../functions/checkAcessByRole';
 const store = SiteState();
-const userData = UserSate();
+const userState = UserSate();
 const router = useRouter();
 
 const schema = toTypedSchema(yup.object({
-    email:yup.string().email('Невалидный email').required('Обязательное поле'),
-    password:yup.string().required('Обязательное поле').min(6,'минимум 6 знаков')
+    // login:yup.string().required('Обязательное поле'),
+    // password:yup.string().required('Обязательное поле').min(6,'минимум 6 знаков')
 }))
 const {errors,defineField,handleSubmit,resetForm}= useForm({
     validationSchema:schema,
@@ -80,19 +79,22 @@ const {errors,defineField,handleSubmit,resetForm}= useForm({
     validateOnChange:true,
     strategy: 'individual'
 })
-const [email, emailAttrs]= defineField('email')
+const [login, loginAttrs]= defineField('login')
 const [password, passwordAttrs]= defineField('password')
-const {loading, auth,error} = useAuth()
+const {loading, auth,error,userData} = useAuth()
 
 const formSubmit = handleSubmit(()=>{
-    auth(email.value, password.value)
+    auth('blabaldd',
+        '9111c5cf0b5a186032b9a90eeef624f852cea81acad47c93ddc5b0c253b80e54e58ab6f7c823bf4e9f34dae55df33808e8fd8b696334ddaa0bf2d12acb630fae'
+    )
 
      if(error){
         store.errorText = error
      }
     if (error.value == '') {
-        userData.userRole = 'partner'
-        if (checkAcessByRole(userData.userRole)) {
+
+        if (userData.value.token && userData.value.id) {
+            userState.writeTokenAndId(userData.value.id, userData.value.token)
             router.push({ name: 'home' })
         } else {
             store.errorText = 'ошибка авторизации'
