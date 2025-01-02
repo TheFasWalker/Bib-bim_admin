@@ -107,8 +107,6 @@ import UiPage from '../pages/UiPage.vue';
 import UserListPage from '../pages/UserListPage.vue';
 import LessonCreatePage from '../pages/LessonCreatePage.vue';
 import CreateUser from '../pages/CreateUser.vue';
-import checkAcessByRole from '../functions/checkAcessByRole';
-import { UserSate } from '../store/UserState';
 
 
 const router = createRouter({
@@ -188,11 +186,5 @@ const router = createRouter({
     ]
 })
 
-router.beforeEach((to, from, next) => {
-    const userData = UserSate()
-    if (!checkAcessByRole(userData.userRole) || to.name == 'error505' || to.name == 'error404' || to.name !=='login' ) {
-        return next()
-    }
-})
 
 export default router;

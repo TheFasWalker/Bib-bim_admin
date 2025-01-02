@@ -1,26 +1,27 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import UserMenu from './header/UserMenu.vue';
 import ButtonType1 from '../ui/ButtonType1.vue';
-import LoginForm from '../forms/LoginForm.vue';
 import { SiteState } from '../../store/SiteState';
+import { UserSate } from '../../store/UserState';
+import useUserData from '../../api/useUserData';
 
 const store = SiteState()
-
+const userState = UserSate()
 const userMenuState = ref(false);
-const loginState = ref(false);
-const loginPopupState = ref(false);
+const {loading, userData}=useUserData()
 
-const closePopup = ()=> {
-  loginPopupState.value = false
-}
 
-const openLoginForm =()=>{
-  loginPopupState.value = true
-}
 const toggleHeaderMenu = ()=>{
   userMenuState.value = !userMenuState.value
 }
+onMounted(() => {
+  if (userState.userData.name == undefined) {
+    userData(userState.userId)
+  }
+
+
+})
 </script>
 <template>
 <nav class="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">

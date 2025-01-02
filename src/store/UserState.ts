@@ -4,7 +4,7 @@ export const UserSate = defineStore('userState',{
         userRole: null as string | null,
         userId: null as string | null,
         userToken: null as string | null,
-        userData: {}
+        userData: []
     }),
     getters: {
         getUserRole:(state)=>state.userRole
@@ -16,9 +16,10 @@ export const UserSate = defineStore('userState',{
             this.userId = id,
             this.userToken = token
         },
-        writeRole(role: string) {
-            localStorage.setItem('bim-role', role)
-            this.userToken = role
+        writeUserData(data) {
+            localStorage.setItem('bim-userData', data)
+            this.userData = data
+
         },
         clearUserData() {
             localStorage.removeItem('bim-role')
