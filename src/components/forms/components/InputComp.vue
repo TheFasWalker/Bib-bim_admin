@@ -1,5 +1,5 @@
 <template>
-    <label class="block mb-2 text-sm font-medium text-gray-900">
+    <label class="block text-sm font-medium text-gray-900">
       <div :class="{'flex flex-row justify-between items-center': error}">
         <span class="block mb-2 text-lg font-bold text-gray-900">{{ title }}</span>
         <p class="text-red-600 text-sm font-bold" v-if="error">{{ error }}</p>
@@ -16,10 +16,10 @@
       />
     </label>
   </template>
-  
+
   <script setup lang="ts">
   import { ref } from 'vue';
-  
+
   interface Props {
       title: string;
       name: string;
@@ -27,24 +27,23 @@
       type: 'number' | 'email' | 'text' | 'password';
       error?: string; // Изменил тип error
       modelValue?: string | number
-     
+
   }
-  
+
   interface Emits {
       (e: 'update:modelValue', value: string | number): void;
       (e: 'blur', value: string | number): void;
   }
-  
+
   const props = defineProps<Props>();
   const emit = defineEmits<Emits>();
-  
+
   const handleInput = (event: Event) => {
       const target = event.target as HTMLInputElement;
       emit('update:modelValue', target.value);
   };
-  
+
   const handleBlur = () => {
       emit('blur', props.modelValue);
   };
   </script>
-  

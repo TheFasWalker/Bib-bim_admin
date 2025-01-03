@@ -34,7 +34,7 @@
                 :data-role="managerKey"
                 class="block px-4 py-2 hover:bg-gray-100 w-full text-left"
             >
-            Манагер
+            Контент менеджер
             </button>
         </li>
         <li>
@@ -43,7 +43,7 @@
                 :data-role="partnerKey"
                 class="block px-4 py-2 hover:bg-gray-100 w-full text-left"
             >
-            Манагер22
+            Партнер
             </button>
         </li>
 

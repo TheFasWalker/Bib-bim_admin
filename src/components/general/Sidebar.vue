@@ -10,7 +10,7 @@ const showOnlyForAdmin = computed(() => {
   if (userState.getUserRole == 'RootDamin') {
     return true
   }
-  return false
+  return true
 })
 </script>
 
