@@ -5,38 +5,109 @@ import SubHeader from '../components/general/SubHeader.vue';
 import MainLauout from '../components/lauouts/MainLauout.vue';
 import InputComp from '../components/forms/components/InputComp.vue';
 import { passwordGenerator } from '../functions/passwordGenerator';
+import ButtonType2 from '../components/ui/ButtonType2.vue';
+import { useForm } from 'vee-validate';
+import * as yup from 'yup';
+import { toTypedSchema } from '@vee-validate/yup';
 
-
-const roleValue = ref('')
 const generatePassword = () => {
     console.log(passwordGenerator())
+    password.value =passwordGenerator()
 }
+const schema = toTypedSchema(yup.object({
+    login: yup.string().required('Обязательное поле'),
+    email: yup.string().required('Обязательное поле').email('not vatid email'),
+    name: yup.string().required('Обязательное поле').min(3, 'too short name'),
+    surname: yup.string().required('Обязательное поле').min(3, 'too short surname'),
+    role: yup.string().required('выберите роль'),
+    password:yup.string().required('Нужен пароль').min(6,'минимум 6 знаков')
+}))
+
+const { errors, defineField,handleSubmit,resetForm} = useForm({
+        validationSchema:schema,
+        validateOnInput:true,
+        validateOnChange:true,
+        strategy: 'individual'
+})
+
+const [login, loginAttrs] = defineField('login')
+const [email, emailAttrs] = defineField('email')
+const [name, nameAttrs] = defineField('name')
+const [surname, surnameAttrs] = defineField('surname')
+const [role, roleAttrs] = defineField('role')
+const [password ,passwordAttrs] = defineField('password')
 </script>
 
 <template>
     <MainLauout>
-        <SubHeader
-            title="Создание пользователя"
-            nav="users"
+        <SubHeader title="Создание пользователя" nav="users" />
+        <form class="flex flex-col gap-3" >
+            <div class="grid grid-cols-[1fr_150px] gap-3">
+                <DropDown
+                    name="role"
+                    class=""
+                    v-model:roleValue="role"
+                    :error="errors.role"
+                    />
+            </div>
+            <div class="grid grid-cols-[1fr_150px] gap-3">
+                <InputComp
+                    title="Логин пользователя"
+                    name="login"
+                    type="text"
+                    placeholder="userLogin"
+                    v-model="login"
+                    v-bind="loginAttrs"
+                    :error="errors.login"/>
+            </div>
+            <div class="grid grid-cols-[1fr_150px] gap-3">
+                <InputComp
+                    title="Почта пользователя"
+                    name="email"
+                    type="email"
+                    placeholder="email"
+                    v-model="email"
+                    v-bind="emailAttrs"
+                    :error="errors.email"/>
+            </div>
+            <div class="grid grid-cols-[1fr_150px] gap-3">
+                <InputComp
+                    title="Имя пользователя"
+                    name="name"
+                    type="text"
+                    placeholder="name"
+                    v-model="name"
+                    v-bind="nameAttrs"
+                    :error="errors.name"/>
+            </div>
 
-        />
-        <span>роль {{ roleValue }}</span>
-        <DropDown
-        class="w-[500px]"
-        v-model:roleValue="roleValue"
-            />
-        <div class="grid grid-cols-[1fr_150px] gap-3">
-            <InputComp
-            title="password"
-            name="password"
-            type="text"
-            placeholder="ваш пароль"/>
-            <button
-            @click="generatePassword"
-            class="w-full h-full flex flex-col items-center justify-center shadow-sm bg-slate-300 rounded-2xl font-bold hover:bg-blue-700 hover:text-white ">
-                <span>генерация</span>
-                <span>пароля</span>
-            </button>
-        </div>
+            <div class="grid grid-cols-[1fr_150px] gap-3">
+                <InputComp
+                    title="Имя пользователя"
+                    name="surname"
+                    type="text"
+                    placeholder="surname"
+                    v-model="surname"
+                    v-bind="surnameAttrs"
+                    :error="errors.surname"/>
+            </div>
+            <div class="grid grid-cols-[1fr_150px] gap-3">
+                <InputComp
+                    title="пароль пользователя"
+                    name="password"
+                    type="text"
+                    v-model="password"
+                    v-bind="passwordAttrs"
+                    placeholder="ваш пароль" />
+                <button
+                type="button"
+                @click="generatePassword"
+                    class="w-full h-full flex flex-col items-center justify-center shadow-sm bg-slate-300 rounded-2xl font-bold hover:bg-blue-700 hover:text-white ">
+                    <span>генерация</span>
+                    <span>пароля</span>
+                </button>
+            </div>
+            <ButtonType2 type="submit" title="Создать пользователя" />
+        </form>
     </MainLauout>
 </template>

@@ -1,6 +1,13 @@
 <template>
 <div class=" relative">
+    <input
+    hidden 
+        type="text"
+        :name="name"
+        :value="modelValue"
+    >
     <button
+    :class="`${error ? 'border-red-700 border-2' : ''}`"
     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 flex flex-row justify-between items-center w-full"
     type="button"
     @click="toggleDropDown"
@@ -21,6 +28,7 @@
         <ul class="py-2 text-sm text-gray-700 " >
         <li>
             <button
+            type="button"
                 @click="elemClicked"
                 :data-role="adminKey"
                 class="block px-4 py-2 hover:bg-gray-100  w-full text-left"
@@ -30,6 +38,7 @@
         </li>
         <li>
             <button
+            type="button"
                 @click="elemClicked"
                 :data-role="managerKey"
                 class="block px-4 py-2 hover:bg-gray-100 w-full text-left"
@@ -39,6 +48,7 @@
         </li>
         <li>
             <button
+            type="button"
                 @click="elemClicked"
                 :data-role="partnerKey"
                 class="block px-4 py-2 hover:bg-gray-100 w-full text-left"
@@ -54,7 +64,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 interface Props{
-    roleValue?:String
+    roleValue?: String,
+    name: string,
+    modelValue?: string ,
+    error?:string
 }
 
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
@@ -71,11 +84,11 @@ const toggleDropDown = () => {
 }
 const elemClicked = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
-  const role = target.getAttribute('data-role')
-  if (role) {
-      firstState.value = target.textContent ?? 'Выберите роль'
-    emit('update:roleValue', role);
-  }
-  dropDownState.value = false;
+    const role = target.getAttribute('data-role')
+    if (role) {
+        firstState.value = target.textContent ?? 'Выберите роль'
+        emit('update:roleValue', role);
+    }
+    dropDownState.value = false;
 };
 </script>
