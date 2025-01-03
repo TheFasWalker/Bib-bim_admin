@@ -1,7 +1,17 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+import checkAcessByRole from '../../functions/checkAcessByRole';
 import { SiteState } from '../../store/SiteState';
+import { UserSate } from '../../store/UserState';
 import SidebarMainLink from '../sidebar/SidebarMainLink.vue';
 const store = SiteState()
+const userState = UserSate()
+const showOnlyForAdmin = computed(() => {
+  if (userState.getUserRole == 'RootDamin') {
+    return true
+  }
+  return false
+})
 </script>
 
 <template>
@@ -27,6 +37,7 @@ const store = SiteState()
           </li>
           <li>
             <SidebarMainLink
+              v-if="showOnlyForAdmin"
               title="Пользователи"
               nav="users"
               iconName="users"
@@ -55,6 +66,7 @@ const store = SiteState()
           </li>
           <li>
             <SidebarMainLink
+            v-if="showOnlyForAdmin"
               title="UI/docks"
               nav="ui"
               iconName="generate"

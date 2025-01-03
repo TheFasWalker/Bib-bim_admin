@@ -64,9 +64,11 @@
     import { SiteState } from '../store/SiteState';
     import { UserSate } from '../store/UserState';
 import { useRouter } from 'vue-router';
+import useAuth from '../api/useAuth';
+import useUserData from '../api/useUserData';
 
     const url = import.meta.env.VITE_API_DB_URL
-    const loading = ref(false)
+
     const siteState = SiteState();
     const userState = UserSate()
     const router = useRouter()
@@ -85,29 +87,26 @@ import { useRouter } from 'vue-router';
     })
     const [login, loginAttrs]= defineField('login')
     const [password, passwordAttrs]= defineField('password')
+    const { loading, makeAuth } = useAuth()
+    const { getUserData} = useUserData()
 
-    const formSubmit = handleSubmit(async ()=>{
-        loading.value = true
-        siteState.cleanTextError()
-        try {
-            const res = await fetch(url + `/admin_auth?login=${userLogin}&password=${userPassword}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
+    const formSubmit = handleSubmit(async () => {
+
+        makeAuth(userLogin, userPassword)
+            .then((data) => {
+
+                if (data.id && data.token) {
+                    console.log('fdnjhbpfwbz ecgtiyf')
+                    getUserData(data.id).then((data) => {
+                        const username =`${data.name} ${data.surname}`
+                        userState.writeTokenData(data.id,data.role.token, data.role.role, username, data.email)
+                    })
+                    router.push({ name:'home'})
+                } else {
+                    siteState.errorText='ошибка авторизации'
                 }
             })
-            if (res.ok) {
-                const resData = await res.json();
-                if (resData.id && resData.token) {
-                    userState.writeTokenAndId(resData.id, resData.token)
-                    router.push({name:'home'})
-                }
-            }
-        } catch(e:any) {
-            siteState.errorText = e.message
-        } finally {
-            loading.value = false
-        }
+
 
     })
 

@@ -1,37 +1,42 @@
-import { ref } from "vue"
-import { UserSate } from "../store/UserState"
+import { ref,computed } from "vue"
 import { SiteState } from "../store/SiteState"
 
 const url = import.meta.env.VITE_API_DB_URL
 
+
 export default function () {
-    const userState = UserSate()
-    const siteState = SiteState()
     const loading = ref(false)
-    const userData = async (id: string)=>{
-        loading.value = true
+    const siteState = SiteState()
+
+    const getUserData = async (id: string) => {
+        loading.value = false
         siteState.cleanTextError()
-        try {
-            const res = await fetch(url + `/admin_profile?id=${id}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
 
-            })
-            console.log('get data')
-            if (res.ok) {
-                const resData = await res.json()
-                userState.userData = resData
+        return fetch (url + `/admin_profile?id=${id}` ,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
             }
-        } catch(e:any) {
-            siteState.errorText = e.message
-
-        } finally {
+        })
+        .then(async (res) => {
+            if (!res.ok) {
+                const errorMessage = await res.text
+                const errorText = `HTTP error! status: ${res.status}, message: ${errorMessage}`
+                siteState.errorText = errorText
+                throw new Error(errorText);
+            }
+            return res.json();
+        })
+        .catch((err) => {
+            siteState.errorText = err.text
+            throw err
+        })
+            .finally(() => {
             loading.value = false
-        }
-
+        })
     }
-    return{loading, userData}
-
+    return {
+        loading: computed(() => loading.value),
+        getUserData
+    }
 }
