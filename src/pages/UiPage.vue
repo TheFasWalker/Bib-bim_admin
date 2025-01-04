@@ -12,6 +12,7 @@ import InputField from '../components/forms/components/InputField.vue';
 import Loader from '../components/ui/Loader.vue'
 import { SiteState } from '../store/SiteState';
 import Icons from '../components/ui/Icons.vue';
+import DeleteButton from '../components/ui/DeleteButton.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
@@ -70,6 +71,18 @@ const state = SiteState()
                 <span>Название : CloseButton </span>
                 <div class="">
                     <span>пропсов нет</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="flex flex-col gap-3">
+            <DeleteButton
+            @confirm = "console.log('asd')"/>
+            <div class="flex flex-col gap-2">
+                <span>Название : DeleteButton </span>
+                <div class="flex flex-col">
+                    <span>Удаление с подтверждением</span>
+                    <span>Эмитит событие @confirm</span>
                 </div>
 
             </div>
