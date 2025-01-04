@@ -9,6 +9,9 @@ import ButtonType2 from '../components/ui/ButtonType2.vue';
 import { useForm } from 'vee-validate';
 import * as yup from 'yup';
 import { toTypedSchema } from '@vee-validate/yup';
+import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
+
+const successfulPopUpState = ref(false)
 
 const generatePassword = () => {
     console.log(passwordGenerator())
@@ -36,12 +39,23 @@ const [name, nameAttrs] = defineField('name')
 const [surname, surnameAttrs] = defineField('surname')
 const [role, roleAttrs] = defineField('role')
 const [password ,passwordAttrs] = defineField('password')
+
+const formSubmit = handleSubmit(async(values) => {
+    console.log(values)
+    successfulPopUpState.value=true
+})
+const hideConfirm = () => {
+    resetForm()
+    successfulPopUpState.value=false
+
+}
+
 </script>
 
 <template>
     <MainLauout>
         <SubHeader title="Создание пользователя" nav="users" />
-        <form class="flex flex-col gap-3" >
+        <form class="flex flex-col gap-3" @submit.prevent="formSubmit">
             <div class="grid grid-cols-[1fr_150px] gap-3">
                 <DropDown
                     name="role"
@@ -109,5 +123,47 @@ const [password ,passwordAttrs] = defineField('password')
             </div>
             <ButtonType2 type="submit" title="Создать пользователя" />
         </form>
+        <PopUpLauout
+        v-if="successfulPopUpState"
+        @close-popup="successfulPopUpState = false">
+        <div class=" flex flex-col gap-4 w-[500px]">
+            <div class=" flex flex-col w-full items-center">
+                <img class=" h-14 w-fit" src="../assets/sucsess.png" alt="">
+                <h2 class=" font-bold trxt-2xl">Пользователь создан</h2>
+            </div>
+            <div class="grid grid-cols-[100px_1fr] gap-2">
+                <span>UserLogin:</span>
+                <span>{{ name }}</span>
+            </div>
+            <div class="grid grid-cols-[100px_1fr] gap-2">
+                <span>UserName:</span>
+                <span>{{ name }}</span>
+            </div>
+            <div class="grid grid-cols-[100px_1fr] gap-2">
+                <span>UserSurName:</span>
+                <span>{{ surname }}</span>
+            </div>
+            <div class="grid grid-cols-[100px_1fr] gap-2">
+                <span>UserEmail:</span>
+                <span>{{ email }}</span>
+            </div>
+            <div class="grid grid-cols-[100px_1fr] gap-2">
+                <span>UserName:</span>
+                <span>{{ name }}</span>
+            </div>
+            <div class="grid grid-cols-[100px_1fr] gap-2">
+                <span>UserName:</span>
+                <span>{{ name }}</span>
+            </div>
+            <div class="grid grid-cols-[100px_1fr] gap-2">
+                <span>UserRole:</span>
+                <span>{{ role }}</span>
+            </div>
+            <ButtonType2
+            @click="hideConfirm"
+            title="Ясно"/>
+        </div>
+        </PopUpLauout>
+
     </MainLauout>
 </template>
