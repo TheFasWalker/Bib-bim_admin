@@ -6,11 +6,29 @@ import { UserSate } from '../../store/UserState';
 import SidebarMainLink from '../sidebar/SidebarMainLink.vue';
 const store = SiteState()
 const userState = UserSate()
+const userRole = userState.getUserRole
+const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
+const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
+const partnerKey = import.meta.env.VITE_PARTNER_ROLE_CODE
+
 const showOnlyForAdmin = computed(() => {
-  if (userState.getUserRole == 'RootDamin') {
+    if (userRole != adminKey) {
+        return false
+    }
     return true
-  }
-  return true
+})
+const showForManager = computed(() => {
+    if (userRole == adminKey || userRole == managerKey) {
+        return true
+    }
+    return false
+})
+const showOnlyForPartner = computed(() => {
+    if (userRole == adminKey || userRole == managerKey || userRole == partnerKey) {
+        return true
+    } else {
+        return false
+    }
 })
 </script>
 
@@ -66,7 +84,7 @@ const showOnlyForAdmin = computed(() => {
           </li>
           <li>
             <SidebarMainLink
-            v-if="showOnlyForAdmin"
+              v-if="showOnlyForAdmin"
               title="UI/docks"
               nav="ui"
               iconName="generate"

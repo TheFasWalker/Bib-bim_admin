@@ -1,12 +1,17 @@
 import { ref, computed } from "vue"
 import { SiteState } from "../store/SiteState"
+import { sha512 } from "js-sha512"
 
 const url = import.meta.env.VITE_API_DB_URL
 export default function () {
     const loading = ref(false)
     const siteState = SiteState()
 
-    const makeAuth = async (login:string, password:string) => {
+    const makeAuth = async (login?: string, password?: string) => {
+        if (password) {
+            password = sha512(password)
+        }
+
         loading.value = true
         siteState.cleanTextError()
 

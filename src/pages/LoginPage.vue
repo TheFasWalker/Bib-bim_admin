@@ -60,24 +60,20 @@
     import Loader from '../components/ui/Loader.vue'
     import ErrorToast from '../components/Toasts/ErrorToast.vue';
 
-    import { ref } from 'vue';
     import { SiteState } from '../store/SiteState';
     import { UserSate } from '../store/UserState';
-import { useRouter } from 'vue-router';
-import useAuth from '../api/useAuth';
-import useUserData from '../api/useUserData';
+    import { useRouter } from 'vue-router';
+    import useAuth from '../api/useAuth';
+    import useUserData from '../api/useUserData';
 
-    const url = import.meta.env.VITE_API_DB_URL
-
+    const rootLogin = import.meta.env.VITE_ROOT_ADMIN_LOGIN
+    const rootPassword = import.meta.env.VITE_ROOT_AMIN_PASSWORD
     const siteState = SiteState();
     const userState = UserSate()
     const router = useRouter()
-    const userLogin = 'blabaldd'
-    const userPassword = '9111c5cf0b5a186032b9a90eeef624f852cea81acad47c93ddc5b0c253b80e54e58ab6f7c823bf4e9f34dae55df33808e8fd8b696334ddaa0bf2d12acb630fae'
-
     const schema = toTypedSchema(yup.object({
-        // login:yup.string().required('Обязательное поле'),
-        // password:yup.string().required('Обязательное поле').min(6,'минимум 6 знаков')
+        login:yup.string().required('Обязательное поле'),
+        password:yup.string().required('Обязательное поле').min(6,'минимум 6 знаков')
     }))
     const {errors,defineField,handleSubmit,resetForm}= useForm({
         validationSchema:schema,
@@ -89,14 +85,16 @@ import useUserData from '../api/useUserData';
     const [password, passwordAttrs]= defineField('password')
     const { loading, makeAuth } = useAuth()
     const { getUserData} = useUserData()
-
+    const writeUserData = () => {
+        login.value = rootLogin
+        password.value = rootPassword
+    }
+    writeUserData()
     const formSubmit = handleSubmit(async () => {
 
-        makeAuth(userLogin, userPassword)
+        makeAuth(login.value, password.value)
             .then((data) => {
-
                 if (data.id && data.token) {
-                    console.log('fdnjhbpfwbz ecgtiyf')
                     getUserData(data.id).then((data) => {
                         const username =`${data.name} ${data.surname}`
                         userState.writeTokenData(data.id,data.role.token, data.role.role, username, data.email)

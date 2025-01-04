@@ -5,6 +5,7 @@
         <p class="text-red-600 text-sm font-bold" v-if="error">{{ error }}</p>
       </div>
       <input
+        autocomplete="off"
         :class="{ 'border-red-600': error }"
         :name="name"
         :placeholder="placeholder"
