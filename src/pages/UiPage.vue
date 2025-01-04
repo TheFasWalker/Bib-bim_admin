@@ -192,9 +192,11 @@ const state = SiteState()
     </div>
 
 </Toggler>
-<Toggler title="Иконки"></Toggler>
-<span>название компонента: Icons</span>
+<Toggler title="Иконки">
+    <div class="flex flex-col ">
+    <span>название компонента: Icons</span>
 <span>iconName : 'users' | 'info' | 'home' | 'help' | 'contacts' | 'exit' | 'left' | 'generate' | 'search' | 'trash' | 'gear'</span>
+</div>
 <div class="flex flex-wrap gap-3">
     <div class="flex flex-col items-center">
         <Icons
@@ -252,6 +254,8 @@ const state = SiteState()
         <span>gear</span>
     </div>
 </div>
+</Toggler>
+
 </div>
     </MainLauout>
 </template>
