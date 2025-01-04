@@ -13,6 +13,7 @@ import Loader from '../components/ui/Loader.vue'
 import { SiteState } from '../store/SiteState';
 import Icons from '../components/ui/Icons.vue';
 import DeleteButton from '../components/ui/DeleteButton.vue';
+import ButtonType3 from '../components/ui/ButtonType3.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
@@ -54,6 +55,20 @@ const state = SiteState()
             title="текст кнопки"/>
             <div class="flex flex-col gap-2">
                 <span>Название : ButtonType2 </span>
+                <div class="">
+                    <span>пропсы:</span>
+                    <ul>
+                        <li>title : String</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <div class="flex flex-col gap-3">
+            <ButtonType3
+            title="текст кнопки"/>
+            <div class="flex flex-col gap-2">
+                <span>Название : ButtonTyp3 </span>
                 <div class="">
                     <span>пропсы:</span>
                     <ul>

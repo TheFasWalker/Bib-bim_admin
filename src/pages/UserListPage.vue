@@ -29,7 +29,7 @@ onMounted(() => {
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
 
             <div class="">
-                <div class="grid grid-cols-[1fr_1fr_1fr_200px]">
+                <div class="grid grid-cols-[1fr_1fr_150px_300px]">
                     <span class=" py-2 px-2">Имя</span>
                     <span class=" py-2 px-2">email</span>
                     <span class=" py-2 px-2">роль</span>
