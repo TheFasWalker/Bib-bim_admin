@@ -255,7 +255,11 @@ const state = SiteState()
     </div>
 </div>
 </Toggler>
-
+<Toggler
+title="ToDo">
+<ul>
+    <li>Не сделана отправка формы на бэк при создании пользователя</li>
+</ul></Toggler>
 </div>
     </MainLauout>
 </template>
