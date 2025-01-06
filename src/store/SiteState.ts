@@ -3,11 +3,13 @@ import { defineStore } from 'pinia'
 export const SiteState = defineStore('siteStates', {
     state: () => ({
       sidebarState: true,
-      errorText:''
+      errorText: '' as string | '',
+      sucsesMessage: '' as string |''
      }),
     getters: {
       getSidebarState :(state)=>state.sidebarState,
-      getErrorText:(state)=>state.errorText
+      getErrorText: (state) => state.errorText,
+      getsucsesMessage : (state)=> state.sucsesMessage
     },
     actions: {
       toggleSidebarState(){
@@ -15,6 +17,9 @@ export const SiteState = defineStore('siteStates', {
       },
       cleanTextError(){
         this.errorText = ''
+      },
+      cleanSucsessText() {
+        this.sucsesMessage = ''
       }
     },
   })
