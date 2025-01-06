@@ -23,7 +23,8 @@ export default function () {
                 siteState.errorText = errorText
                 throw new Error(errorText);
             }
-            return res.json();
+            const data = res.json()
+            return data;
         })
         .catch((err) => {
             siteState.errorText = err.text

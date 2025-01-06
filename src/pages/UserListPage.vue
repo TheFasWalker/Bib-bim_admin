@@ -7,11 +7,12 @@ import UsersPreview from '../components/users/usersPreview.vue';
 import Loader from '../components/ui/Loader.vue';
 import useGetUsersList from '../api/useGetUsersList';
 import type { Iuser } from '../Types';
+import { SiteState } from '../store/SiteState';
 
-const userslist= ref<Iuser[]>([])
+    const siteState = SiteState()
 const{ loading, getUserList} = useGetUsersList()
 onMounted(() => {
-    getUserList().then((data)=>{userslist.value = data})
+    getUserList().then((data)=>{siteState.setUserList(data)})
 })
 </script>
 
@@ -36,7 +37,7 @@ onMounted(() => {
                     <div class=" py-2 px-2"> управление</div>
                 </div>
             </div>
-            <UsersPreview v-for="user in userslist"
+            <UsersPreview v-for="user in siteState.userList"
                 :user="user"
             />
         </div>
