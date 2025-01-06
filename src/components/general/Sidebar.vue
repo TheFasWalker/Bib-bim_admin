@@ -12,8 +12,8 @@ const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
 const partnerKey = import.meta.env.VITE_PARTNER_ROLE_CODE
 
 const showOnlyForAdmin = computed(() => {
-    if (userRole != adminKey) {
-        return false
+    if (userRole == adminKey) {
+        return true
     }
     return true
 })
