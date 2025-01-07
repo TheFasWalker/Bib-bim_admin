@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
 import { Iuser } from '../Types'
 
+
 export const SiteState = defineStore('siteStates', {
   state: () => ({
     sidebarState: true,
     errorText: '' as string | '',
     sucsesMessage: '' as string | '',
-    userList: null as Iuser[] | null
+    userList: null as Iuser[] | null,
   }),
   getters: {
     getSidebarState: (state) => state.sidebarState,
@@ -25,6 +26,9 @@ export const SiteState = defineStore('siteStates', {
     },
     setUserList(data: Iuser[] | null) {
       this.userList = data
+    },
+    deleteUserById(id: string) {
+      this.userList = this.userList.filter(user => user.id !== id)
     }
     },
   })

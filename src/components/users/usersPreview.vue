@@ -71,16 +71,19 @@ import UserRole from './userRole.vue';
 import PopUpLauout from '../lauouts/PopUpLauout.vue';
 import DeleteButton from '../ui/DeleteButton.vue';
 import ButtonType3 from '../ui/ButtonType3.vue';
+import useDeleteUser from '../../api/useDeleteUser';
 const showUserData = ref( false)
-const editUserData = ref (false)
+const editUserData = ref(false)
+
+const {loading,deleteUserById} = useDeleteUser()
 
 const deleteElem = (id: string) => {
     showUserData.value = false
-    console.log('id for delete' + id)
+    deleteUserById(id)
 }
 interface Props {
     user:Iuser
-}
+}   
 
 const userProps = defineProps<Props>()
 
