@@ -6,11 +6,10 @@ import Pagination from '../components/pagination/Pagination.vue';
 import UsersPreview from '../components/users/usersPreview.vue';
 import Loader from '../components/ui/Loader.vue';
 import useGetUsersList from '../api/useGetUsersList';
-import type { Iuser } from '../Types';
 import { SiteState } from '../store/SiteState';
 
     const siteState = SiteState()
-const{ loading, getUserList} = useGetUsersList()
+const{ getUserList} = useGetUsersList()
 onMounted(() => {
     getUserList().then((data)=>{siteState.setUserList(data)})
 })
@@ -18,9 +17,6 @@ onMounted(() => {
 
 <template>
     <MainLauout>
-        <Loader
-            v-if="loading"
-        />
         <SubHeader
         title="Список пользлователей"
         nav="home"

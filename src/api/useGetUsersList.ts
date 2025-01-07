@@ -4,11 +4,10 @@ import { SiteState } from "../store/SiteState"
 const url = import.meta.env.VITE_API_DB_URL
 
 export default function () {
-    const loading = ref(false)
     const siteState = SiteState()
 
     const getUserList = async () => {
-        loading.value = false
+        siteState.loadingTrue()
         siteState.cleanTextError()
 
         return fetch(url + '/admin_profile', {
@@ -31,11 +30,10 @@ export default function () {
             throw err
         })
             .finally(() => {
-            loading.value = false
+                siteState.loaderFalse()
         })
     }
     return {
-        loading: computed(() => loading.value),
         getUserList
     }
 }

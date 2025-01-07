@@ -4,15 +4,15 @@ import { sha512 } from "js-sha512"
 
 const url = import.meta.env.VITE_API_DB_URL
 export default function () {
-    const loading = ref(false)
+    // const loading = ref(false)
     const siteState = SiteState()
 
     const makeAuth = async (login?: string, password?: string) => {
         if (password) {
             password = sha512(password)
         }
-
-        loading.value = true
+        siteState.loadingTrue()
+        // loading.value = true
         siteState.cleanTextError()
 
         return fetch(url + `/admin_auth?login=${login}&password=${password}` , {
@@ -34,12 +34,13 @@ export default function () {
                 siteState.errorText = 'Ошибка авторизации';
                 throw err;
               })
-              .finally(() => {
-                loading.value = false;
+            .finally(() => {
+                  siteState.loaderFalse()
+                // loading.value = false;
               });
     }
     return {
-        loading: computed(() => loading.value),
+        // loading: computed(() => loading.value),
         makeAuth
     }
 

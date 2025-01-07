@@ -1,5 +1,5 @@
     <template>
-        <Loader v-if="loading"/>
+        <Loader v-if="siteState.loading"/>
         <ErrorToast/>
         <section class="bg-gray-50 ">
         <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -83,8 +83,8 @@
     })
     const [login, loginAttrs]= defineField('login')
     const [password, passwordAttrs]= defineField('password')
-    const { loading, makeAuth } = useAuth()
-    const { getUserData} = useUserData()
+    const { makeAuth } = useAuth()
+    const { getUserData } = useUserData()
     const writeUserData = () => {
         login.value = rootLogin
         password.value = rootPassword
