@@ -1,6 +1,7 @@
 import { computed, ref } from "vue"
 import { SiteState } from "../store/SiteState"
 import { UserSate } from "../store/UserState"
+import { UserListState } from "../store/UsersListState"
 
 const url = import.meta.env.VITE_API_DB_URL
 
@@ -8,6 +9,7 @@ export default function () {
     const loading = ref(false)
     const siteState = SiteState()
     const userState = UserSate()
+    const userListState = UserListState()
     const deleteUserById = async (id:string) => {
         loading.value = true
 
@@ -29,7 +31,7 @@ export default function () {
                 siteState.errorText = errorText
                 throw new Error(errorText);
             }
-            siteState.deleteUserById(id)
+            userListState.deleteUserById(id)
             return res.json();
         })
         .catch((err) => {
