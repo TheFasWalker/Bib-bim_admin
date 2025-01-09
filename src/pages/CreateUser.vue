@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import DropDown from '../components/forms/components/DropDown.vue';
 import SubHeader from '../components/general/SubHeader.vue';
 import MainLauout from '../components/lauouts/MainLauout.vue';
@@ -10,9 +10,10 @@ import { useForm } from 'vee-validate';
 import * as yup from 'yup';
 import { toTypedSchema } from '@vee-validate/yup';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
+import useGetRoles from '../api/useGetRoles';
 
 const successfulPopUpState = ref(false)
-
+const {adminRoles} = useGetRoles()
 const generatePassword = () => {
     console.log(passwordGenerator())
     password.value =passwordGenerator()
@@ -49,7 +50,8 @@ const hideConfirm = () => {
     successfulPopUpState.value=false
 
 }
-
+const rolesList = computed(() => adminRoles())
+console.log(rolesList)
 </script>
 
 <template>

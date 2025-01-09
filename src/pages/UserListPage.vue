@@ -8,7 +8,6 @@ import useGetUsersList from '../api/useGetUsersList';
 import { SiteState } from '../store/SiteState';
 import { UserListState } from '../store/UsersListState';
 
-const siteState = SiteState()
 const userListState = UserListState()
 const { getUserList } = useGetUsersList()
 onMounted(() => {
@@ -34,7 +33,7 @@ onMounted(() => {
                     <div class=" py-2 px-2"> управление</div>
                 </div>
             </div>
-            <UsersPreview v-for="user in siteState.userList"
+            <UsersPreview v-for="user in userListState.userList"
                 :user="user"
             />
         </div>

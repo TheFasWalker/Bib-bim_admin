@@ -83,7 +83,7 @@ const deleteElem = (id: string) => {
 }
 interface Props {
     user:Iuser
-}   
+}
 
 const userProps = defineProps<Props>()
 

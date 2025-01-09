@@ -16,7 +16,7 @@ export const SiteState = defineStore('siteStates', {
     getsucsesMessage: (state) => state.sucsesMessage
   },
   actions: {
-    loaderFalse() {
+    loadingFalse() {
       this.loading = false
     },
     loadingTrue() {

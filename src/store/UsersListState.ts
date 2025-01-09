@@ -13,5 +13,12 @@ export const UserListState = defineStore("userListState", {
     deleteUserById(id: string) {
       this.userList = this.userList.filter((user) => user.id !== id);
     },
+    getElementById(id: string) {
+      if (!this.userList) {
+        return null
+      }
+      const foundElem = this.userList.find((user) => user.id === id)
+      return foundElem || null
+    }
   },
 });

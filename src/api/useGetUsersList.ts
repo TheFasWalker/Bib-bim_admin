@@ -20,17 +20,20 @@ export default function () {
                 const errorMessage = await res.text
                 const errorText = `HTTP error! status: ${res.status}, message: ${errorMessage}`
                 siteState.errorText = errorText
+                siteState.loadingFalse()
                 throw new Error(errorText);
             }
             const data = res.json()
             return data;
         })
-        .catch((err) => {
-            siteState.errorText = err.text
+            .catch((err) => {
+                siteState.loadingFalse()
+                siteState.errorText = err.text
+                siteState.loadingFalse()
             throw err
         })
             .finally(() => {
-                siteState.loaderFalse()
+                siteState.loadingFalse()
         })
     }
     return {
