@@ -14,7 +14,7 @@ export default function () {
             'Content-Type': 'application/json',
         }
         if (userState.getUserToken) {
-            headersData['Authorization'] = `Bearer ${userState.userToken}`
+            headersData['Authorization'] = `Bearer ${userState.getUserToken}`
         }
         return fetch(url + `/admin_role`, {
             method: 'GET',

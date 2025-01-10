@@ -11,17 +11,19 @@ import * as yup from 'yup';
 import { toTypedSchema } from '@vee-validate/yup';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
 import useGetRoles from '../api/useGetRoles';
+import useCreateUser from '../api/useCreateUser';
 import { sha512 } from 'js-sha512';
 
 const successfulPopUpState = ref(false)
 const {adminRoles} = useGetRoles()
+const {createUser} = useCreateUser()
 const generatePassword = () => {
     password.value =passwordGenerator()
 }
 const schema = toTypedSchema(yup.object({
     login: yup.string().required('Обязательное поле'),
     email: yup.string().required('Обязательное поле').email('not vatid email'),
-    name: yup.string().required('Обязательное поле').min(3, 'too short name'),
+    name: yup.string().required('Обязательное поле').min(3, 'too short name').max(10,'max 10 symbols'),
     surname: yup.string().required('Обязательное поле').min(3, 'too short surname'),
     role: yup.string().required('выберите роль'),
     password:yup.string().required('Нужен пароль').min(6,'минимум 6 знаков')
@@ -31,8 +33,8 @@ onMounted(() => {
     adminRoles().then((data)=>{
         userRoles.value = data
     })
-    email.value='email@email.email'
-    login.value='Userlogin123'
+    email.value='asdfdf@mail.ru'
+    login.value='Userlogin1as'
     name.value = 'UserNameFromFront'
     surname.value='UserSurname'
     password.value = passwordGenerator()
@@ -52,8 +54,8 @@ const [role, roleAttrs] = defineField('role')
 const [password ,passwordAttrs] = defineField('password')
 
 const formSubmit = handleSubmit(async(values) => {
-    console.log(values)
-    successfulPopUpState.value=true
+    createUser(values)
+    // successfulPopUpState.value=true
 })
 const hideConfirm = () => {
     // resetForm()
