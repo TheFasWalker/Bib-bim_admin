@@ -27,12 +27,12 @@ export default function(){
         })
         .then(async (res)=>{
             console.log(res.text)
-            // if(!res.ok){
-            //     const errorMessage = await res.text
-            //     const errorText = `HTTP error! status: ${res.status}, message: ${errorMessage}`
-            //     siteState.errorText = errorText
-            //     throw new Error(errorText);
-            // }
+            if(!res.ok){
+                const errorMessage = await res.text
+                const errorText = `HTTP error! status: ${res.status}, message: ${errorMessage}`
+                siteState.errorText = errorText
+                throw new Error(errorText);
+            }
             return res.text;
         })
         .catch((error) =>{

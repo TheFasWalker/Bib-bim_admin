@@ -11,6 +11,10 @@ export default function () {
     const userState = UserSate()
     const userListState = UserListState()
     const deleteUserById = async (id:string) => {
+        if(id == userState.getUserId){
+            siteState.errorText = 'Самоудаление не рекомендовано'
+            return
+        }
         loading.value = true
 
         const headersData = {
@@ -32,7 +36,7 @@ export default function () {
                 throw new Error(errorText);
             }
             userListState.deleteUserById(id)
-            return res.json();
+            return res.text;
         })
         .catch((err) => {
             siteState.errorText = 'Неудалось удалить пользователя';

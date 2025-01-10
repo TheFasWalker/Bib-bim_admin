@@ -11,7 +11,11 @@ import { UserListState } from '../store/UsersListState';
 const userListState = UserListState()
 const { getUserList } = useGetUsersList()
 onMounted(() => {
-    getUserList().then((data)=>{userListState.setUserList(data)})
+    getUserList().then((data)=>{
+        userListState.setUserList(data)
+        console.log(data)
+    })
+
 })
 </script>
 
