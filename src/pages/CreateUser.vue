@@ -11,11 +11,11 @@ import * as yup from 'yup';
 import { toTypedSchema } from '@vee-validate/yup';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
 import useGetRoles from '../api/useGetRoles';
+import { sha512 } from 'js-sha512';
 
 const successfulPopUpState = ref(false)
 const {adminRoles} = useGetRoles()
 const generatePassword = () => {
-    console.log(passwordGenerator())
     password.value =passwordGenerator()
 }
 const schema = toTypedSchema(yup.object({
@@ -26,7 +26,17 @@ const schema = toTypedSchema(yup.object({
     role: yup.string().required('выберите роль'),
     password:yup.string().required('Нужен пароль').min(6,'минимум 6 знаков')
 }))
-
+const userRoles = ref([])
+onMounted(() => {
+    adminRoles().then((data)=>{
+        userRoles.value = data
+    })
+    email.value='email@email.email'
+    login.value='Userlogin123'
+    name.value = 'UserNameFromFront'
+    surname.value='UserSurname'
+    password.value = passwordGenerator()
+})
 const { errors, defineField,handleSubmit,resetForm} = useForm({
         validationSchema:schema,
         validateOnInput:true,
@@ -46,12 +56,10 @@ const formSubmit = handleSubmit(async(values) => {
     successfulPopUpState.value=true
 })
 const hideConfirm = () => {
-    resetForm()
+    // resetForm()
     successfulPopUpState.value=false
 
 }
-const rolesList = computed(() => adminRoles())
-console.log(rolesList)
 </script>
 
 <template>
@@ -60,6 +68,7 @@ console.log(rolesList)
         <form class="flex flex-col gap-3" @submit.prevent="formSubmit">
             <div class="grid grid-cols-[1fr_150px] gap-3">
                 <DropDown
+                :data="userRoles"
                     name="role"
                     class=""
                     v-model:roleValue="role"
@@ -114,6 +123,7 @@ console.log(rolesList)
                     type="text"
                     v-model="password"
                     v-bind="passwordAttrs"
+                    :error="errors.password"
                     placeholder="ваш пароль" />
                 <button
                 type="button"
@@ -135,7 +145,7 @@ console.log(rolesList)
             </div>
             <div class="grid grid-cols-[100px_1fr] gap-2">
                 <span>UserLogin:</span>
-                <span>{{ name }}</span>
+                <span>{{ login }}</span>
             </div>
             <div class="grid grid-cols-[100px_1fr] gap-2">
                 <span>UserName:</span>
@@ -149,10 +159,7 @@ console.log(rolesList)
                 <span>UserEmail:</span>
                 <span>{{ email }}</span>
             </div>
-            <div class="grid grid-cols-[100px_1fr] gap-2">
-                <span>UserName:</span>
-                <span>{{ name }}</span>
-            </div>
+
             <div class="grid grid-cols-[100px_1fr] gap-2">
                 <span>UserName:</span>
                 <span>{{ name }}</span>

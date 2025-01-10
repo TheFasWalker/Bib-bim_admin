@@ -1,18 +1,24 @@
 import { SiteState } from "../store/SiteState"
+import { UserSate } from "../store/UserState"
 const url = import.meta.env.VITE_API_DB_URL
 
 
 export default function () {
     const siteState = SiteState()
+    const userState = UserSate()
     siteState.loadingTrue()
     siteState.cleanTextError()
 
     const adminRoles = async () => {
+        const headersData = {
+            'Content-Type': 'application/json',
+        }
+        if (userState.getUserToken) {
+            headersData['Authorization'] = `Bearer ${userState.userToken}`
+        }
         return fetch(url + `/admin_role`, {
             method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-              },
+            headers:headersData
         })
         .then(async (res) => {
             if (!res.ok) {
@@ -25,12 +31,11 @@ export default function () {
         })
         .catch((err) => {
             siteState.errorText = 'Ошибка получения ролей';
-            siteState.loadingFalse()
             throw err;
           })
         .finally(() => {
               siteState.loadingFalse()
           });
     }
-    return adminRoles
+    return {adminRoles}
 }

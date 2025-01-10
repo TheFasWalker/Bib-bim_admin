@@ -10,11 +10,11 @@ export const UserSate = defineStore('userState',{
     }),
     getters: {
         getUserRole: (state) => {
-            if (state.userToken == undefined) {
-                state.userToken = localStorage.getItem('bim-userRole')
-                return state.userToken
+            if (state.userRole == undefined) {
+                state.userRole = localStorage.getItem('bim-userRole')
+                return state.userRole
             } else {
-                return state.userToken
+                return state.userRole
             }
         },
         getUserToken: (state) => {

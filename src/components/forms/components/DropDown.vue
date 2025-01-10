@@ -23,51 +23,36 @@
         </svg>
     </button>
 
-
     <div v-show="dropDownState" class="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow absolute left-0 top-full w-full">
         <ul class="py-2 text-sm text-gray-700 " >
-        <li>
+            
+        <li v-for="elem in data">
             <button
             type="button"
                 @click="elemClicked"
-                :data-role="adminKey"
+                :data-role="elem.id"
                 class="block px-4 py-2 hover:bg-gray-100  w-full text-left"
             >
-            Администратор
+            {{ readableTitle(elem.role) }}
             </button>
         </li>
-        <li>
-            <button
-            type="button"
-                @click="elemClicked"
-                :data-role="managerKey"
-                class="block px-4 py-2 hover:bg-gray-100 w-full text-left"
-            >
-            Контент менеджер
-            </button>
-        </li>
-        <li>
-            <button
-            type="button"
-                @click="elemClicked"
-                :data-role="partnerKey"
-                class="block px-4 py-2 hover:bg-gray-100 w-full text-left"
-            >
-            Партнер
-            </button>
-        </li>
-
         </ul>
     </div>
 </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
+interface IUserRole{
+    id:string,
+    role:String
+}
 interface Props{
     roleValue?: String,
     name: string,
     modelValue?: string ,
-    error?:string
+    error?:string,
+    data:Array<IUserRole>
+    
 }
 
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
@@ -91,4 +76,17 @@ const elemClicked = (event: MouseEvent) => {
     }
     dropDownState.value = false;
 };
+const readableTitle = (title) =>{
+    switch(title){
+        case adminKey:
+            return 'Администратор'
+            break
+        case managerKey:
+            return 'Контент менеджер'
+            break
+        case partnerKey:
+            return 'Партнёр'
+            break
+        }
+}
 </script>

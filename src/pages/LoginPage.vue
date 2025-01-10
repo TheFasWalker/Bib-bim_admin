@@ -95,9 +95,11 @@
         makeAuth(login.value, password.value)
             .then((data) => {
                 if (data.id && data.token) {
+                    const userToken = data.token
                     getUserData(data.id).then((data) => {
                         const username =`${data.name} ${data.surname}`
-                        userState.writeTokenData(data.id,data.role.token, data.role.role, username, data.email)
+                        userState.writeTokenData(data.id,userToken, data.role.role, username, data.email)
+                        
                     })
                     router.push({ name:'home'})
                 } else {

@@ -1,3 +1,5 @@
+import { EnumType } from "typescript";
+
 export type IconType = 'users' | 'info' | 'home' | 'help' | 'contacts' | 'exit' | 'left' | 'generate' | 'search' | 'trash' | 'gear';
 export type UserRoles = 'RootAdmin' | 'ContentManager' | 'BussinesPartner'
 export interface Iuser {
@@ -12,4 +14,12 @@ export interface Iuser {
   export interface Role {
     id: string
     role: UserRoles
+  }
+  export interface ICreateUser {
+    login:string,
+    name:string,
+    surname:string,
+    role:string,
+    email:string,
+    password:string
   }
