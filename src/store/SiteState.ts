@@ -8,7 +8,7 @@ export const SiteState = defineStore('siteStates', {
     errorText: '' as string | '',
     sucsesMessage: '' as string | '',
     userList: null as Iuser[] | null,
-    loading:true
+    loading:false
   }),
   getters: {
     getSidebarState: (state) => state.sidebarState,
