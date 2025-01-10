@@ -1,4 +1,3 @@
-import { computed, ref } from "vue"
 import { SiteState } from "../store/SiteState"
 import { UserSate } from "../store/UserState"
 import { UserListState } from "../store/UsersListState"
@@ -6,16 +5,16 @@ import { UserListState } from "../store/UsersListState"
 const url = import.meta.env.VITE_API_DB_URL
 
 export default function () {
-    const loading = ref(false)
     const siteState = SiteState()
     const userState = UserSate()
     const userListState = UserListState()
     const deleteUserById = async (id:string) => {
+        siteState.loadingTrue()
         if(id == userState.getUserId){
             siteState.errorText = 'Самоудаление не рекомендовано'
             return
         }
-        loading.value = true
+        
 
         const headersData = {
             'Content-Type': 'application/json',
@@ -43,12 +42,11 @@ export default function () {
             throw err;
           })
           .finally(() => {
-            loading.value = false;
+            siteState.loadingFalse()
           });
 
     }
     return {
-        loading: computed(() => loading.value),
         deleteUserById
     }
 }

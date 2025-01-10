@@ -1,17 +1,14 @@
-import { ref,computed } from "vue"
 import { SiteState } from "../store/SiteState"
 import { UserSate } from "../store/UserState"
-
 const url = import.meta.env.VITE_API_DB_URL
 
 
 export default function () {
-    const loading = ref(false)
     const siteState = SiteState()
     const userState = UserSate()
 
     const getUserData = async (id: string) => {
-        loading.value = false
+        siteState.loadingTrue()
         siteState.cleanTextError()
         const headersData = {
             'Content-Type': 'application/json',
@@ -37,11 +34,10 @@ export default function () {
             throw err
         })
             .finally(() => {
-            loading.value = false
+                siteState.loadingFalse()
         })
     }
     return {
-        loading: computed(() => loading.value),
         getUserData
     }
 }
