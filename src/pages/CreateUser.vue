@@ -13,6 +13,7 @@ import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
 import useGetRoles from '../api/useGetRoles';
 import useCreateUser from '../api/useCreateUser';
 import { sha512 } from 'js-sha512';
+import { useRouter } from 'vue-router';
 
 const successfulPopUpState = ref(false)
 const {adminRoles} = useGetRoles()
@@ -45,7 +46,7 @@ const { errors, defineField,handleSubmit,resetForm} = useForm({
         validateOnChange:true,
         strategy: 'individual'
 })
-
+const router = useRouter()
 const [login, loginAttrs] = defineField('login')
 const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
@@ -54,12 +55,14 @@ const [role, roleAttrs] = defineField('role')
 const [password ,passwordAttrs] = defineField('password')
 
 const formSubmit = handleSubmit(async(values) => {
-    createUser(values)
-    // successfulPopUpState.value=true
+    createUser(values).then(() => {
+        successfulPopUpState.value=true
+    })
 })
 const hideConfirm = () => {
-    // resetForm()
-    successfulPopUpState.value=false
+    resetForm()
+    successfulPopUpState.value = false
+    router.push({name:'users'})
 
 }
 </script>

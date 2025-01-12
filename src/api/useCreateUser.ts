@@ -17,8 +17,8 @@ export default function(){
         if(userState.getUserToken){
             headersData['Authorization'] = `Bearer ${userState.getUserToken}`
         }
-        console.log(userData)
-        console.log(JSON.stringify(userData))
+        // console.log(userData)
+        // console.log(JSON.stringify(userData))
 
         return fetch(url +'/admin_profile',{
             method:'POST',
@@ -26,7 +26,7 @@ export default function(){
             body:JSON.stringify(userData)
         })
         .then(async (res)=>{
-            console.log(res.text)
+            // console.log(res.text)
             if(!res.ok){
                 const errorMessage = await res.text
                 const errorText = `HTTP error! status: ${res.status}, message: ${errorMessage}`
@@ -36,7 +36,7 @@ export default function(){
             return res.text;
         })
         .catch((error) =>{
-            console.log(error.message)
+            // console.log(error.message)
             siteState.errorText = error.message + 'Ошибка создания'
             throw error
         })
