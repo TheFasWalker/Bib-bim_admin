@@ -74,8 +74,7 @@ import ButtonType3 from '../ui/ButtonType3.vue';
 import useDeleteUser from '../../api/useDeleteUser';
 const showUserData = ref( false)
 const editUserData = ref(false)
-
-const {loading,deleteUserById} = useDeleteUser()
+const {deleteUserById} = useDeleteUser()
 
 const deleteElem = (id: string) => {
     showUserData.value = false

@@ -1,7 +1,7 @@
 <template>
 <div class=" relative">
     <input
-    hidden 
+    hidden
         type="text"
         :name="name"
         :value="modelValue"
@@ -22,11 +22,9 @@
             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
         </svg>
     </button>
-
     <div v-show="dropDownState" class="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow absolute left-0 top-full w-full">
         <ul class="py-2 text-sm text-gray-700 " >
-            
-        <li v-for="elem in data">
+        <li v-for="elem in data" :key="elem.id" v-show="outputAdminRole(elem.role) ">
             <button
             type="button"
                 @click="elemClicked"
@@ -52,12 +50,13 @@ interface Props{
     modelValue?: string ,
     error?:string,
     data:Array<IUserRole>
-    
+
 }
 
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
 const partnerKey = import.meta.env.VITE_PARTNER_ROLE_CODE
+const devM0de = import.meta.env.VITE_DEV_MODE
 
 const props = defineProps<Props>()
 const emit = defineEmits<{ (e: 'update:roleValue', value: string): void }>();
@@ -76,6 +75,18 @@ const elemClicked = (event: MouseEvent) => {
     }
     dropDownState.value = false;
 };
+const outputAdminRole =(role) =>{
+    if (!devM0de) {
+        if (role == adminKey) {
+            return false
+        } else {
+            return true
+        }
+    } else {
+        return true
+    }
+
+}
 const readableTitle = (title) =>{
     switch(title){
         case adminKey:
