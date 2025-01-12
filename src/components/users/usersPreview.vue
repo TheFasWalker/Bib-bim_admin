@@ -10,6 +10,7 @@
             @click="editUserData= true"
         />
         <DeleteButton
+            v-if="user.id != userState.getUserId"
             @confirm="deleteElem(user.id)"
         />
         </div>
@@ -72,10 +73,11 @@ import PopUpLauout from '../lauouts/PopUpLauout.vue';
 import DeleteButton from '../ui/DeleteButton.vue';
 import ButtonType3 from '../ui/ButtonType3.vue';
 import useDeleteUser from '../../api/useDeleteUser';
+import { UserSate } from '../../store/UserState';
 const showUserData = ref( false)
 const editUserData = ref(false)
 const {deleteUserById} = useDeleteUser()
-
+const userState = UserSate()
 const deleteElem = (id: string) => {
     showUserData.value = false
     deleteUserById(id)
