@@ -68,6 +68,7 @@
 
     const rootLogin = import.meta.env.VITE_ROOT_ADMIN_LOGIN
     const rootPassword = import.meta.env.VITE_ROOT_AMIN_PASSWORD
+    const devMode = import.meta.env.VITE_DEV_MODE
     const siteState = SiteState();
     const userState = UserSate()
     const router = useRouter()
@@ -86,8 +87,10 @@
     const { makeAuth } = useAuth()
     const { getUserData } = useUserData()
     const writeUserData = () => {
-        login.value = rootLogin
-        password.value = rootPassword
+        if (devMode) {
+            login.value = rootLogin
+            password.value = rootPassword
+        }
     }
     writeUserData()
     const formSubmit = handleSubmit(async () => {
@@ -99,7 +102,7 @@
                     getUserData(data.id).then((data) => {
                         const username =`${data.name} ${data.surname}`
                         userState.writeTokenData(data.id,userToken, data.role.role, username, data.email)
-                        
+
                     })
                     router.push({ name:'home'})
                 } else {
