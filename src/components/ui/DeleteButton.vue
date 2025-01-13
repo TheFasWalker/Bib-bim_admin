@@ -1,9 +1,13 @@
 <template>
     <button
     @click="confirmPopupState = true"
-        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-bold rounded-lg text-sm px-5 py-2.5 "
+    :class="addClass"
+        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-bold rounded-lg text-sm h-12 w-12 flex items-center justify-center"
     >
-        delete
+    <Icons
+    class=" stroke-white fill-white text-white "
+    iconName="trash"
+    />
     </button>
     <PopUpLauout
         v-if="confirmPopupState"
@@ -30,7 +34,8 @@
 </template>
 <script setup lang="ts">
 import PopUpLauout from '../lauouts/PopUpLauout.vue';
-import { ref } from 'vue';
+import { ref,defineProps } from 'vue';
+import Icons from '../ui/Icons.vue'
 
 const confirmPopupState = ref(false)
 const emit = defineEmits<{ (e: 'confirm', value: boolean): void }>();
@@ -39,4 +44,8 @@ const emitConfirm = () => {
     emit('confirm', true)
     confirmPopupState.value = false
 }
+interface Props{
+    addClass?: string
+}
+defineProps<Props>()
 </script>

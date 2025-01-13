@@ -18,12 +18,14 @@
             <button class=" flex flex-row gap-4 items-center justify-center text-xl font-bold focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300  me-2   rounded-lg  px-5 py-2.5 ">
                 Редактировать
             </button>
+            <EditButton/>
             <button class=" focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg text-xl px-5 py-2.5 me-2  font-bold">Удалить</button>
         </div>
       </div>
 </template>
 
 <script setup lang="ts">
+import EditButton from '../ui/EditButton.vue';
 import Icons from '../ui/Icons.vue';
 
 interface Props {
