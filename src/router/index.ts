@@ -46,13 +46,13 @@ const routes: CustomRoteRecordRaw[] = [
                 path: '',
                 name: 'lessons',
                 component: LessonsListPage,
-                meta:{requireAuth:true}
+                meta:{requireAuth:true, requiredRole: ['rootadmin']}
             },
             {
                 path: 'create',
                 name: 'createLesson',
                 component: LessonsListPage,
-                meta:{requireAuth: true}
+                meta:{requireAuth: true, requiredRole: ['rootadmin']}
             }
         ]
     },
@@ -66,13 +66,13 @@ const routes: CustomRoteRecordRaw[] = [
         path: '/posts',
         name: 'posts',
         component: PostsListPage,
-        meta:{requireAuth:true}
+        meta:{requireAuth:true,requiredRole: ['rootadmin']}
     },
     {
         path: '/ui',
         name: 'ui',
         component: UiPage,
-        meta:{requireAuth:true}
+        meta:{requireAuth:true,requiredRole: ['rootadmin']}
     },
     {
         path: '/users',
@@ -81,13 +81,13 @@ const routes: CustomRoteRecordRaw[] = [
                 path: '',
                 name: 'users',
                 component: UserListPage,
-                meta:{requireAuth:true}
+                meta:{requireAuth:true,requiredRole: ['rootadmin']}
             },
             {
                 path: 'create',
                 name: 'createUser',
                 component: CreateUser,
-                meta:{requireAuth:true}
+                meta:{requireAuth:true,requiredRole: ['rootadmin']}
             }
         ]
 
