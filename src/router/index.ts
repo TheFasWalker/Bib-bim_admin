@@ -11,6 +11,12 @@ import UiPage from "../pages/UiPage.vue";
 import UserListPage from "../pages/UserListPage.vue";
 import CreateUser from "../pages/CreateUser.vue";
 import Error404 from "../pages/Error404.vue";
+import { UserRoles } from "../Types";
+import checkAcsessByRole from "../functions/checkAcessByRole";
+
+const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
+const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
+const partnerKey = import.meta.env.VITE_PARTNER_ROLE_CODE
 
 interface RouteMeta {
     requireAuth?: boolean
@@ -46,13 +52,13 @@ const routes: CustomRoteRecordRaw[] = [
                 path: '',
                 name: 'lessons',
                 component: LessonsListPage,
-                meta:{requireAuth:true, requiredRole: ['rootadmin']}
+                meta:{requireAuth:true, acsessRoles: [adminKey,managerKey]}
             },
             {
                 path: 'create',
                 name: 'createLesson',
                 component: LessonsListPage,
-                meta:{requireAuth: true, requiredRole: ['rootadmin']}
+                meta:{requireAuth: true, acsessRoles: [adminKey,managerKey]}
             }
         ]
     },
@@ -60,19 +66,19 @@ const routes: CustomRoteRecordRaw[] = [
         path: '/partners',
         name: 'partners',
         component: PartnersPage,
-        meta:{requireAuth:true}
+        meta:{requireAuth:true, acsessRoles:[adminKey, partnerKey]}
     },
     {
         path: '/posts',
         name: 'posts',
         component: PostsListPage,
-        meta:{requireAuth:true,requiredRole: ['rootadmin']}
+        meta:{requireAuth:true,acsessRoles: [adminKey, managerKey]}
     },
     {
         path: '/ui',
         name: 'ui',
         component: UiPage,
-        meta:{requireAuth:true,requiredRole: ['rootadmin']}
+        meta:{requireAuth:true,acsessRoles: [adminKey]}
     },
     {
         path: '/users',
@@ -81,13 +87,13 @@ const routes: CustomRoteRecordRaw[] = [
                 path: '',
                 name: 'users',
                 component: UserListPage,
-                meta:{requireAuth:true,requiredRole: ['rootadmin']}
+                meta:{requireAuth:true,acsessRoles: [adminKey]}
             },
             {
                 path: 'create',
                 name: 'createUser',
                 component: CreateUser,
-                meta:{requireAuth:true,requiredRole: ['rootadmin']}
+                meta:{requireAuth:true,acsessRoles: [adminKey]}
             }
         ]
 
@@ -114,7 +120,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const userSatate = UserSate()
     const isAuth = !!userSatate.getUserToken
-    const requireRoles = to.meta?.requiredRole as string[] | undefined
+    const acsessRoles = to.meta?.acsessRoles as UserRoles[] | undefined
     const requiredAuth = to.meta?.requireAuth
     const publicRoute = to.meta?.public
 
@@ -129,9 +135,9 @@ router.beforeEach((to, from, next) => {
             return
         }
 
-        if (requireRoles) {
-            const userRole = userSatate.getUserRole
-            if (!userRole || !requireRoles.includes(userRole)) {
+        if (acsessRoles) {
+            const userRole = userSatate.getUserRole as UserRoles | null;
+            if(!userRole || !checkAcsessByRole(userRole, acsessRoles)){
                 next({ name: 'error505' })
                 return
             }
