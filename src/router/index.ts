@@ -6,16 +6,16 @@ import HomePage from "../pages/HomePage.vue";
 import AboutPage from "../pages/AboutPage.vue";
 import LessonsListPage from "../pages/LessonsListPage.vue";
 import PartnersPage from "../pages/PartnersPage.vue";
-import PostsListPage from "../pages/PostsListPage.vue";
+import PostsListPage from "../pages/posts/PostsListPage.vue";
 import UiPage from "../pages/UiPage.vue";
 import UserListPage from "../pages/UserListPage.vue";
 import CreateUser from "../pages/CreateUser.vue";
 import Error404 from "../pages/Error404.vue";
 import { UserRoles } from "../Types";
 import checkAcsessByRole from "../functions/checkAcessByRole";
-import PostCreate from "../pages/PostCreate.vue";
-import PostPage from "../pages/PostPage.vue";
-import EditPost from "../pages/EditPost.vue";
+import PostCreate from "../pages/posts/PostCreate.vue";
+import PostPage from "../pages/posts/PostPage.vue";
+import EditPost from "../pages/posts/PostEdit.vue";
 
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
