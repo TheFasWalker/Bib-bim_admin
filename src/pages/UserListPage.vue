@@ -26,8 +26,8 @@ onMounted(() => {
         nav="home"
         createPage="createUser"/>
 
-    <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-        <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+    <section class="bg-gray-50  p-3 sm:p-5">
+        <div class="bg-white  relative shadow-md sm:rounded-lg overflow-hidden">
 
             <div class="">
                 <div class="grid grid-cols-[1fr_1fr_150px_100px]">

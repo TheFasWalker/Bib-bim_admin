@@ -5,7 +5,7 @@
       <span class="block text-sm font-semibold text-gray-900 ">{{ userStore.getUserRole }}</span>
       <span class="block text-sm text-gray-900 truncate ">{{ userStore.getUserEmail }}</span>
     </div>
-    <ul class="py-1 text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
+    <ul class="py-1 text-gray-700 " aria-labelledby="dropdown">
       <li>
         <a href="#"
           class="block py-2 px-4 text-sm hover:bg-gray-100 ">My profile</a>
@@ -17,7 +17,7 @@
     </ul>
 
 
-    <ul class=" text-gray-700 dark:text-gray-300" aria-labelledby="dropdown">
+    <ul class=" text-gray-700 " aria-labelledby="dropdown">
       <li>
         <button
          class="w-full block py-2 px-4 text-sm hover:bg-gray-100 "
