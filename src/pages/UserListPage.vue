@@ -25,11 +25,18 @@ onMounted(() => {
         title="Список пользлователей"
         nav="home"
         createPage="createUser"/>
+        <div 
+        v-if="!userListState.userList?.length"
+         class=" flex flex-col h-full w-full items-center gap-4 mt-28" 
+         >
+            <h1 class=" text-3xl font-extrabold tracking-tight text-gray-900">Что то пошло не так</h1>
+            <span class=" text-xl">Список пуст</span>
+        </div>
 
-    <section class="bg-gray-50  p-3 sm:p-5">
-        <div class="bg-white  relative shadow-md sm:rounded-lg overflow-hidden">
+    <section v-else class="bg-gray-50  p-3 sm:p-5">
 
-            <div class="">
+        <div  class="bg-white  relative shadow-md sm:rounded-lg overflow-hidden">
+            <div class="" >
                 <div class="grid grid-cols-[1fr_1fr_150px_100px]">
                     <span class=" py-2 px-2">Имя</span>
                     <span class=" py-2 ">email</span>
@@ -41,8 +48,9 @@ onMounted(() => {
                 :user="user"
             />
         </div>
+        <Pagination/>
     </section>
 
-        <Pagination/>
+
     </MainLauout>
 </template>
