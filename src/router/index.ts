@@ -13,6 +13,9 @@ import CreateUser from "../pages/CreateUser.vue";
 import Error404 from "../pages/Error404.vue";
 import { UserRoles } from "../Types";
 import checkAcsessByRole from "../functions/checkAcessByRole";
+import PostCreate from "../pages/PostCreate.vue";
+import PostPage from "../pages/PostPage.vue";
+import EditPost from "../pages/EditPost.vue";
 
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
@@ -70,9 +73,35 @@ const routes: CustomRoteRecordRaw[] = [
     },
     {
         path: '/posts',
-        name: 'posts',
-        component: PostsListPage,
-        meta:{requireAuth:true,acsessRoles: [adminKey, managerKey]}
+        children:[
+            {
+                path:'',
+                name: 'posts',
+                component: PostsListPage,
+                meta:{requireAuth:true,acsessRoles: [adminKey, managerKey]}
+            },
+            {
+                path:'create',
+                name: 'createPost',
+                component: PostCreate ,
+                meta:{requireAuth:true,acsessRoles: [adminKey, managerKey]}
+            },
+            {
+                path:'edit/:id',
+                name: 'editPost',
+                component: EditPost ,
+                meta:{requireAuth:true,acsessRoles: [adminKey, managerKey]}
+            },
+            {
+                path:':id',
+                name: 'showPost',
+                component: PostPage ,
+                meta:{requireAuth:true,acsessRoles: [adminKey, managerKey]}
+            },
+
+
+           
+        ]
     },
     {
         path: '/ui',
