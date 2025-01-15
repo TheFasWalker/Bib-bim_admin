@@ -22,10 +22,10 @@ const generatePassword = () => {
     password.value =passwordGenerator()
 }
 const schema = toTypedSchema(yup.object({
-    login: yup.string().required('Обязательное поле'),
+    login: yup.string().required('Обязательное поле').max(30,'max 30 symbols'),
     email: yup.string().required('Обязательное поле').email('not vatid email'),
-    name: yup.string().required('Обязательное поле').min(3, 'too short name').max(10,'max 10 symbols'),
-    surname: yup.string().required('Обязательное поле').min(3, 'too short surname'),
+    name: yup.string().required('Обязательное поле').min(3, 'too short name').max(15,'max 15 symbols'),
+    surname: yup.string().required('Обязательное поле').min(3, 'too short surname').max(20,'max 20 symbols'),
     role: yup.string().required('выберите роль'),
     password:yup.string().required('Нужен пароль').min(6,'минимум 6 знаков')
 }))
@@ -35,8 +35,8 @@ onMounted(() => {
         userRoles.value = data
     })
     email.value='asdfdf@mail.ru'
-    login.value='Userlogin1as'
-    name.value = 'UserNameFromFront'
+    login.value='partner'
+    name.value = 'UserNameFrom'
     surname.value='UserSurname'
     password.value = passwordGenerator()
 })
