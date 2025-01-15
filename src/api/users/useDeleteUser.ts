@@ -1,6 +1,6 @@
-import { SiteState } from "../store/SiteState"
-import { UserSate } from "../store/UserState"
-import { UserListState } from "../store/UsersListState"
+import { SiteState } from "../../store/SiteState"
+import { UserSate } from "../../store/UserState"
+import { UserListState } from "../../store/UsersListState"
 
 const url = import.meta.env.VITE_API_DB_URL
 

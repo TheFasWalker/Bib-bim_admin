@@ -1,9 +1,9 @@
 const url = import.meta.env.VITE_API_DB_URL
 import { sha512 } from "js-sha512"
-import { SiteState } from "../store/SiteState"
-import { UserSate } from "../store/UserState"
-import { ICreateUser } from "../Types"
-import ErrorsToText from "../functions/ErrorsToText"
+import { SiteState } from "../../store/SiteState"
+import { UserSate } from "../../store/UserState"
+import { ICreateUser } from "../../Types"
+import ErrorsToText from "../../functions/ErrorsToText"
 
 export default function(){
     const siteState = SiteState()

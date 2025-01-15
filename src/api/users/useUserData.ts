@@ -1,5 +1,5 @@
-import { SiteState } from "../store/SiteState"
-import { UserSate } from "../store/UserState"
+import { SiteState } from "../../store/SiteState"
+import { UserSate } from "../../store/UserState"
 const url = import.meta.env.VITE_API_DB_URL
 
 
