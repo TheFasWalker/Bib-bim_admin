@@ -4,7 +4,7 @@ import SubHeader from '../components/general/SubHeader.vue';
 import MainLauout from '../components/lauouts/MainLauout.vue';
 import Pagination from '../components/pagination/Pagination.vue';
 import UsersPreview from '../components/users/usersPreview.vue';
-import useGetUsersList from '../api/useGetUsersList';
+import useGetUsersList from '../api/users/useGetUsersList';
 import { SiteState } from '../store/SiteState';
 import { UserListState } from '../store/UsersListState';
 

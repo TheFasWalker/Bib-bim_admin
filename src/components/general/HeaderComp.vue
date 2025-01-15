@@ -4,7 +4,7 @@ import UserMenu from './header/UserMenu.vue';
 import ButtonType1 from '../ui/ButtonType1.vue';
 import { SiteState } from '../../store/SiteState';
 import { UserSate } from '../../store/UserState';
-import useUserData from '../../api/useUserData';
+import useUserData from '../../api/users/useUserData';
 
 const store = SiteState()
 const userState = UserSate()

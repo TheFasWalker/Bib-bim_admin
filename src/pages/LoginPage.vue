@@ -64,7 +64,7 @@
     import { UserSate } from '../store/UserState';
     import { useRouter } from 'vue-router';
     import useAuth from '../api/useAuth';
-    import useUserData from '../api/useUserData';
+    import useUserData from '../api//users/useUserData';
 
     const rootLogin = import.meta.env.VITE_ROOT_ADMIN_LOGIN
     const rootPassword = import.meta.env.VITE_ROOT_AMIN_PASSWORD

@@ -11,7 +11,7 @@ import * as yup from 'yup';
 import { toTypedSchema } from '@vee-validate/yup';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
 import useGetRoles from '../api/useGetRoles';
-import useCreateUser from '../api/useCreateUser';
+import useCreateUser from '../api/users/useCreateUser';
 import { sha512 } from 'js-sha512';
 import { useRouter } from 'vue-router';
 
@@ -73,7 +73,7 @@ const hideConfirm = () => {
         <form class="flex flex-col gap-3" @submit.prevent="formSubmit">
             <div class="grid grid-cols-[1fr_150px] gap-3">
                 <DropDown
-                :data="userRoles"
+                    :data="userRoles"
                     name="role"
                     class=""
                     v-model:roleValue="role"

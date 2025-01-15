@@ -13,7 +13,7 @@
     @click="toggleDropDown"
 
     >
-        {{ firstState !=''? firstState: 'Выберите роль' }}
+        {{ firstState }}
         <svg
         :class="`${dropDownState? 'rotate-180' : ''}`"
         class="w-2.5 h-2.5 ms-3"
@@ -39,7 +39,7 @@
 </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, onBeforeMount, onMounted, ref } from 'vue';
 interface IUserRole{
     id:string,
     role:String
@@ -53,6 +53,35 @@ interface Props{
 
 }
 
+const readableTitle = (title:String):string =>{
+    switch(title){
+        case adminKey:
+            return 'Администратор'
+            break
+        case managerKey:
+            return 'Контент менеджер'
+            break
+        case partnerKey:
+            return 'Партнёр'
+            break
+        default: 
+            return 'Неизвестная роль'
+        }
+       
+
+}
+const readebleTitleForRoleById = (id:String):string=>{
+    let redableTitle ='Божествоasd'
+    props.data.forEach(element => {
+        if(element.id == id){
+            redableTitle = readableTitle(element.role)
+        }
+    });
+    return redableTitle
+
+}
+
+
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
 const partnerKey = import.meta.env.VITE_PARTNER_ROLE_CODE
@@ -61,7 +90,13 @@ const devM0de = import.meta.env.VITE_DEV_MODE
 const props = defineProps<Props>()
 const emit = defineEmits<{ (e: 'update:roleValue', value: string): void }>();
 
-const firstState = ref(props.roleValue ?? 'Выберите роль')
+const firstState = computed(()=>{
+    if(props.roleValue){
+       return readebleTitleForRoleById(props.roleValue)
+    }else{
+        return 'Выберите роль'
+    }
+})
 const dropDownState = ref(false)
 const toggleDropDown = () => {
     dropDownState.value= !dropDownState.value
@@ -75,7 +110,7 @@ const elemClicked = (event: MouseEvent) => {
     }
     dropDownState.value = false;
 };
-const outputAdminRole =(role) =>{
+const outputAdminRole =(role:boolean):boolean =>{
     if (!devM0de) {
         if (role == adminKey) {
             return false
@@ -85,19 +120,5 @@ const outputAdminRole =(role) =>{
     } else {
         return true
     }
-
-}
-const readableTitle = (title) =>{
-    switch(title){
-        case adminKey:
-            return 'Администратор'
-            break
-        case managerKey:
-            return 'Контент менеджер'
-            break
-        case partnerKey:
-            return 'Партнёр'
-            break
-        }
 }
 </script>

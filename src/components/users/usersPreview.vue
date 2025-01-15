@@ -62,13 +62,7 @@
         v-if="editUserData"
         @close-popup="editUserData = false"
     >
-    <div class="flex flex-col gap-2">
-        <h2>Редактирование пользователя</h2>
-        <ButtonType3
-        @click="confirmEdit"
-        title="Сохранить"/>
-
-    </div>
+    <UserEdit :userId="user.id"/>
 </PopUpLauout>
 
 
@@ -80,9 +74,10 @@ import UserRole from './userRole.vue';
 import PopUpLauout from '../lauouts/PopUpLauout.vue';
 import DeleteButton from '../ui/DeleteButton.vue';
 import ButtonType3 from '../ui/ButtonType3.vue';
-import useDeleteUser from '../../api/useDeleteUser';
+import useDeleteUser from '../../api/users/useDeleteUser';
 import { UserSate } from '../../store/UserState';
 import EditButton from '../ui/EditButton.vue';
+import UserEdit from './userEdit.vue';
 const showUserData = ref( false)
 const editUserData = ref(false)
 const {deleteUserById} = useDeleteUser()

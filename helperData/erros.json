@@ -1,4 +1,5 @@
 {
     "login is duplicate" : "Пользователь с таким логином уже существует",
-    "invalid email":"Не валидный email"
+    "invalid email":"Не валидный email",
+    "Wrong role. You cannot add more than one root admin":"Нельзя добавить больше одного администратора"
 }
