@@ -9,12 +9,15 @@ import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import DropDown from '../../components/forms/components/DropDown.vue';
 import useGetRoles from '../../api/useGetRoles';
+import useEditUser from '../../api/users/useEditUser';
 
 const {adminRoles } = useGetRoles()
-
+const {updateUser} = useEditUser()
 interface Props {
     userId:string
 }
+const emit = defineEmits(['close']);
+
 const userListState = UserListState()
 const userData = computed<Iuser>(()=>{
     return userListState.getElementById(props.userId)
@@ -27,6 +30,7 @@ const schema = toTypedSchema(yup.object({
     name: yup.string().required('Обязательное поле').min(3, 'too short name').max(15,'max 15 symbols'),
     surname: yup.string().required('Обязательное поле').min(3, 'too short surname').max(20,'max 20 symbols'),
     role: yup.string().required('выберите роль'),
+    user_id:yup.string().required()
 }))
 const userRoles = ref([])
 
@@ -47,16 +51,21 @@ const [email, emailAttrs] = defineField('email')
 const [name, nameAttrs] = defineField('name')
 const [surname, surnameAttrs] = defineField('surname')
 const [role, roleAttrs] = defineField('role')
+const [user_id,useridAttrs] = defineField('user_id')
 
 login.value = userData.value.login
 email.value = userData.value.email
 name.value = userData.value.name
 surname.value = userData.value.surname
 role.value = userData.value.role.id
-
+user_id.value = userData.value.id
 
 const formSubmit = handleSubmit((values)=>{
-    console.log(values)
+
+     let valuesToString = new URLSearchParams(values).toString()
+     updateUser(valuesToString).then(()=>{
+        emit('close')
+     })
 })
 </script>
 
@@ -64,6 +73,12 @@ const formSubmit = handleSubmit((values)=>{
     <div class="flex flex-col gap-2">
         <h2>Редактирование пользователя</h2>
         <form @submit.prevent="formSubmit" class="flex flex-col gap-2">
+            <input type="text" 
+                v-model="user_id" 
+                name="userid"
+                v-bind="useridAttrs"
+                hidden
+            >
             <DropDown
                 :data="userRoles"
                 name="role"

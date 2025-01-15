@@ -62,8 +62,11 @@
         v-if="editUserData"
         @close-popup="editUserData = false"
     >
-    <UserEdit :userId="user.id"/>
-</PopUpLauout>
+        <UserEdit 
+        :userId="user.id"
+        @close="editUserData = false"
+        />
+    </PopUpLauout>
 
 
 </template>
@@ -73,7 +76,6 @@ import { Iuser, UserRoles } from '../../Types';
 import UserRole from './userRole.vue';
 import PopUpLauout from '../lauouts/PopUpLauout.vue';
 import DeleteButton from '../ui/DeleteButton.vue';
-import ButtonType3 from '../ui/ButtonType3.vue';
 import useDeleteUser from '../../api/users/useDeleteUser';
 import { UserSate } from '../../store/UserState';
 import EditButton from '../ui/EditButton.vue';
@@ -90,7 +92,7 @@ interface Props {
     user:Iuser
 }
 
-const userProps = defineProps<Props>()
+defineProps<Props>()
 
 const openEditUsetPopup =()=>{
     showUserData.value =false
@@ -99,6 +101,5 @@ const openEditUsetPopup =()=>{
 const confirmEdit = () => {
     showUserData.value = false
     editUserData.value = false
-    console.log('confirm edit')
 }
 </script>
