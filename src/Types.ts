@@ -2,6 +2,11 @@ import { EnumType } from "typescript";
 
 export type IconType = 'users' | 'info' | 'home' | 'help' | 'contacts' | 'exit' | 'left' | 'generate' | 'search' | 'trash' | 'gear';
 export type UserRoles = 'RootAdmin' | 'ContentManager' | 'BussinesPartner'
+export interface IRoles {
+  id:string,
+  role:UserRoles
+}
+
 export interface Iuser {
     id: string
     name: string

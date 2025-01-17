@@ -24,7 +24,7 @@
     </button>
     <div v-show="dropDownState" class="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow absolute left-0 top-full w-full">
         <ul class="py-2 text-sm text-gray-700 " >
-        <li v-for="elem in data" :key="elem.id" v-show="outputAdminRole(elem.role) ">
+        <li v-for="elem in roles" :key="elem.id" v-show="outputAdminRole(elem.role) ">
             <button
             type="button"
                 @click="elemClicked"
@@ -39,7 +39,27 @@
 </div>
 </template>
 <script setup lang="ts">
-import { computed, onBeforeMount, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
+import { UserListState } from '../../../store/UsersListState';
+import useGetRoles from '../../../api/useGetRoles';
+
+const userLisrState = UserListState()
+const {adminRoles } = useGetRoles()
+
+const roles = computed(()=>{
+    if(userLisrState.userRolesList){
+        console.log('no fetch data')
+        return userLisrState.userRolesList
+    }else{
+        console.log('fetching data')
+        adminRoles().then((data)=>{
+            userLisrState.userRolesList=data
+        })
+
+        return userLisrState.userRolesList  
+    }
+})
+console.log(roles.value)
 interface IUserRole{
     id:string,
     role:String
@@ -49,7 +69,7 @@ interface Props{
     name: string,
     modelValue?: string ,
     error?:string,
-    data:Array<IUserRole>
+
 
 }
 
@@ -72,7 +92,7 @@ const readableTitle = (title:String):string =>{
 }
 const readebleTitleForRoleById = (id:String):string=>{
     let redableTitle ='Божествоasd'
-    props.data.forEach(element => {
+    roles.value.forEach(element => {
         if(element.id == id){
             redableTitle = readableTitle(element.role)
         }

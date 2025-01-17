@@ -7,11 +7,9 @@ import InputComp from '../forms/components/InputComp.vue';
 import * as yup from 'yup'
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
-import DropDown from '../../components/forms/components/DropDown.vue';
-import useGetRoles from '../../api/useGetRoles';
+import DropDownRoles from '../forms/components/DropDownRoles.vue';
 import useEditUser from '../../api/users/useEditUser';
 
-const {adminRoles } = useGetRoles()
 const {updateUser} = useEditUser()
 interface Props {
     userId:string
@@ -32,13 +30,6 @@ const schema = toTypedSchema(yup.object({
     role: yup.string().required('выберите роль'),
     user_id:yup.string().required()
 }))
-const userRoles = ref([])
-
-onMounted(()=>{
-    adminRoles().then((data)=>{
-        userRoles.value = data
-    })
-})
 
 const { errors, defineField,handleSubmit,resetForm} = useForm({
         validationSchema:schema,
@@ -79,8 +70,7 @@ const formSubmit = handleSubmit((values)=>{
                 v-bind="useridAttrs"
                 hidden
             >
-            <DropDown
-                :data="userRoles"
+            <DropDownRoles
                 name="role"
                 class=""
                 v-model:roleValue="role"

@@ -1,9 +1,10 @@
 import { defineStore } from "pinia";
-import { Iuser } from "../Types";
+import { IRoles, Iuser } from "../Types";
 
 export const UserListState = defineStore("userListState", {
   state: () => ({
     userList: null as Iuser[] | null,
+    userRolesList : null as IRoles[] | null
   }),
   getters: {},
   actions: {
