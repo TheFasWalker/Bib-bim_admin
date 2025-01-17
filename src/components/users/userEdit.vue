@@ -54,7 +54,11 @@ user_id.value = userData.value.id
 const formSubmit = handleSubmit((values)=>{
 
      let valuesToString = new URLSearchParams(values).toString()
-     updateUser(valuesToString).then(()=>{
+     updateUser(valuesToString)
+     .then(()=>{
+        userListState.editUser(values)
+     })
+     .then(()=>{
         emit('close')
      })
 })

@@ -20,6 +20,9 @@ export const UserListState = defineStore("userListState", {
       }
       const foundElem = this.userList.find((user) => user.id === id)
       return foundElem || null
+    },
+    editUser(data){
+      console.log(data)
     }
   },
 });

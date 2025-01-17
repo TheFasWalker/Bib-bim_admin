@@ -24,7 +24,7 @@
     </button>
     <div v-show="dropDownState" class="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow absolute left-0 top-full w-full">
         <ul class="py-2 text-sm text-gray-700 " >
-        <li v-for="elem in roles" :key="elem.id" v-show="outputAdminRole(elem.role) ">
+        <li v-for="elem in userLisrState.userRolesList" :key="elem.id" v-show="outputAdminRole(elem.role) ">
             <button
             type="button"
                 @click="elemClicked"
@@ -39,27 +39,33 @@
 </div>
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { UserListState } from '../../../store/UsersListState';
 import useGetRoles from '../../../api/useGetRoles';
+import { SiteState } from '../../../store/SiteState';
 
+const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
+const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
+const partnerKey = import.meta.env.VITE_PARTNER_ROLE_CODE
+const devM0de = import.meta.env.VITE_DEV_MODE
+const props = defineProps<Props>()
+const emit = defineEmits<{ (e: 'update:roleValue', value: string): void }>();
+const firstState = ref('')
 const userLisrState = UserListState()
 const {adminRoles } = useGetRoles()
+const siteState = SiteState()
 
-const roles = computed(()=>{
-    if(userLisrState.userRolesList){
-        console.log('no fetch data')
-        return userLisrState.userRolesList
-    }else{
-        console.log('fetching data')
+
+onMounted(()=>{
+    if(userLisrState.userRolesList == null){
         adminRoles().then((data)=>{
             userLisrState.userRolesList=data
         })
-
-        return userLisrState.userRolesList  
+    }else{
+        siteState.loadingFalse()
     }
 })
-console.log(roles.value)
+
 interface IUserRole{
     id:string,
     role:String
@@ -92,29 +98,25 @@ const readableTitle = (title:String):string =>{
 }
 const readebleTitleForRoleById = (id:String):string=>{
     let redableTitle ='Божествоasd'
-    roles.value.forEach(element => {
+    if(userLisrState.userRolesList){
+        userLisrState.userRolesList.forEach(element => {
         if(element.id == id){
             redableTitle = readableTitle(element.role)
         }
     });
+    }
+    
     return redableTitle
 
 }
 
 
-const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
-const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
-const partnerKey = import.meta.env.VITE_PARTNER_ROLE_CODE
-const devM0de = import.meta.env.VITE_DEV_MODE
 
-const props = defineProps<Props>()
-const emit = defineEmits<{ (e: 'update:roleValue', value: string): void }>();
-
-const firstState = computed(()=>{
+onMounted(()=>{
     if(props.roleValue){
-       return readebleTitleForRoleById(props.roleValue)
+        firstState.value= readebleTitleForRoleById(props.roleValue)
     }else{
-        return 'Выберите роль'
+        firstState.value= 'Выберите роль'
     }
 })
 const dropDownState = ref(false)
