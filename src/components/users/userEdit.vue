@@ -52,7 +52,7 @@ role.value = userData.value.role.id
 user_id.value = userData.value.id
 
 const formSubmit = handleSubmit((values)=>{
-
+    userListState.editUser(values)
      let valuesToString = new URLSearchParams(values).toString()
      updateUser(valuesToString)
      .then(()=>{

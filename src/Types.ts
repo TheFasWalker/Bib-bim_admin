@@ -28,3 +28,12 @@ export interface Iuser {
     email:string,
     password:string
   }
+  export interface IEditUser {
+    user_id:string,
+    login:string,
+    name:string,
+    surname:string,
+    role:string,
+    email:string,
+    password?:string
+  }
