@@ -5,17 +5,24 @@ import MainLauout from '../components/lauouts/MainLauout.vue';
 import Pagination from '../components/pagination/Pagination.vue';
 import UsersPreview from '../components/users/usersPreview.vue';
 import useGetUsersList from '../api/users/useGetUsersList';
-import { SiteState } from '../store/SiteState';
 import { UserListState } from '../store/UsersListState';
+import useGetRoles from '../api/useGetRoles';
 
 const userListState = UserListState()
 const { getUserList } = useGetUsersList()
+const { adminRoles } = useGetRoles()
+
 onMounted(() => {
     getUserList().then((data)=>{
         userListState.setUserList(data)
         console.log(data)
     })
+    if (userListState.userRolesList == null) {
 
+        adminRoles().then((data)=>{
+            userListState.userRolesList = data
+        })
+    }
 })
 </script>
 
@@ -25,9 +32,9 @@ onMounted(() => {
         title="Список пользлователей"
         nav="home"
         createPage="createUser"/>
-        <div 
+        <div
         v-if="!userListState.userList?.length"
-         class=" flex flex-col h-full w-full items-center gap-4 mt-28" 
+         class=" flex flex-col h-full w-full items-center gap-4 mt-28"
          >
             <h1 class=" text-3xl font-extrabold tracking-tight text-gray-900">Что то пошло не так</h1>
             <span class=" text-xl">Список пуст</span>

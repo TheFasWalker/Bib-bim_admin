@@ -16,11 +16,11 @@ export const UserListState = defineStore("userListState", {
     },
     getElementById(id: string):Iuser {
       const foundElem = this.userList.find((user:Iuser) => user.id === id)
-      return foundElem 
+      return foundElem
     },
     getRoleArrById(id:string):IRoles{
       const founRoleName = this.userRolesList.find(item=>item.id == id)
-      return founRoleName 
+      return founRoleName
     },
     editUser(data:IEditUser){
       const editingUser:Iuser = this.getElementById(data.user_id)
@@ -32,14 +32,12 @@ export const UserListState = defineStore("userListState", {
           }
         }
       }
-      
       keys.forEach((key)=>{
         if(editingUser[key] != data[key])
           editingUser[key]= data[key]
       })
 
       if(editingUser.role.id != data.role){
-        console.log('role changing')
         editingUser.role = this.getRoleArrById(data.role)
       }
     }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {ref } from 'vue';
+import {onMounted, ref } from 'vue';
 import DropDownRoles from '../components/forms/components/DropDownRoles.vue';
 import SubHeader from '../components/general/SubHeader.vue';
 import MainLauout from '../components/lauouts/MainLauout.vue';
@@ -12,9 +12,15 @@ import { toTypedSchema } from '@vee-validate/yup';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
 import useCreateUser from '../api/users/useCreateUser';
 import { useRouter } from 'vue-router';
+import { UserListState } from '../store/UsersListState';
+import useGetRoles from '../api/useGetRoles';
+import { SiteState } from '../store/SiteState';
 
+const siteState = SiteState()
 const successfulPopUpState = ref(false)
-const {createUser} = useCreateUser()
+const userListState = UserListState()
+const { createUser } = useCreateUser()
+const { adminRoles } = useGetRoles()
 const generatePassword = () => {
     password.value =passwordGenerator()
 }
@@ -50,8 +56,17 @@ const hideConfirm = () => {
     resetForm()
     successfulPopUpState.value = false
     router.push({name:'users'})
-
 }
+onMounted(() => {
+    console.log('onmounted')
+    if (userListState.userRolesList == null) {
+        adminRoles().then((data)=>{
+            userListState.userRolesList = data
+        })
+    } else {
+        siteState.loadingFalse()
+    }
+})
 </script>
 
 <template>

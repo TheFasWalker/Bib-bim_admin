@@ -24,7 +24,7 @@
     </button>
     <div v-show="dropDownState" class="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow absolute left-0 top-full w-full">
         <ul class="py-2 text-sm text-gray-700 " >
-        <li v-for="elem in userLisrState.userRolesList" :key="elem.id" v-show="outputAdminRole(elem.role) ">
+        <li v-for="elem in userListState.userRolesList" :key="elem.id" v-show="outputAdminRole(elem.role) ">
             <button
             type="button"
                 @click="elemClicked"
@@ -51,25 +51,8 @@ const devM0de = import.meta.env.VITE_DEV_MODE
 const props = defineProps<Props>()
 const emit = defineEmits<{ (e: 'update:roleValue', value: string): void }>();
 const firstState = ref('')
-const userLisrState = UserListState()
-const {adminRoles } = useGetRoles()
-const siteState = SiteState()
+const userListState = UserListState()
 
-
-onMounted(()=>{
-    if(userLisrState.userRolesList == null){
-        adminRoles().then((data)=>{
-            userLisrState.userRolesList=data
-        })
-    }else{
-        siteState.loadingFalse()
-    }
-})
-
-interface IUserRole{
-    id:string,
-    role:String
-}
 interface Props{
     roleValue?: String,
     name: string,
@@ -90,22 +73,22 @@ const readableTitle = (title:String):string =>{
         case partnerKey:
             return 'Партнёр'
             break
-        default: 
+        default:
             return 'Неизвестная роль'
         }
-       
+
 
 }
 const readebleTitleForRoleById = (id:String):string=>{
     let redableTitle ='Божествоasd'
-    if(userLisrState.userRolesList){
-        userLisrState.userRolesList.forEach(element => {
+    if(userListState.userRolesList){
+        userListState.userRolesList.forEach(element => {
         if(element.id == id){
             redableTitle = readableTitle(element.role)
         }
     });
     }
-    
+
     return redableTitle
 
 }
