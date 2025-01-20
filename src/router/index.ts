@@ -16,6 +16,7 @@ import checkAcsessByRole from "../functions/checkAcessByRole";
 import PostCreate from "../pages/posts/PostCreate.vue";
 import PostPage from "../pages/posts/PostPage.vue";
 import EditPost from "../pages/posts/PostEdit.vue";
+import UserPage from "../pages/UserPage.vue";
 
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
@@ -126,6 +127,12 @@ const routes: CustomRoteRecordRaw[] = [
             }
         ]
 
+    },
+    {
+        path:'/lk',
+        name:'lk',
+        component:UserPage,
+        meta:{requireAuth:true}
     },
     {
         path: '/505',

@@ -7,8 +7,12 @@
     </div>
     <ul class="py-1 text-gray-700 " aria-labelledby="dropdown">
       <li>
-        <a href="#"
-          class="block py-2 px-4 text-sm hover:bg-gray-100 ">My profile</a>
+        <router-link
+        class="block py-2 px-4 text-sm hover:bg-gray-100 "
+        :to="{name:'lk'}">
+        My profile
+      </router-link>
+        
       </li>
       <li>
         <a href="#"
