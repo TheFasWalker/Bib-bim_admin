@@ -24,14 +24,13 @@ export default function (){
             if(!res.ok){
                 const errorText = await res.text()
                 let errorMessage = ErrorsToText(errorText)
-                siteState.errorText = errorMessage
                 throw new Error(errorMessage);
             }
             siteState.sucsesMessage='Данные пользователя обновлены'
             return res.text;
 
         }).catch((err) => {
-            siteState.errorText = err.text
+            siteState.errorText = err
             throw err
         })
             .finally(() => {

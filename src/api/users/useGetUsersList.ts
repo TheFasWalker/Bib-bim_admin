@@ -26,9 +26,7 @@ export default function () {
             return data;
         })
             .catch((err) => {
-                siteState.loadingFalse()
                 siteState.errorText = err.text
-                siteState.loadingFalse()
             throw err
         })
             .finally(() => {
