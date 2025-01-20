@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from 'vue';
 import { UserListState } from '../../store/UsersListState';
 import ButtonType3 from '../ui/ButtonType3.vue';
-import { Iuser } from '../../Types';
+import { IEditUser, Iuser } from '../../Types';
 import InputComp from '../forms/components/InputComp.vue';
 import * as yup from 'yup'
 import { useForm } from 'vee-validate';
@@ -10,7 +10,9 @@ import { toTypedSchema } from '@vee-validate/yup';
 import DropDownRoles from '../forms/components/DropDownRoles.vue';
 import useEditUser from '../../api/users/useEditUser';
 
+const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const {updateUser} = useEditUser()
+
 interface Props {
     userId:string
 }
@@ -53,8 +55,14 @@ user_id.value = userData.value.id
 
 const formSubmit = handleSubmit((values)=>{
     userListState.editUser(values)
-     let valuesToString = new URLSearchParams(values).toString()
-     updateUser(valuesToString)
+    const userDataToEdit = Object.assign({},values)
+    if(userListState.getRoleArrById(values.role).role == adminKey){
+        if(values.role){
+            delete userDataToEdit.role
+        }
+    }
+     let userDataToString = new URLSearchParams(userDataToEdit).toString()
+     updateUser(userDataToString)
      .then(()=>{
         userListState.editUser(values)
      })
@@ -65,8 +73,10 @@ const formSubmit = handleSubmit((values)=>{
 </script>
 
 <template>
+
     <div class="flex flex-col gap-2">
-        <h2>Редактирование пользователя</h2>
+        {{ }}
+        <h2 class=" text-center">Редактирование пользователя</h2>
         <form @submit.prevent="formSubmit" class="flex flex-col gap-2">
             <input type="text" 
                 v-model="user_id" 
@@ -75,11 +85,16 @@ const formSubmit = handleSubmit((values)=>{
                 hidden
             >
             <DropDownRoles
+            v-if="userData.role.role != adminKey"
                 name="role"
                 class=""
                 v-model:roleValue="role"
                 :error="errors.role"
             />
+            <span
+            v-else
+            class=" text-center font-bold text-2xl"
+            >{{ userData.role.role }}</span>
             <div class="">
                 <InputComp
                     title="Логин"

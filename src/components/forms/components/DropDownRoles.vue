@@ -24,7 +24,7 @@
     </button>
     <div v-show="dropDownState" class="z-10  bg-white divide-y divide-gray-100 rounded-lg shadow absolute left-0 top-full w-full">
         <ul class="py-2 text-sm text-gray-700 " >
-        <li v-for="elem in userListState.userRolesList" :key="elem.id" v-show="outputAdminRole(elem.role) ">
+        <li v-for="elem in userListState.userRolesList" :key="elem.id" v-show="elem.role != adminKey">
             <button
             type="button"
                 @click="elemClicked"
@@ -47,7 +47,6 @@ import { SiteState } from '../../../store/SiteState';
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
 const partnerKey = import.meta.env.VITE_PARTNER_ROLE_CODE
-const devM0de = import.meta.env.VITE_DEV_MODE
 const props = defineProps<Props>()
 const emit = defineEmits<{ (e: 'update:roleValue', value: string): void }>();
 const firstState = ref('')
@@ -80,7 +79,7 @@ const readableTitle = (title:String):string =>{
 
 }
 const readebleTitleForRoleById = (id:String):string=>{
-    let redableTitle ='Божествоasd'
+    let redableTitle ='Божество'
     if(userListState.userRolesList){
         userListState.userRolesList.forEach(element => {
         if(element.id == id){
@@ -115,15 +114,4 @@ const elemClicked = (event: MouseEvent) => {
     }
     dropDownState.value = false;
 };
-const outputAdminRole =(role:boolean):boolean =>{
-    if (!devM0de) {
-        if (role == adminKey) {
-            return false
-        } else {
-            return true
-        }
-    } else {
-        return true
-    }
-}
 </script>

@@ -55,7 +55,6 @@ onMounted(() => {
                 :user="user"
             />
         </div>
-        <Pagination/>
     </section>
 
 
