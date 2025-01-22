@@ -7,10 +7,38 @@ import EditButton from '../components/ui/EditButton.vue'
 import ButtonType2 from '../components/ui/ButtonType2.vue';
 import ButtonType3 from '../components/ui/ButtonType3.vue';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/yup';
+import * as yup from 'yup';
+import EdittingData from '../components/forms/lk/EdittingData.vue';
+
+
+const schema = toTypedSchema(yup.object({
+    email: yup.string().required('Обязательное поле').email('not vatid email'),
+    name: yup.string().required('Обязательное поле').min(3, 'too short name').max(15,'max 15 symbols'),
+    surname: yup.string().required('Обязательное поле').min(3, 'too short surname').max(20,'max 20 symbols'),
+    password:yup.string().required('Нужен пароль').min(6,'минимум 6 знаков')
+}))
+const {errors, defineField, handleSubmit,resetForm} =useForm({
+    validationSchema:schema,
+    validateOnInput:true,
+    validateOnChange:true,
+    strategy: 'individual'
+})
+const [name, nameAttrs] = defineField('name')
+const [surname, surnameAttrs] = defineField('surname')
+const [email, emailAttrs] = defineField('email')
+// const [login, loginAttrs] = defineField('login')
+// const [password ,passwordAttrs] = defineField('password')
 const userState = UserSate()
 
+const writeBaseUserData =()=>{
+    name.value= 'userName' 
+    surname.value= 'userSurName' 
+    email.value= 'email@email.email'
+}
+writeBaseUserData()
 const editting = ref(false)
-const userName = ref('UserName')
 const confirmPopupState = ref(false)
 const canselEditting =()=>{
     editting.value = false
@@ -34,63 +62,36 @@ const canselEditting =()=>{
                             @click ="editting = false"
                             title="Отменить"/>
             </div>
-
-            <div class="grid grid-cols-[100px_1fr] h-12 justify-center ">
-                <span class=" flex items-center  text-xl font-bold">
-                    Имя
-                </span>
-                <label v-if="editting"  class="block text-sm font-medium text-gray-900 ">
-                    <input type="text"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full h-full p-2.5 "
-                        placeholder="John" :value="`${userName}`">
-                </label>
-                <span v-else  class="flex items-center pl-2.5 text-gray-900 text-sm">
-                    {{ userName }}
-                </span>
-                
-            </div>
-            <div class="grid grid-cols-[100px_1fr] h-12 justify-center ">
-                <span class=" flex items-center  text-xl font-bold">
-                    Фамилия
-                </span>
-                <label v-if="editting"  class="block text-sm font-medium text-gray-900 ">
-                    <input type="text"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full h-full p-2.5 "
-                        placeholder="John" :value="`${userName}`">
-                </label>
-                <span v-else  class="flex items-center pl-2.5 text-gray-900 text-sm">
-                    {{ userName }}
-                </span>
-
-            </div>
-            <div class="grid grid-cols-[100px_1fr] h-12 justify-center ">
-                <span class=" flex items-center  text-xl font-bold">
-                    Email
-                </span>
-                <label v-if="editting" class="block text-sm font-medium text-gray-900 ">
-                    <input type="text"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full h-full p-2.5 "
-                        placeholder="John" :value="`${userName}`">
-                </label>
-                <span v-else class="flex items-center pl-2.5 text-gray-900 text-sm">
-                    {{ userName }}
-                </span>
-                
-            </div>
-            <div class="grid grid-cols-[100px_1fr] h-12 justify-center ">
-                <span class=" flex items-center  text-xl font-bold">
-                    Login
-                </span>
-
-                <label v-if="editting"  class="block text-sm font-medium text-gray-900 ">
-                    <input type="text"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full h-full p-2.5 "
-                        placeholder="John" :value="`${userName}`">
-                </label>
-                <span v-else class="flex items-center pl-2.5 text-gray-900 text-sm">
-                    {{ userName }}
-                </span>
-            </div>
+            <EdittingData
+                title="Имя"
+                name="name"
+                type="text"
+                placeholder="Имя"
+                v-model = 'name'
+                v-bind="nameAttrs"
+                :error="errors.name"
+                :editing="editting"
+            />
+            <EdittingData
+                title="Фамилия"
+                name="surname"
+                type="text"
+                placeholder="Фамилия"
+                v-model = 'surname'
+                v-bind="surnameAttrs"
+                :error="errors.surname"
+                :editing="editting"
+            />
+            <EdittingData
+                title="Email"
+                name="email"
+                type="email"
+                placeholder="email"
+                v-model = 'email'
+                v-bind="emailAttrs"
+                :error="errors.email"
+                :editing="editting"
+            />
 
             <div
                 v-if="editting"
