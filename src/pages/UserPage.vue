@@ -109,7 +109,7 @@ const canselEditting =()=>{
     </div>
     <PopUpLauout
         v-if="confirmPopupState"
-        @close-popup="confirmPopupState = false"
+        @close-popup="canselEditting()"
     >
     <div class=" flex flex-col items-center gap-4">
         <h2 class="font-bold text-3xl">    Вы уверены ?</h2>
