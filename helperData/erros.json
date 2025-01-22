@@ -2,5 +2,6 @@
     "login is duplicate" : "Пользователь с таким логином уже существует",
     "invalid email":"Не валидный email",
     "Wrong role. You cannot add more than one root admin":"Нельзя добавить больше одного администратора",
-    "Email param is not valid": "Невалидный пароль"
+    "Email param is not valid": "Невалидный пароль",
+    "Sorry unknown error":"Что то пошло не по плану проверьте данные"
 }

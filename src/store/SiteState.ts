@@ -36,6 +36,10 @@ export const SiteState = defineStore('siteStates', {
     },
     deleteUserById(id: string) {
       this.userList = this.userList.filter(user => user.id !== id)
+    },
+    cleanMessages(){
+      this.errorText = ''
+      this.sucsesMessage =''
     }
     },
   })
