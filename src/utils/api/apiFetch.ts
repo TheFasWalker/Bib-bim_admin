@@ -28,6 +28,7 @@ export async function apiFetch(endpoint:string, options:FethcOptions={}):Promise
             headers,
             body:options.body ? JSON.stringify(options.body) : null
         })
+        const responseBody = await response.text()
         if (!response.ok) {
             const errorText = await response.text();
             const errorMessage = ErrorsToText(errorText);
@@ -35,12 +36,13 @@ export async function apiFetch(endpoint:string, options:FethcOptions={}):Promise
             throw new Error(errorMessage);
         }
         try {
-            return await response.json();
-        } catch (e){
-          return await response.text()
+            return JSON.parse(responseBody);
+        } catch (e) {
+            return responseBody
         }
     }catch(error:any){
         siteState.errorText = error.message;
+        console.log(error)
         throw error;
     }finally{
         siteState.loadingFalse()
