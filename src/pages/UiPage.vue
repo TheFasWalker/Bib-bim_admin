@@ -3,8 +3,8 @@ import { ref } from 'vue';
 import SubHeader from '../components/general/SubHeader.vue';
 import MainLauout from '../components/lauouts/MainLauout.vue';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
-import ButtonType1 from '../components/ui/ButtonType1.vue';
-import ButtonType2 from '../components/ui/ButtonType2.vue';
+import ButtonWhite from '../components/ui/ButtonWhite.vue';
+import ButtonBlue from '../components/ui/ButtonBlue.vue';
 import CloseButton from '../components/ui/CloseButton.vue';
 import Toggler from '../components/uiPageComponents/Toggler.vue';
 import Checkbox from '../components/forms/components/Checkbox.vue';
@@ -13,7 +13,7 @@ import Loader from '../components/ui/Loader.vue'
 import { SiteState } from '../store/SiteState';
 import Icons from '../components/ui/Icons.vue';
 import DeleteButton from '../components/ui/DeleteButton.vue';
-import ButtonType3 from '../components/ui/ButtonType3.vue';
+import ButtonGreen from '../components/ui/ButtonGreen.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
@@ -37,10 +37,10 @@ const state = SiteState()
 <Toggler title="Кнопки">
     <div class="grid grid-cols-3 gap-3">
         <div class="flex flex-col gap-3">
-            <ButtonType1
+            <ButtonWhite
             title="текст кнопки"/>
             <div class="flex flex-col gap-2">
-                <span>Название : ButtonType1 </span>
+                <span>Название : ButtonWhite </span>
                 <div class="">
                     <span>пропсы:</span>
                     <ul>
@@ -51,10 +51,10 @@ const state = SiteState()
             </div>
         </div>
         <div class="flex flex-col gap-3">
-            <ButtonType2
+            <ButtonBlue
             title="текст кнопки"/>
             <div class="flex flex-col gap-2">
-                <span>Название : ButtonType2 </span>
+                <span>Название : ButtonBlue </span>
                 <div class="">
                     <span>пропсы:</span>
                     <ul>
@@ -65,7 +65,7 @@ const state = SiteState()
             </div>
         </div>
         <div class="flex flex-col gap-3">
-            <ButtonType3
+            <ButtonGreen
             title="текст кнопки"/>
             <div class="flex flex-col gap-2">
                 <span>Название : ButtonTyp3 </span>
@@ -107,7 +107,7 @@ const state = SiteState()
 <Toggler title="Обертки">
     <div class="grid grid-cols-3 gap-3">
         <div class="flex flex-col gap-3">
-        <ButtonType2
+        <ButtonBlue
         @click="popUpLauoutState =true"
         title="popupWrapper"/>
         <PopUpLauout
@@ -177,7 +177,7 @@ const state = SiteState()
 <Toggler title="Прочее">
     <div class="grid grid-cols-3 gap-3">
         <div class="flex flex-col gap-3">
-            <ButtonType2
+            <ButtonBlue
                 @click="showLoader"
             title="Загрузчик"/>
             <Loader v-if="loaderState"/>
@@ -191,7 +191,7 @@ const state = SiteState()
                 </div>
         </div>
         <div class="flex flex-col gap-3">
-        <ButtonType2
+        <ButtonBlue
             @click="state.errorText= 'Error text'"
         title="errors"/>
         <div class="flex flex-col gap-2">

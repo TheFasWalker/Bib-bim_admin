@@ -38,7 +38,7 @@
 
                             />
                         </div>
-                        <ButtonType2
+                        <ButtonBlue
                             type="submit"
                             title="LogIn"
                             class=" w-full "/>
@@ -53,7 +53,7 @@
     </template>
     <script setup lang="ts">
     import InputComp from '../components/forms/components/InputComp.vue';
-    import ButtonType2 from '../components/ui/ButtonType2.vue';
+    import ButtonBlue from '../components/ui/ButtonBlue.vue';
     import {useForm} from 'vee-validate'
     import Loader from '../components/ui/Loader.vue'
     import ErrorToast from '../components/Toasts/ErrorToast.vue';

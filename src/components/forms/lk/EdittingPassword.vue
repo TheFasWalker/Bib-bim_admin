@@ -28,7 +28,7 @@
                 iconName="generate"/>
             </button>
         </div>
-    <ButtonType2
+    <ButtonBlue
     v-else
     @click="emit('edittingPassword')"
         title="Изменить пароль"/>
@@ -36,7 +36,7 @@
 </template>
 <script setup lang="ts">
     import { passwordGenerator } from '../../../utils/passwordGenerator';
-    import ButtonType2 from '../../ui/ButtonType2.vue';
+    import ButtonBlue from '../../ui/ButtonBlue.vue';
     import CloseButton from '../../ui/CloseButton.vue';
     import Icons from '../../ui/Icons.vue';
     interface Props {

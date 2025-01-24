@@ -4,8 +4,8 @@ import SubHeader from '../components/general/SubHeader.vue';
 import MainLauout from '../components/lauouts/MainLauout.vue';
 import { UserSate } from '../store/UserState';
 import EditButton from '../components/ui/EditButton.vue'
-import ButtonType2 from '../components/ui/ButtonType2.vue';
-import ButtonType3 from '../components/ui/ButtonType3.vue';
+import ButtonBlue from '../components/ui/ButtonBlue.vue';
+import ButtonGreen from '../components/ui/ButtonGreen.vue';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
 import { useForm } from 'vee-validate';
 import EdittingData from '../components/forms/lk/EdittingData.vue';
@@ -68,7 +68,7 @@ const toggleEdittindPassword =():void=>{
                         @click="editting = true" 
                         />
 
-                        <ButtonType2
+                        <ButtonBlue
                         v-else
                             @click ="editting = false"
                             title="Отменить"/>
@@ -115,7 +115,7 @@ const toggleEdittindPassword =():void=>{
             <div
                 v-if="editting"
              class="grid gap-3 grid-cols-2">
-                <ButtonType3
+                <ButtonGreen
                 title="Сохранить"
                 @click ="confirmPopupState=true" />
             </div>

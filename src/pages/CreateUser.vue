@@ -5,7 +5,7 @@ import SubHeader from '../components/general/SubHeader.vue';
 import MainLauout from '../components/lauouts/MainLauout.vue';
 import InputComp from '../components/forms/components/InputComp.vue';
 
-import ButtonType2 from '../components/ui/ButtonType2.vue';
+import ButtonBlue from '../components/ui/ButtonBlue.vue';
 import { useForm } from 'vee-validate';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
 import useCreateUser from '../api/users/useCreateUser';
@@ -139,7 +139,7 @@ onMounted(() => {
                     <span>пароля</span>
                 </button>
             </div>
-            <ButtonType2 type="submit" title="Создать пользователя" />
+            <ButtonBlue type="submit" title="Создать пользователя" />
         </form>
         <PopUpLauout
         v-if="successfulPopUpState"
@@ -174,7 +174,7 @@ onMounted(() => {
                 <span>UserRole:</span>
                 <span>{{ role }}</span>
             </div>
-            <ButtonType2
+            <ButtonBlue
             @click="hideConfirm"
             title="Ясно"/>
         </div>

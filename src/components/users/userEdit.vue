@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { UserListState } from '../../store/UsersListState';
-import ButtonType3 from '../ui/ButtonType3.vue';
+import ButtonGreen from '../ui/ButtonGreen.vue';
 import { Iuser } from '../../Types';
 import InputComp from '../forms/components/InputComp.vue';
 import { useForm } from 'vee-validate';
@@ -135,7 +135,7 @@ const formSubmit = handleSubmit((values)=>{
                     v-bind="surnameAttrs"
                     :error="errors.surname"/>
             </div>
-            <ButtonType3
+            <ButtonGreen
                 type="submit"
                 title="Сохранить изменения"/>
         </form>
