@@ -14,10 +14,12 @@ import { SiteState } from '../store/SiteState';
 import Icons from '../components/ui/Icons.vue';
 import DeleteButton from '../components/ui/DeleteButton.vue';
 import ButtonGreen from '../components/ui/ButtonGreen.vue';
+import ImageInput from '../components/forms/components/ImageInput.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
 const loaderState = ref(false)
+const imageUrl = ref<string|null>(null);
 
 const showLoader = () => {
     loaderState.value = true
@@ -171,6 +173,22 @@ const state = SiteState()
                 </div>
 
             </div>
+        </div>
+        <div class="flex flex-col gap-3">
+            <ImageInput
+            v-model="imageUrl"
+            />
+            <div class="flex flex-col gap-2">
+                <span>Название : ImageInput </span>
+                <div class="">
+                    <span>пропсы:</span>
+                    <ul>
+                        <li>v-model</li>
+                    </ul>
+                </div>
+
+            </div>
+
         </div>
     </div>
 </Toggler>
