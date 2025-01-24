@@ -1,40 +1,14 @@
 import { SiteState } from "../../store/SiteState"
-import { UserSate } from "../../store/UserState"
-import ErrorsToText from "../../functions/ErrorsToText"
+import { apiFetch } from "../../utils/api/apiFetch"
 
-const url = import.meta.env.VITE_API_DB_URL
 
 export default function (){
     const siteState = SiteState()
-    const userState = UserSate()
-    const updateUser = async(userData:string)=>{
-        siteState.loadingTrue()
-        siteState.cleanTextError()
-        const headersData ={
-            'Content-Type': 'application/json',
-        }
-        if (userState.getUserToken) {
-            headersData['Authorization'] = `Bearer ${userState.userToken}`
-        }
-
-        return fetch(url + `/admin_profile?${userData}`,{
-            method:'PATCH',
-            headers:headersData
-        }).then(async (res)=>{
-            if(!res.ok){
-                const errorText = await res.text()
-                let errorMessage = ErrorsToText(errorText)
-                throw new Error(errorMessage);
-            }
-            siteState.sucsesMessage='Данные пользователя обновлены'
-            return res.text;
-
-        }).catch((err) => {
-            siteState.errorText = err
-            throw err
-        })
-            .finally(() => {
-                siteState.loadingFalse()
+    const updateUser = async (userData:string)=>{
+        return apiFetch(`/admin_profile?${userData}`,{
+            method:'PATCH'
+        }).then(()=>{
+            siteState.sucsesMessage = 'Данные пользователя обновлены' 
         })
     }
     return{

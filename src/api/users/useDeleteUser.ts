@@ -1,8 +1,9 @@
+import { SiteState } from "../../store/SiteState"
 import { UserListState } from "../../store/UsersListState"
 import { apiFetch } from "../../utils/api/apiFetch"
 
 export default function () {
-   
+    const siteState = SiteState()
     const userListState = UserListState()
     
     const deleteUserById = async (id:string) => {
@@ -10,7 +11,7 @@ export default function () {
             method:"DELETE"
         }).then((data)=>{
             userListState.deleteUserById(id)
-            return data.text;
+            siteState.sucsesMessage = 'Пользователь успешно удалён'
         })
     }
     return {
