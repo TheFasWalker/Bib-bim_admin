@@ -9,6 +9,7 @@ import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/yup';
 import DropDownRoles from '../forms/components/DropDownRoles.vue';
 import useEditUser from '../../api/users/useEditUser';
+import { useYupValidation } from '../../utils/useYupValidation';
 
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const {updateUser} = useEditUser()
@@ -24,14 +25,14 @@ const userData = computed<Iuser>(()=>{
 })
 const props = defineProps<Props>()
 
-const schema = toTypedSchema(yup.object({
-    login: yup.string().required('Обязательное поле').max(30,'max 30 symbols'),
-    email: yup.string().required('Обязательное поле').email('not valid email'),
-    name: yup.string().required('Обязательное поле').min(3, 'too short name').max(15,'max 15 symbols'),
-    surname: yup.string().required('Обязательное поле').min(3, 'too short surname').max(20,'max 20 symbols'),
-    role: yup.string().required('выберите роль'),
-    user_id:yup.string().required()
-}))
+const schema = useYupValidation({
+    login:true,
+    email:true,
+    name:true,
+    surname:true,
+    role:true,
+    user_id:true,
+})
 
 const { errors, defineField,handleSubmit,resetForm} = useForm({
         validationSchema:schema,

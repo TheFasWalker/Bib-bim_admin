@@ -30,8 +30,7 @@ export async function apiFetch(endpoint:string, options:FethcOptions={}):Promise
         })
         const responseBody = await response.text()
         if (!response.ok) {
-            const errorText = await response.text();
-            const errorMessage = ErrorsToText(errorText);
+            const errorMessage = ErrorsToText(responseBody);
             siteState.errorText = errorMessage;
             throw new Error(errorMessage);
         }
@@ -42,7 +41,6 @@ export async function apiFetch(endpoint:string, options:FethcOptions={}):Promise
         }
     }catch(error:any){
         siteState.errorText = error.message;
-        console.log(error)
         throw error;
     }finally{
         siteState.loadingFalse()

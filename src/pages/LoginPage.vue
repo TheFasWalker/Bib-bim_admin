@@ -55,8 +55,6 @@
     import InputComp from '../components/forms/components/InputComp.vue';
     import ButtonType2 from '../components/ui/ButtonType2.vue';
     import {useForm} from 'vee-validate'
-    import * as yup from 'yup'
-    import { toTypedSchema } from '@vee-validate/yup';
     import Loader from '../components/ui/Loader.vue'
     import ErrorToast from '../components/Toasts/ErrorToast.vue';
 
@@ -65,6 +63,7 @@
     import { useRouter } from 'vue-router';
     import useAuth from '../api/useAuth';
     import useUserData from '../api//users/useUserData';
+    import { useYupValidation } from '../utils/useYupValidation';
 
     const rootLogin = import.meta.env.VITE_ROOT_ADMIN_LOGIN
     const rootPassword = import.meta.env.VITE_ROOT_AMIN_PASSWORD
@@ -72,10 +71,11 @@
     const siteState = SiteState();
     const userState = UserSate()
     const router = useRouter()
-    const schema = toTypedSchema(yup.object({
-        login:yup.string().required('Обязательное поле'),
-        password:yup.string().required('Обязательное поле').min(6,'минимум 6 знаков')
-    }))
+
+    const schema = useYupValidation({
+        login:true,
+        password:true
+    })
     const {errors,defineField,handleSubmit,resetForm}= useForm({
         validationSchema:schema,
         validateOnInput:true,
