@@ -8,11 +8,10 @@ import ButtonType2 from '../components/ui/ButtonType2.vue';
 import ButtonType3 from '../components/ui/ButtonType3.vue';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
 import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/yup';
-import * as yup from 'yup';
 import EdittingData from '../components/forms/lk/EdittingData.vue';
 import UserRole from '../components/users/userRole.vue';
 import EdittingPassword from '../components/forms/lk/EdittingPassword.vue';
+import { useYupValidation } from '../utils/useYupValidation';
 
 const userState = UserSate()
 const initialValues ={
@@ -23,12 +22,12 @@ const initialValues ={
 }
 
 
-const schema = toTypedSchema(yup.object({
-    email: yup.string().required('Обязательное поле').email('not vatid email'),
-    name: yup.string().required('Обязательное поле').min(3, 'too short name').max(15,'max 15 symbols'),
-    surname: yup.string().required('Обязательное поле').min(3, 'too short surname').max(20,'max 20 symbols'),
-    password:yup.string().min(6,'минимум 6 знаков')
-}))
+const schema = useYupValidation({
+    email:true,
+    name:true,
+    surname:true,
+    password:true,
+})
 const {errors, defineField, handleSubmit,resetForm} =useForm({
     validationSchema:schema,
     validateOnInput:true,
