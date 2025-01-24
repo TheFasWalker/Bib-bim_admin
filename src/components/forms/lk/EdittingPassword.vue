@@ -35,7 +35,7 @@
         
 </template>
 <script setup lang="ts">
-    import { passwordGenerator } from '../../../functions/passwordGenerator';
+    import { passwordGenerator } from '../../../utils/passwordGenerator';
     import ButtonType2 from '../../ui/ButtonType2.vue';
     import CloseButton from '../../ui/CloseButton.vue';
     import Icons from '../../ui/Icons.vue';

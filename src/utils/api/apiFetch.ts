@@ -1,7 +1,8 @@
 import { UserSate } from "../../store/UserState"
-import ErrorsToText from "../../functions/ErrorsToText"
+
 const url = import.meta.env.VITE_API_DB_URL
 import { SiteState } from "../../store/SiteState"
+import errorsToText from "../errorsToText";
 
 
 interface FethcOptions extends RequestInit {
@@ -30,7 +31,8 @@ export async function apiFetch(endpoint:string, options:FethcOptions={}):Promise
         })
         const responseBody = await response.text()
         if (!response.ok) {
-            const errorMessage = ErrorsToText(responseBody);
+            
+            const errorMessage = errorsToText(responseBody);
             siteState.errorText = errorMessage;
             throw new Error(errorMessage);
         }

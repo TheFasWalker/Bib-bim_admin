@@ -4,7 +4,7 @@ import DropDownRoles from '../components/forms/components/DropDownRoles.vue';
 import SubHeader from '../components/general/SubHeader.vue';
 import MainLauout from '../components/lauouts/MainLauout.vue';
 import InputComp from '../components/forms/components/InputComp.vue';
-import { passwordGenerator } from '../functions/passwordGenerator';
+
 import ButtonType2 from '../components/ui/ButtonType2.vue';
 import { useForm } from 'vee-validate';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
@@ -14,6 +14,7 @@ import { UserListState } from '../store/UsersListState';
 import useGetRoles from '../api/useGetRoles';
 import { SiteState } from '../store/SiteState';
 import { useYupValidation } from '../utils/useYupValidation';
+import { passwordGenerator } from '../utils/passwordGenerator';
 
 const siteState = SiteState()
 const successfulPopUpState = ref(false)

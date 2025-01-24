@@ -12,11 +12,12 @@ import UserListPage from "../pages/UserListPage.vue";
 import CreateUser from "../pages/CreateUser.vue";
 import Error404 from "../pages/Error404.vue";
 import { UserRoles } from "../Types";
-import checkAcsessByRole from "../functions/checkAcessByRole";
+
 import PostCreate from "../pages/posts/PostCreate.vue";
 import PostPage from "../pages/posts/PostPage.vue";
 import EditPost from "../pages/posts/PostEdit.vue";
 import UserPage from "../pages/UserPage.vue";
+import checkAcsessByRole from "../utils/checkAcessByRole";
 
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE

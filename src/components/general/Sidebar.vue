@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import checkAcsessByRole from '../../functions/checkAcessByRole';
+import checkAcsessByRole from '../../utils/checkAcessByRole';
 import { SiteState } from '../../store/SiteState';
 import { UserSate } from '../../store/UserState';
 import SidebarMainLink from '../sidebar/SidebarMainLink.vue';
