@@ -2,8 +2,8 @@
   <div
     class=" absolute right-0 top-10 z-50 my-4 w-56 text-base list-none bg-white divide-y divide-gray-100 shadow  rounded-xl overflow-hidden">
     <div class="py-3 px-4">
-      <span class="block text-sm font-semibold text-gray-900 ">{{ userStore.getUserRole }}</span>
-      <span class="block text-sm text-gray-900 truncate ">{{ userStore.getUserEmail }}</span>
+      <span class="block text-sm font-semibold text-gray-900 ">{{ userStore.getUserData?.role?.role }}</span>
+      <span class="block text-sm text-gray-900 truncate ">{{ userStore.getUserData?.email }}</span>
     </div>
     <ul class="py-1 text-gray-700 " aria-labelledby="dropdown">
       <li>

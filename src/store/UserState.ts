@@ -5,9 +5,7 @@ export const UserSate = defineStore('userState',{
         userRole: null as string | null,
         userId: null as string | null,
         userToken: null as string | null,
-        userName: null as string | null,
-        userEmail: null as string | null,
-        userData : null as Array<Iuser> | null
+        userData : null as Iuser | null
     }),
     getters: {
         getUserRole: (state) => {
@@ -34,34 +32,15 @@ export const UserSate = defineStore('userState',{
                 return state.userId
             }
         },
-        getUserName: (state) => {
-            if (state.userName == undefined) {
-                state.userName = localStorage.getItem('bim-userName')
-                return state.userName
-            } else {
-                return state.userName
+        getUserData: (state): Iuser | null => {
+            const userDataFromLocalStorage = localStorage.getItem('bim-userData');
+            if (userDataFromLocalStorage) {
+                    const parsedUserData: Iuser = JSON.parse(userDataFromLocalStorage);
+                    state.userData = parsedUserData;
+                     return state.userData;
             }
+             return state.userData;
         },
-        getUserEmail: (state) => {
-            if (state.userEmail == undefined) {
-                state.userEmail = localStorage.getItem('bim-userEmail')
-                return state.userEmail
-            } else {
-                return state.userEmail
-            }
-        },
-        getUserData:(state)=>{
-            const userDataFromLocalStorage = localStorage.getItem('bim-userData')
-            if(state.userData == null){
-                if(userDataFromLocalStorage){
-                    state.userData = JSON.parse(userDataFromLocalStorage)
-                    return state.userData
-                }else{
-                    return state.userData
-                }
-            }
-
-        }
     },
     actions: {
         writeTokenData(id:string,token:string,role:string,name:string, email) {

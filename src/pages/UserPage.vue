@@ -16,9 +16,9 @@ import EdittingPassword from '../components/forms/lk/EdittingPassword.vue';
 
 const userState = UserSate()
 const initialValues ={
-    email:userState.getUserEmail,
-    name:userState.getUserName?.split(" ")[0],
-    surname:userState.getUserName?.split(" ")[1],
+    email:userState.getUserData?.email,
+    name:userState.getUserData?.name ,
+    surname:userState.getUserData?.surname,
     password:''
 }
 
@@ -128,7 +128,7 @@ const toggleEdittindPassword =():void=>{
                 <div class=" grid grid-cols-[100px_1fr] gap-4">
                     <span>Ваша роль</span>
                     <UserRole
-                        :role="userState.getUserRole"
+                        :role="userState.getUserData?.role.role"
                     />
                     
                 </div>
