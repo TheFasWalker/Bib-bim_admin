@@ -2,11 +2,9 @@
 import { computed, onMounted, ref } from 'vue';
 import { UserListState } from '../../store/UsersListState';
 import ButtonType3 from '../ui/ButtonType3.vue';
-import { IEditUser, Iuser } from '../../Types';
+import { Iuser } from '../../Types';
 import InputComp from '../forms/components/InputComp.vue';
-import * as yup from 'yup'
 import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/yup';
 import DropDownRoles from '../forms/components/DropDownRoles.vue';
 import useEditUser from '../../api/users/useEditUser';
 import { useYupValidation } from '../../utils/useYupValidation';

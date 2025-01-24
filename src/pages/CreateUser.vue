@@ -7,14 +7,13 @@ import InputComp from '../components/forms/components/InputComp.vue';
 import { passwordGenerator } from '../functions/passwordGenerator';
 import ButtonType2 from '../components/ui/ButtonType2.vue';
 import { useForm } from 'vee-validate';
-import * as yup from 'yup';
-import { toTypedSchema } from '@vee-validate/yup';
 import PopUpLauout from '../components/lauouts/PopUpLauout.vue';
 import useCreateUser from '../api/users/useCreateUser';
 import { useRouter } from 'vue-router';
 import { UserListState } from '../store/UsersListState';
 import useGetRoles from '../api/useGetRoles';
 import { SiteState } from '../store/SiteState';
+import { useYupValidation } from '../utils/useYupValidation';
 
 const siteState = SiteState()
 const successfulPopUpState = ref(false)
@@ -24,14 +23,14 @@ const { adminRoles } = useGetRoles()
 const generatePassword = () => {
     password.value =passwordGenerator()
 }
-const schema = toTypedSchema(yup.object({
-    login: yup.string().required('Обязательное поле').max(30,'max 30 symbols'),
-    email: yup.string().required('Обязательное поле').email('not vatid email'),
-    name: yup.string().required('Обязательное поле').min(3, 'too short name').max(15,'max 15 symbols'),
-    surname: yup.string().required('Обязательное поле').min(3, 'too short surname').max(20,'max 20 symbols'),
-    role: yup.string().required('выберите роль'),
-    password:yup.string().required('Нужен пароль').min(6,'минимум 6 знаков')
-}))
+const schema = useYupValidation({
+    login:true,
+    email:true,
+    name:true,
+    surname:true,
+    role:true,
+    password:true,
+})
 
 const { errors, defineField,handleSubmit,resetForm} = useForm({
         validationSchema:schema,
