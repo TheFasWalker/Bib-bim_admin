@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { Iuser } from "../Types";
 export const UserSate = defineStore('userState',{
     state: () => ({
         userRole: null as string | null,
@@ -6,7 +7,7 @@ export const UserSate = defineStore('userState',{
         userToken: null as string | null,
         userName: null as string | null,
         userEmail: null as string | null,
-
+        userData : null as Array<Iuser> | null
     }),
     getters: {
         getUserRole: (state) => {
@@ -48,6 +49,18 @@ export const UserSate = defineStore('userState',{
             } else {
                 return state.userEmail
             }
+        },
+        getUserData:(state)=>{
+            const userDataFromLocalStorage = localStorage.getItem('bim-userData')
+            if(state.userData == null){
+                if(userDataFromLocalStorage){
+                    state.userData = JSON.parse(userDataFromLocalStorage)
+                    return state.userData
+                }else{
+                    return state.userData
+                }
+            }
+
         }
     },
     actions: {
@@ -63,10 +76,10 @@ export const UserSate = defineStore('userState',{
             this.userName = name,
             this.userEmail = email
         },
-        writeUserData(data) {
-            localStorage.setItem('bim-userData', data)
+        writeUserData(data:Iuser) {
+            const dataToStore = JSON.stringify(data)
+            localStorage.setItem('bim-userData', dataToStore)
             this.userData = data
-
         },
         clearUserData() {
             localStorage.removeItem('bim-userId')
