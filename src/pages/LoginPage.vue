@@ -101,11 +101,10 @@
                 if (data.id && data.token) {
                     const userToken = data.token
                     getUserData(data.id).then((data) => {
-                        const username =`${data.name} ${data.surname}`
-                        userState.writeTokenData(data.id,userToken, data.role.role, username, data.email)
+                        userState.writeTokenData(data.id,userToken, data.role.role)
                         userState.writeUserData(data)
 
-                    }).then((data) => {
+                    }).then(() => {
                 router.push({name:'home'})
             })
                 } else {

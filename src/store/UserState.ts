@@ -43,17 +43,13 @@ export const UserSate = defineStore('userState',{
         },
     },
     actions: {
-        writeTokenData(id:string,token:string,role:string,name:string, email) {
+        writeTokenData(id:string,token:string,role:string) {
             localStorage.setItem('bim-userId', id)
             localStorage.setItem('bim-userToken', token)
             localStorage.setItem('bim-userRole', role)
-            localStorage.setItem('bim-userName', name)
-            localStorage.setItem('bim-userEmail', email)
             this.userId = id,
             this.userToken = token
             this.userRole = role
-            this.userName = name,
-            this.userEmail = email
         },
         writeUserData(data:Iuser) {
             const dataToStore = JSON.stringify(data)
@@ -65,7 +61,6 @@ export const UserSate = defineStore('userState',{
             localStorage.removeItem('bim-userToken')
             localStorage.removeItem('bim-userRole')
             localStorage.removeItem('bim-userName')
-            localStorage.removeItem('bim-userEmail')
             this.userName = null
             this.userRole = null
             this.userId = null
