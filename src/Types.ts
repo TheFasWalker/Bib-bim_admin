@@ -37,3 +37,14 @@ export interface Iuser {
     email:string,
     password?:string
   }
+
+  export interface IPost {
+      id: string
+      author: any
+      createDate: string
+      createTime: string
+      isPublished: boolean
+      description: string
+      images: string[]
+    }
+    
