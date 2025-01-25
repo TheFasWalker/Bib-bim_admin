@@ -195,21 +195,21 @@ const state = SiteState()
         </div>
     </div>
     <div class="">
-    <MultiImageUpload
-    v-model:images="form.images"/>
-    <div class="flex flex-col gap-2">
-                <span>Название : MultiImageUpload </span>
-                <div class="">
-                    <span>пропсы:</span>
-                    <ul>
-                        <li>v-model</li>
-                    </ul>
-                </div>
+        <MultiImageUpload
+        v-model:images="form.images"/>
+        <div class="flex flex-col gap-2">
+                    <span>Название : MultiImageUpload </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>v-model</li>
+                        </ul>
+                    </div>
 
-            </div>
         </div>
+    </div>
 
-</div>
+
 </Toggler>
 <Toggler title="Прочее">
     <div class="grid grid-cols-3 gap-3">
