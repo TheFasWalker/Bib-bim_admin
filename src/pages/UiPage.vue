@@ -15,12 +15,15 @@ import Icons from '../components/ui/Icons.vue';
 import DeleteButton from '../components/ui/DeleteButton.vue';
 import ButtonGreen from '../components/ui/ButtonGreen.vue';
 import ImageInput from '../components/forms/components/ImageInput.vue';
+import MultiImageUpload from '../components/forms/components/MultiImageUpload.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
 const loaderState = ref(false)
 const imageUrl = ref<string|null>(null);
-
+const form = ref({
+      images: []
+    });
 const showLoader = () => {
     loaderState.value = true
     setTimeout(() => {
@@ -191,6 +194,22 @@ const state = SiteState()
 
         </div>
     </div>
+    <div class="">
+    <MultiImageUpload
+    v-model:images="form.images"/>
+    <div class="flex flex-col gap-2">
+                <span>Название : MultiImageUpload </span>
+                <div class="">
+                    <span>пропсы:</span>
+                    <ul>
+                        <li>v-model</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+</div>
 </Toggler>
 <Toggler title="Прочее">
     <div class="grid grid-cols-3 gap-3">
