@@ -17,11 +17,17 @@ import ButtonGreen from '../components/ui/ButtonGreen.vue';
 import ImageInput from '../components/forms/components/ImageInput.vue';
 import MultiImageUpload from '../components/forms/components/MultiImageUpload.vue';
 import TextEditor from '../components/forms/components/TextEditor.vue';
+import SortingByPublishing from '../components/SortingByPublishing.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
 const loaderState = ref(false)
-const imageUrl = ref<string|null>(null);
+const imageUrl = ref<string | null>(null);
+    const currentFilter = ref<boolean | 'all'>(true);
+    const handleFilterChange = (value: boolean | 'all') => {
+  currentFilter.value = value;
+  console.log('Фильтр изменен на:', value);
+};
 const form = ref({
       images: []
     });
@@ -256,7 +262,19 @@ const state = SiteState()
 
             </div>
         </div>
+        <div class="flex flex-col gap-3">
+        <SortingByPublishing
+        @filter-change="handleFilterChange"
+        :currentFilter="currentFilter"/>
+        <div class="flex flex-col gap-2">
+                <span>Название : SortingByPublishing </span>
+                <div class="">
+                    <span>@filter-change : Эмит события</span>
+                    <span>пропс currentFilter : true| false| 'all'</span>
+                </div>
 
+            </div>
+        </div>
     </div>
 
 </Toggler>
