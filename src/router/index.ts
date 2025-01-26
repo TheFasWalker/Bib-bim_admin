@@ -14,7 +14,6 @@ import Error404 from "../pages/Error404.vue";
 import { UserRoles } from "../Types";
 
 import PostCreate from "../pages/posts/PostCreate.vue";
-import PostPage from "../pages/posts/PostPage.vue";
 import EditPost from "../pages/posts/PostEdit.vue";
 import UserPage from "../pages/UserPage.vue";
 import checkAcsessByRole from "../utils/checkAcessByRole";
@@ -93,16 +92,7 @@ const routes: CustomRoteRecordRaw[] = [
                 name: 'editPost',
                 component: EditPost ,
                 meta:{requireAuth:true,acsessRoles: [adminKey, managerKey]}
-            },
-            {
-                path:':id',
-                name: 'showPost',
-                component: PostPage ,
-                meta:{requireAuth:true,acsessRoles: [adminKey, managerKey]}
-            },
-
-
-           
+            }
         ]
     },
     {
