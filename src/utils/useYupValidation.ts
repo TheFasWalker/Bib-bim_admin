@@ -30,7 +30,8 @@ interface ValidationSchemaOptions {
     user_id?:boolean,
     role?: boolean,
     description?:boolean,
-    files?:boolean;
+    files?: boolean;
+    isPublished?: boolean;
     [key: string]: boolean | undefined;
 }
 
@@ -64,6 +65,9 @@ export function useYupValidation(options: ValidationSchemaOptions) {
     }
     if(options.files){
         schemaObject.files = yup.array().min(1, 'Должна быть хотя бы 1 фотография').required()
+    }
+    if (options.isPublished) {
+        schemaObject.isPublished = yup.boolean()
     }
 
     const schema = toTypedSchema(yup.object(schemaObject));

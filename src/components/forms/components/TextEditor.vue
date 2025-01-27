@@ -5,30 +5,53 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import Quill from 'quill';
-import 'quill/dist/quill.snow.css'; 
+import 'quill/dist/quill.snow.css';
 
-    const quillEditor = ref(null);
-    const editor = ref(null);
+const props = defineProps({
+    modelValue: {
+        type: String,
+        default: '',
+    },
+});
 
-    onMounted(() => {
-      editor.value = new Quill(quillEditor.value, {
-        theme: 'snow', // Или 'bubble'
-        modules: {
-          toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            // ['image'], 
-            ['link'],
-            // ['clean']
-          ]
-        }
-      });
-      editor.value.on('text-change', (delta, oldDelta, source) => {
-        console.log("Text changed:", editor.value.root.innerHTML);
-      });
-    });
+const emit = defineEmits(['update:modelValue']);
 
+const quillEditor = ref(null);
+const editor = ref<Quill | null>(null);
+
+onMounted(() => {
+  editor.value = new Quill(quillEditor.value, {
+    theme: 'snow',
+    modules: {
+      toolbar: [
+        [{ header: [1, 2, false] }],
+        ['bold', 'italic', 'underline'],
+        ['link'],
+      ],
+    },
+  });
+
+
+    if (props.modelValue) {
+        editor.value.root.innerHTML = props.modelValue;
+    }
+
+
+  editor.value.on('text-change', () => {
+    emit('update:modelValue', editor.value?.root.innerHTML);
+  });
+});
+
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    if (editor.value && editor.value.root.innerHTML !== newValue) {
+        editor.value.root.innerHTML = newValue;
+    }
+  }
+);
 
 </script>
+

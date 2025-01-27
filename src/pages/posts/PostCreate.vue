@@ -6,10 +6,26 @@ import SubHeader from '../../components/general/SubHeader.vue';
 import MainLauout from '../../components/lauouts/MainLauout.vue';
 import { ref } from 'vue';
 import ButtonGreen from '../../components/ui/ButtonGreen.vue';
-const isPublished = ref(false)
+import { useForm } from 'vee-validate';
+import { useYupValidation } from '../../utils/useYupValidation';
+// const isPublished = ref(false)
 
 const imageUrl = ref<string | null>(null);
 
+const schema = useYupValidation({
+    description:true
+})
+
+const { errors, defineField, handleSubmit } = useForm({
+    validationSchema:schema
+})
+const [isPublished] = defineField('is_published')
+const [description, descriptionAttrs] = defineField('description')
+
+const onFormSubmit = (values) => {
+    console.log(isPublished.value)
+    console.log(description.value)
+}
 </script>
 
 
@@ -18,7 +34,8 @@ const imageUrl = ref<string | null>(null);
         <SubHeader
         title="создание поста"
         nav="posts"/>
-        <div class=" flex flex-col gap-5">
+        {{ isPublished }}
+        <form @submit.prevent="onFormSubmit" class=" flex flex-col gap-5">
             <div class=" flex flex-row gap-5 h-10 ">
                 <span
                 v-if="isPublished"
@@ -43,8 +60,10 @@ const imageUrl = ref<string | null>(null);
             </div>
             <div class=" flex flex-col gap-3 ">
                 <h3>Текст поста</h3>
-                <TextEditor/>
+                <TextEditor
+                v-model="description"/>
             </div>
+            {{ description }}
             <ButtonGreen
             type="submit"
             title="Сохранить"/>
@@ -52,7 +71,7 @@ const imageUrl = ref<string | null>(null);
 
 
 
-        </div>
+        </form>
 
     </MainLauout>
 </template>
