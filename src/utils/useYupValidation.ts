@@ -28,12 +28,14 @@ interface ValidationSchemaOptions {
     password?: boolean;
     login?:boolean,
     user_id?:boolean,
-    role?:boolean,
+    role?: boolean,
+    description?:boolean,
+    files?:boolean;
     [key: string]: boolean | undefined;
 }
 
 export function useYupValidation(options: ValidationSchemaOptions) {
-    setupYupLocale(); 
+    setupYupLocale();
 
     const schemaObject: any = {}
     if (options.email) {
@@ -56,6 +58,12 @@ export function useYupValidation(options: ValidationSchemaOptions) {
     }
     if(options.role){
         schemaObject.role = yup.string().required('выберите роль')
+    }
+    if(options.description){
+        schemaObject.text = yup.string().required('Текст поста не может быть пустым')
+    }
+    if(options.files){
+        schemaObject.files = yup.array().min(1, 'Должна быть хотя бы 1 фотография').required()
     }
 
     const schema = toTypedSchema(yup.object(schemaObject));
