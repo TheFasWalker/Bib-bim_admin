@@ -45,4 +45,10 @@ export interface Iuser {
       description: string
       images: string[]
     }
+    export interface ICreatePost {
+      author: any
+      isPublished: boolean
+      description: string
+      images: string[]
+    }
     
