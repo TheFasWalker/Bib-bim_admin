@@ -9,7 +9,7 @@
             <div class=" h-40 w-full">
                 <img class=" w-full h-full object-contain" :src="`${images[0]? images[0] : '/images/noimage.png'}`" alt="">
             </div>
-            <p class=" h-30 overflow-hidden">{{ description }}</p>
+            <div class="h-30 overflow-hidden" v-html="description"></div>
         </div>
             <div class="grid grid-cols-2 gap-3">
                 <DeleteButton

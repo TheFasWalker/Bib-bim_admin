@@ -8,24 +8,39 @@ import { ref } from 'vue';
 import ButtonGreen from '../../components/ui/ButtonGreen.vue';
 import { useForm } from 'vee-validate';
 import { useYupValidation } from '../../utils/useYupValidation';
-// const isPublished = ref(false)
-
+import useCreatePost from '../../api/posts/useCreatePost';
+const updateField = (event) => {
+    console.log('blur')
+}
 const imageUrl = ref<string | null>(null);
-
+const{createPost} = useCreatePost()
 const schema = useYupValidation({
-    description:true
+    isPublished:true,
+    // description:true
 })
 
 const { errors, defineField, handleSubmit } = useForm({
-    validationSchema:schema
+    validationSchema:schema,
+    validateOnInput:true,
+    validateOnChange:true,
+    initialValues:{
+        description: '',
+        is_published: false,
+    }
 })
 const [isPublished] = defineField('is_published')
 const [description, descriptionAttrs] = defineField('description')
 
-const onFormSubmit = (values) => {
-    console.log(isPublished.value)
-    console.log(description.value)
-}
+const onFormSubmit = handleSubmit(async(values)=>{
+    values.author= null
+    values.images =[
+        'https://media.gettyimages.com/id/1127317526/nl/foto/scottish-fold-playing.jpg?s=612x612&w=0&k=20&c=Rw8Er7CKOy8tTibwK0J_VuCCcz-yVM9AE-xBM6YUJKM=',
+        'https://media.gettyimages.com/id/1286001342/nl/foto/chinchilla-kitten-scottish-fold-longhair-white-kitten-sleeping-on-the-bar.jpg?s=612x612&w=0&k=20&c=RwXcDjJVgrGE5GLb4X1W3DJbOtdz48rYWRAPpP4xmZE='
+        ]
+        createPost(values)
+    })
+
+
 </script>
 
 
@@ -34,8 +49,8 @@ const onFormSubmit = (values) => {
         <SubHeader
         title="создание поста"
         nav="posts"/>
-        {{ isPublished }}
         <form @submit.prevent="onFormSubmit" class=" flex flex-col gap-5">
+            {{ errors.description }}
             <div class=" flex flex-row gap-5 h-10 ">
                 <span
                 v-if="isPublished"
@@ -53,17 +68,21 @@ const onFormSubmit = (values) => {
 
             </div>
 
-            <div class=" flex flex-col gap-3 ">
+            <!-- <div class=" flex flex-col gap-3 ">
                 <h3>Фотографии</h3>
                 <ImageInput
                 v-model="imageUrl"/>
-            </div>
+            </div> -->
             <div class=" flex flex-col gap-3 ">
                 <h3>Текст поста</h3>
                 <TextEditor
-                v-model="description"/>
+                name="description"
+                :error="errors.description"
+                v-model="description"
+                @blur="updateField"
+                />
             </div>
-            {{ description }}
+            <!-- {{ description }} -->
             <ButtonGreen
             type="submit"
             title="Сохранить"/>

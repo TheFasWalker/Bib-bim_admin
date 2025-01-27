@@ -1,7 +1,15 @@
 <template>
-  <div class="relative h-96">
+  <div class=" relative h-96">
+    <div v-if="error" class=" bg-red-500 text-white font-bold absolute top-0 z-20 right-0 p-2 w-fit rounded-md border border-red-500">{{ error }}</div>
     <div ref="quillEditor" class="border border-gray-300 rounded-md p-2"></div>
   </div>
+  <textarea 
+  :name="name" 
+  :value="modelValue" 
+  @input="$emit('update:modelValue', $event.target.value)"
+  @blur="$emit('blur')"
+  ></textarea>
+  
 </template>
 
 <script setup lang="ts">
@@ -9,19 +17,20 @@ import { ref, onMounted, watch } from 'vue';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 
-const props = defineProps({
-    modelValue: {
-        type: String,
-        default: '',
-    },
-});
+interface Props{
+  modelValue:string,
+  error?:string,
+  name:string
+}
+const props = defineProps<Props>();
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue','blur']);
 
-const quillEditor = ref(null);
+const quillEditor = ref<HTMLElement | null>(null);
 const editor = ref<Quill | null>(null);
 
 onMounted(() => {
+  if (!quillEditor.value) return;
   editor.value = new Quill(quillEditor.value, {
     theme: 'snow',
     modules: {

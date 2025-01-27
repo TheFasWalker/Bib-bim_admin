@@ -37,10 +37,10 @@ export interface Iuser {
   }
 
   export interface IPost {
-      id: string
+      id?: string
       author: any
-      createDate: string
-      createTime: string
+      createDate?: string
+      createTime?: string
       isPublished: boolean
       description: string
       images: string[]
