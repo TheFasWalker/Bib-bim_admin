@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import SubHeader from '../../components/general/SubHeader.vue';
 import MainLauout from '../../components/lauouts/MainLauout.vue';
 import useGetAllPosts from '../../api/posts/useGetAllPosts';
@@ -16,8 +16,18 @@ onMounted(()=>{
 })
 const handleFilterChange = (value: boolean | 'all') => {
   currentFilter.value = value;
-  console.log('Фильтр изменен на:', value);
+  if (value === true) {
+      queryParams.value = '?is_published=true'
+  } else if(value === false){
+     queryParams.value = '?is_published=false'
+  } else {
+       queryParams.value = ''
+  }
 };
+watch(queryParams, (newQueryParams) => {
+    console.log('queryParams changed:', newQueryParams)
+  getAllPosts(newQueryParams);
+});
 </script>
 
 <template>

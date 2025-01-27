@@ -13,7 +13,7 @@ export async function apiFetch(endpoint:string, options:FethcOptions={}):Promise
     const siteState = SiteState();
     const userState = UserSate();
     siteState.cleanMessages();
-
+    siteState.loadingTrue()
 
     const headers = {
         'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export async function apiFetch(endpoint:string, options:FethcOptions={}):Promise
         })
         const responseBody = await response.text()
         if (!response.ok) {
-            
+
             const errorMessage = errorsToText(responseBody);
             siteState.errorText = errorMessage;
             throw new Error(errorMessage);
