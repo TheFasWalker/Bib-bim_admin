@@ -47,8 +47,8 @@ export interface Iuser {
     }
     export interface ICreatePost {
       author: any
-      isPublished: boolean
+      is_published: boolean
       description: string
       images: string[]
     }
-    
+

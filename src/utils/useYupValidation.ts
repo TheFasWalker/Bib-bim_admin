@@ -61,7 +61,7 @@ export function useYupValidation(options: ValidationSchemaOptions) {
         schemaObject.role = yup.string().required('выберите роль')
     }
     if(options.description){
-        schemaObject.text = yup.string().required('Текст поста не может быть пустым')
+        schemaObject.description = yup.string().required('Текст поста не может быть пустым')
     }
     if(options.files){
         schemaObject.files = yup.array().min(1, 'Должна быть хотя бы 1 фотография').required()

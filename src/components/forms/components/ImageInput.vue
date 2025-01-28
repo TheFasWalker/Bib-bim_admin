@@ -1,5 +1,7 @@
 <template>
-    <div class="flex flex-col items-center w-full">
+    <div class="flex flex-col items-center w-full relative">
+
+        <span class=" absolute top-0 right-0">{{ error }}</span>
         <label class="w-full flex flex-col items-center justify-center border-2 border-dashed rounded-lg p-4 text-center cursor-pointer transition-colors hover:bg-gray-100">
             <input type="file" ref="fileInput" class="hidden" accept="image/*" @change="handleFileChange">
               <div v-if="!previewImage" class=" flex flex-col items-center">
@@ -23,7 +25,8 @@ import ButtonBlue from '../../ui/ButtonBlue.vue';
 import { defineEmits, defineProps } from 'vue';
 import Icons from '../../ui/Icons.vue';
     interface Props {
-        modelValue: string | null
+        modelValue: string | null,
+        error?: string
     }
  const props = defineProps<Props>()
  const emit = defineEmits(['update:modelValue'])
