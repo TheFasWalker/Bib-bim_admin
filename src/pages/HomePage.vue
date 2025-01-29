@@ -1,9 +1,63 @@
 <script setup lang="ts">
 import MainLauout from '../components/lauouts/MainLauout.vue';
+import { ref } from 'vue';
+
+const fileInput = ref(null);
+const selectedFile = ref(null);
+const uploadStatus = ref('');
+const acsesskeyString = import.meta.env.VITE_MINIO_ACCESS_KEY_ID
+const secretKeyString = import.meta.env.VITE_MINIO_SECRET_ACCESS_KEY
+const urlEndpoint = import.meta.env.VITE_API_PHOTOS_URL
+const handleFileChange = (event) => {
+  selectedFile.value = event.target.files[0];
+};
+
+const uploadFile = async () => {
+    if (!selectedFile.value) {
+      return;
+    }
+
+    const fileBlob = new Blob([selectedFile.value], {type: selectedFile.value.type});
+    // const formData = new FormData();
+    // formData.append('file', selectedFile.value); 
+    // formData.append('bucket', bucket);
+    // formData.append('accessKey', acsesskeyString);
+    // formData.append('secretKey', secretKeyString);
+    uploadStatus.value = 'Загрузка...';
+    try {
+        const response = await fetch(`${urlEndpoint}/feedpost/${selectedFile.value.name}`, { 
+           method: 'PUT', 
+           body: fileBlob,
+           headers: {
+                'x-amz-acl': 'public-read',
+              'Content-Type': selectedFile.value.type,
+              'Content-Length': selectedFile.value.size.toString()
+           }
+        });
+        
+        if (response.ok) {
+          uploadStatus.value = 'Файл успешно загружен!';
+          fileInput.value.value = '';
+          selectedFile.value = null;
+        } else {
+          const errorData = await response.json();
+          uploadStatus.value = `Ошибка загрузки: ${response.status} - ${errorData.message || 'Неизвестная ошибка'}`;
+        }
+
+    } catch(error) {
+      console.error('Ошибка загрузки', error);
+      uploadStatus.value = 'Ошибка загрузки: ' + error.message;
+    }
+};
 </script>
 
 <template>
     <MainLauout>
         <h1>HomePage</h1>
+        <div>
+            <input type="file" @change="handleFileChange" ref="fileInput" />
+            <button @click="uploadFile" :disabled="!selectedFile">Загрузить</button>
+            <p v-if="uploadStatus">{{ uploadStatus }}</p>
+        </div>
     </MainLauout>
 </template>
