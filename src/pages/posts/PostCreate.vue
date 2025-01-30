@@ -8,7 +8,7 @@ import ButtonGreen from '../../components/ui/ButtonGreen.vue';
 import { useForm } from 'vee-validate';
 import { useYupValidation } from '../../utils/useYupValidation';
 import useCreatePost from '../../api/posts/useCreatePost';
-import { apiFetchWithFiles } from '../../utils/api/apiFetchWithFiles';
+// import apiFetchWithFiles from '../../utils/api/apiFetchWithFiles';
 import { ICreatePost } from '../../Types';
 
 
@@ -33,22 +33,23 @@ const [isPublished] = defineField('is_published')
 const [description] = defineField('description')
 const [files] = defineField('files')
 
-const uploadFiles = async(files:File[])=>{
-    try{
-         const formData = new FormData();
-         files.forEach(file => formData.append('files', file));
-         const data = await apiFetchWithFiles('/upload', {
-                method:'POST',
-               body: formData
-            })
-        return data
-    }catch(e:any){
-        setErrors({files:e.message})
-        throw new Error(e.message)
-    }
-}
+// const uploadFiles = async(files:File[])=>{
+//     try{
+//          const formData = new FormData();
+//          files.forEach(file => formData.append('files', file));
+//          const data = await apiFetchWithFiles('/upload', {
+//                 method:'POST',
+//                body: formData
+//             })
+//         return data
+//     }catch(e:any){
+//         setErrors({files:e.message})
+//         throw new Error(e.message)
+//     }
+// }
 
-const onFormSubmit = handleSubmit(async(values)=>{
+const onFormSubmit = handleSubmit(async (values) => {
+
     // try{
     //     values.author = null;
     //      if(!imageUrl.value){
@@ -65,19 +66,20 @@ const onFormSubmit = handleSubmit(async(values)=>{
     // }catch(e:any){
     //     console.log(e)
     // }
-    try {
-          const fileUploadResult = await uploadFiles(values.files)
-          const postData: ICreatePost = {
-            description: values.description,
-            is_published: values.is_published,
-           file_ids: fileUploadResult.map((item: {id:number})=>item.id)
-           };
-           await createPost(postData)
+
+    // try {
+    //       const fileUploadResult = await uploadFiles(values.files)
+    //       const postData: ICreatePost = {
+    //         description: values.description,
+    //         is_published: values.is_published,
+    //        file_ids: fileUploadResult.map((item: {id:number})=>item.id)
+    //        };
+    //        await createPost(postData)
 
 
-       }catch(e:any){
-        console.log('form error',e.message)
-       }
+    //    }catch(e:any){
+    //     console.log('form error',e.message)
+    //    }
 
 
     })
