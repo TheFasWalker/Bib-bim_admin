@@ -31,7 +31,6 @@ export async function apiFetch(endpoint:string, options:FethcOptions={}):Promise
         })
         const responseBody = await response.text()
         if (!response.ok) {
-
             const errorMessage = errorsToText(responseBody);
             siteState.errorText = errorMessage;
             throw new Error(errorMessage);

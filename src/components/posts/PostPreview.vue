@@ -13,14 +13,8 @@
         </div>
             <div class="grid grid-cols-2 gap-3">
                 <DeleteButton
+                    @confirm="deletePostById(id)"
                     addClass="w-full"/>
-                <!-- <EditButton
-                    class="w-full"/> -->
-                    <!-- <router-link 
-                    :to="{name: 'editPost',params:{id : id}}"
-                    class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm fill-white stroke-white flex items-center justify-center h-12 w-12"">
-                       <Icons iconName="gear"/>
-                    </router-link> -->
                     <router-link 
                         :to="{name: 'editPost', params: { id: id }}"
                         class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm fill-white stroke-white flex items-center justify-center h-12 ">
@@ -34,9 +28,11 @@
     </template>
     
     <script setup lang="ts">
+    import useDeletePostById from '../../api/posts/useDeletePostById';
     import { IPost } from '../../Types';
     import DeleteButton from '../ui/DeleteButton.vue';
     import Icons from '../ui/Icons.vue';
 
+    const {deletePostById} = useDeletePostById()
     defineProps<IPost>()
     </script>
