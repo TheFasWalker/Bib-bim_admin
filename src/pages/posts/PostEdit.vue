@@ -11,7 +11,9 @@ import Checkbox from '../../components/forms/components/Checkbox.vue';
 import MultiImageUpload from '../../components/forms/components/MultiImageUpload.vue';
 import TextEditor from '../../components/forms/components/TextEditor.vue';
 import { useForm } from 'vee-validate';
-
+import DeleteButton from '../../components/ui/DeleteButton.vue';
+import useDeletePostById from '../../api/posts/useDeletePostById.ts';
+const {deletePostById} = useDeletePostById()
 const {getPostById}= useGetPostById()
 const postState = PostsState()
 const route = useRoute()
@@ -22,7 +24,6 @@ onMounted(() => {
     if (!postState.postItem) {
         getPostById(postId)
     }
-    console.log(typeof(postState.postItem?.images))
 })
 const schema = useYupValidation({
     isPublished:true,
@@ -49,9 +50,14 @@ const onFormSubmit = handleSubmit(async (values) => {})
 <template>
     <MainLauout>
         <SubHeader title="Редактирование поста" nav="posts"/>
-        <div class=" w-full p-2 border shadow-sm rounded-lg flex flex-col gap-2">
-            <span>Пост создан: {{ postState.postItem?.createDate }} {{ postState.postItem?.createTime }}</span>
-            <span>Автор : {{ postState.postItem?.author || 'NoNameAuthor'  }}</span>
+        <div class=" w-full p-2 border shadow-sm rounded-lg flex flex-row justify-between items-center">
+            <div class=" flex flex-col gap-2">
+                <span>Пост создан: {{ postState.postItem?.createDate }} {{ postState.postItem?.createTime }}</span>
+                <span>Автор : {{ postState.postItem?.author || 'NoNameAuthor'  }}</span>
+            </div>
+            <DeleteButton
+            @confirm="deletePostById(postState.postItem?.id)"/>
+
         </div>
         
         
@@ -61,7 +67,7 @@ const onFormSubmit = handleSubmit(async (values) => {})
             <div class=" flex flex-row gap-5 h-10 ">
                 <span
                 v-if="isPublished"
-                class="w-[150px] bg-green-600 p-2 font-bold rounded-xl"
+                class="w-[150px] bg-green-600 p-2 font-bold rounded-xl text-center"
                 >Опубликовано</span>
                 <span
                 v-else
