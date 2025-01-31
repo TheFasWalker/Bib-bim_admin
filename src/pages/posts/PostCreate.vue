@@ -130,6 +130,7 @@ const onFormSubmit = handleSubmit(async (values) => {
             </div>
             <!-- {{ description }} -->
             <ButtonGreen
+            class=" mt-8"
             type="submit"
             title="Сохранить"/>
 

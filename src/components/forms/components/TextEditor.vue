@@ -4,6 +4,7 @@
     <div ref="quillEditor" class="border border-gray-300 rounded-md p-2"></div>
   </div>
   <textarea 
+  hidden
   :name="name" 
   :value="modelValue" 
   @input="$emit('update:modelValue', $event.target.value)"
