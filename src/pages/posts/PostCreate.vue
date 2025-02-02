@@ -8,15 +8,18 @@ import ButtonGreen from '../../components/ui/ButtonGreen.vue';
 import { useForm } from 'vee-validate';
 import { useYupValidation } from '../../utils/useYupValidation';
 import useCreatePost from '../../api/posts/useCreatePost';
-// import apiFetchWithFiles from '../../utils/api/apiFetchWithFiles';
-import { ICreatePost } from '../../Types';
+import {v3 as uuid} from 'uuid'
+import useGetPostById from '../../api/posts/useGetPostById';
+import useEditPost from '../../api/posts/useEditPost';
+import { useRouter } from 'vue-router';
 
-
+const router = useRouter()
 const{createPost} = useCreatePost()
+const {editPost} = useEditPost()
 const schema = useYupValidation({
     isPublished:true,
     description:true,
-    files:true
+    images:true
 })
 
 const { errors, defineField, handleSubmit,setErrors } = useForm({
@@ -26,63 +29,45 @@ const { errors, defineField, handleSubmit,setErrors } = useForm({
     initialValues:{
         description: '',
         is_published: false,
-        files: []
+        images: []
     }
 })
 const [isPublished] = defineField('is_published')
 const [description] = defineField('description')
-const [files] = defineField('files')
+const [images] = defineField('images')
 
-// const uploadFiles = async(files:File[])=>{
-//     try{
-//          const formData = new FormData();
-//          files.forEach(file => formData.append('files', file));
-//          const data = await apiFetchWithFiles('/upload', {
-//                 method:'POST',
-//                body: formData
-//             })
-//         return data
-//     }catch(e:any){
-//         setErrors({files:e.message})
-//         throw new Error(e.message)
-//     }
-// }
 
 const onFormSubmit = handleSubmit(async (values) => {
+    let postId=''
+    values.author = null
+    const photos = values.images
+    const publishingStatus = values.is_published
 
-    // try{
-    //     values.author = null;
-    //      if(!imageUrl.value){
-    //          setErrors({files:'Должна быть хотя бы 1 фотография'})
-    //          return
-    //       }
-    //     const file = await  fetch(imageUrl.value).then(res => res.blob()).then(blob => new File([blob], 'image.jpg', { type: 'image/jpeg' }))
-    //     const uploadedFiles = await uploadFiles([file])
-    //     if(uploadedFiles){
-    //         values.files = uploadedFiles
-    //     }
+    delete values.is_published
+    values.images = []
 
-    //     await createPost(values)
-    // }catch(e:any){
-    //     console.log(e)
-    // }
+    const imageArray = [
+        'https://img.freepik.com/free-photo/close-up-portrait-adorable-cats_23-2151917065.jpg?t=st=1738459333~exp=1738462933~hmac=0bd7b0fd568f11b801c29438cbff2f0b6bb35a512453a3dca818a7c0b1c7b8a7&w=1380',
+        'https://img.freepik.com/premium-photo/cute-kitten-cat-closeup_1026065-142280.jpg?w=1380'
+    ]
 
-    // try {
-    //       const fileUploadResult = await uploadFiles(values.files)
-    //       const postData: ICreatePost = {
-    //         description: values.description,
-    //         is_published: values.is_published,
-    //        file_ids: fileUploadResult.map((item: {id:number})=>item.id)
-    //        };
-    //        await createPost(postData)
+    createPost(values)
+        .then((data)=>{
+            postId = data
+            console.log('получили postId = ' + postId)
+            console.log('тут будет редактирование названий картинок и залив в minio')
+        })
+        .then(()=>{
+            values.images = imageArray
+            values.id = postId
+            values.is_published = publishingStatus
+            const dataToSend = new URLSearchParams(values).toString()
+            editPost(dataToSend)
+        }).then(()=>{
+            router.push({name:'posts'})
+        })
 
-
-    //    }catch(e:any){
-    //     console.log('form error',e.message)
-    //    }
-
-
-    })
+})
 
 
 </script>
@@ -95,15 +80,15 @@ const onFormSubmit = handleSubmit(async (values) => {
         nav="posts"/>
 
         <form @submit.prevent="onFormSubmit" class=" flex flex-col gap-5">
-            {{ errors.files }}
+            {{ errors.images }}
             <div class=" flex flex-row gap-5 h-10 ">
                 <span
                 v-if="isPublished"
-                class="w-[150px] bg-green-600 p-2 font-bold rounded-xl"
+                class="w-[150px] bg-green-600 p-2 font-bold rounded-xl text-center"
                 >Опубликовано</span>
                 <span
                 v-else
-                class="w-[150px] bg-red-500 text-white p-2 font-bold rounded-xl"
+                class="w-[150px] bg-red-500 text-white p-2 font-bold rounded-xl text-center"
                 >Не опубликовано</span>
             <Checkbox
             class="h-full"
@@ -117,8 +102,8 @@ const onFormSubmit = handleSubmit(async (values) => {
                 <h3>Фотографии</h3>
 
                 <MultiImageUpload
-                :error="errors.files"
-                v-model:images="files"/>
+                :error="errors.images"
+                v-model:images="images"/>
             </div>
             <div class=" flex flex-col gap-3 ">
                 <h3>Текст поста</h3>

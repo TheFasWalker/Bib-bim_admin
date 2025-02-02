@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import SubHeader from '../../components/general/SubHeader.vue';
 import MainLauout from '../../components/lauouts/MainLauout.vue';
 import { PostsState } from '../../store/PostsState.ts'
@@ -13,11 +13,17 @@ import TextEditor from '../../components/forms/components/TextEditor.vue';
 import { useForm } from 'vee-validate';
 import DeleteButton from '../../components/ui/DeleteButton.vue';
 import useDeletePostById from '../../api/posts/useDeletePostById.ts';
+import useEditPost from '../../api/posts/useEditPost.ts';
+import { SiteState } from '../../store/SiteState.ts';
 const {deletePostById} = useDeletePostById()
 const {getPostById}= useGetPostById()
+const {editPost} = useEditPost()
+const router = useRouter()
 const postState = PostsState()
 const route = useRoute()
 const postId = route.params.id
+const siteState = SiteState()
+
 
 onMounted(() => {
     postState.getPostByIdFromState(postId)
@@ -44,7 +50,15 @@ const [isPublished] = defineField('is_published')
 const [description] = defineField('description')
 const [files] = defineField('files')
 
-const onFormSubmit = handleSubmit(async (values) => {})
+const onFormSubmit = handleSubmit(async (values) => {
+    delete values.files
+    values.id= postState.postItem?.id
+    const dataToSend = new URLSearchParams(values).toString()
+    editPost(dataToSend).then(()=>{
+        siteState.sucsesMessage = 'Данные поста обновлены'
+        // router.push({name:'posts'})
+    })
+})
 </script>
 
 <template>

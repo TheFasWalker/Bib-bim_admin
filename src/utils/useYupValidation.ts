@@ -30,7 +30,7 @@ interface ValidationSchemaOptions {
     user_id?:boolean,
     role?: boolean,
     description?:boolean,
-    files?: boolean;
+    images?: boolean;
     isPublished?: boolean;
     [key: string]: boolean | undefined;
 }
@@ -63,8 +63,8 @@ export function useYupValidation(options: ValidationSchemaOptions) {
     if(options.description){
         schemaObject.description = yup.string().required('Текст поста не может быть пустым')
     }
-    if(options.files){
-        schemaObject.files = yup.array().min(1, 'Должна быть хотя бы 1 фотография').required()
+    if(options.images){
+        schemaObject.images = yup.array().min(1, 'Должна быть хотя бы 1 фотография').required()
     }
     if (options.isPublished) {
         schemaObject.isPublished = yup.boolean()
