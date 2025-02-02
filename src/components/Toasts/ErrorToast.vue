@@ -4,13 +4,16 @@ import { SiteState } from '../../store/SiteState';
 const showToastLength = import.meta.env.VITE_SHOW_TOAST_TIME
 
 const store = SiteState()
-watch(() => store.errorText, (newMessage) => {
+if(showToastLength){
+  watch(() => store.errorText, (newMessage) => {
   if (newMessage) {
     setTimeout(() => {
       store.cleanTextError();
     }, showToastLength*1000);
   }
 });
+}
+
 </script>
 <template>
 
