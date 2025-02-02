@@ -1,8 +1,16 @@
 <script setup lang="ts">
+import { watch } from 'vue';
 import { SiteState } from '../../store/SiteState';
-
+const showToastLength = import.meta.env.VITE_SHOW_TOAST_TIME
 
 const store = SiteState()
+watch(() => store.sucsesMessage, (newMessage) => {
+  if (newMessage) {
+    setTimeout(() => {
+      store.cleanSucsessText();
+    }, showToastLength*1000);
+  }
+});
 </script>
 <template>
 

@@ -12,7 +12,7 @@ interface FethcOptions extends RequestInit {
 export async function apiFetch(endpoint:string, options:FethcOptions={}):Promise<any>{
     const siteState = SiteState();
     const userState = UserSate();
-    siteState.cleanMessages();
+    siteState.cleanTextError();
     siteState.loadingTrue()
 
     const headers = {

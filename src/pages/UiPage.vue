@@ -263,6 +263,19 @@ const state = SiteState()
             </div>
         </div>
         <div class="flex flex-col gap-3">
+        <ButtonBlue
+            @click="state.sucsesMessage= 'Sucsess message'"
+            title="SucsessTost"/>
+        <div class="flex flex-col gap-2">
+                <span>Название : SucsessTost </span>
+                <div class="">
+                    <span>пропсов нет</span>
+                    <span>появляелся есть в стейте errorText !=' '</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="flex flex-col gap-3">
         <SortingByPublishing
         @filter-change="handleFilterChange"
         :currentFilter="currentFilter"/>

@@ -56,7 +56,7 @@ const onFormSubmit = handleSubmit(async (values) => {
     const dataToSend = new URLSearchParams(values).toString()
     editPost(dataToSend).then(()=>{
         siteState.sucsesMessage = 'Данные поста обновлены'
-        // router.push({name:'posts'})
+        router.push({name:'posts'})
     })
 })
 </script>
