@@ -1,83 +1,77 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
+import { onBeforeMount, onBeforeUnmount, onMounted, watch } from 'vue';
 import SubHeader from '../../components/general/SubHeader.vue';
 import MainLauout from '../../components/lauouts/MainLauout.vue';
-import { PostsState } from '../../store/PostsState.ts'
-import { onMounted } from 'vue';
-import useGetPostById from '../../api/posts/useGetPostById.ts';
-import { useYupValidation } from '../../utils/useYupValidation.ts';
-import ButtonGreen from '../../components/ui/ButtonGreen.vue';
-import Checkbox from '../../components/forms/components/Checkbox.vue';
-import MultiImageUpload from '../../components/forms/components/MultiImageUpload.vue';
-import TextEditor from '../../components/forms/components/TextEditor.vue';
-import { useForm } from 'vee-validate';
 import DeleteButton from '../../components/ui/DeleteButton.vue';
-import useDeletePostById from '../../api/posts/useDeletePostById.ts';
-import useEditPost from '../../api/posts/useEditPost.ts';
-import { SiteState } from '../../store/SiteState.ts';
-const {deletePostById} = useDeletePostById()
-const {getPostById}= useGetPostById()
-const {editPost} = useEditPost()
-const router = useRouter()
-const postState = PostsState()
+import { onBeforeRouteLeave, useRoute } from 'vue-router';
+import useGetPostById from '../../api/posts/useGetPostById';
+import { PostsState } from '../../store/PostsState';
+import { useYupValidation } from '../../utils/useYupValidation';
+import { useForm } from 'vee-validate';
+import Checkbox from '../../components/forms/components/Checkbox.vue';
+import ButtonGreen from '../../components/ui/ButtonGreen.vue';
+import TextEditor from '../../components/forms/components/TextEditor.vue';
+import MultiImageUpload from '../../components/forms/components/MultiImageUpload.vue';
+
+const { getPostById, postData} = useGetPostById()
+const postsState = PostsState()
+
 const route = useRoute()
-const postId = route.params.id
-const siteState = SiteState()
-
-
-onMounted(() => {
-    postState.getPostByIdFromState(postId)
-    if (!postState.postItem) {
-        getPostById(postId)
-    }
+const postId = route.params.id as string
+onBeforeMount(()=>{
+    getPostById(postId)
 })
 const schema = useYupValidation({
     isPublished:true,
     description:true,
-    files:true
+    images:true
 })
-const { errors, defineField, handleSubmit,setErrors } = useForm({
+const { errors, defineField, handleSubmit,setErrors,resetForm } = useForm({
     validationSchema:schema,
     validateOnInput:true,
-    validateOnChange:true,
+    validateOnChange:true,  
     initialValues:{
-        description: postState.postItem?.description,
-        is_published: postState.postItem?.isPublished,
-        files: []
+        description: postData.value?.description,
+        is_published: false,
+        images: []
     }
 })
 const [isPublished] = defineField('is_published')
 const [description] = defineField('description')
-const [files] = defineField('files')
-
+const [images] = defineField('images')
 const onFormSubmit = handleSubmit(async (values) => {
-    delete values.files
-    values.id= postState.postItem?.id
-    const dataToSend = new URLSearchParams(values).toString()
-    editPost(dataToSend).then(()=>{
-        siteState.sucsesMessage = 'Данные поста обновлены'
-        router.push({name:'posts'})
-    })
+
 })
+watch(postData,()=>{
+    if(postData.value){
+         resetForm({
+            values:{
+                description: postData.value?.description,
+                is_published: postData.value?.isPublished,
+                images: postData.value?.images
+            }
+        })
+    }
+})
+
 </script>
 
 <template>
     <MainLauout>
         <SubHeader title="Редактирование поста" nav="posts"/>
+{{ postData?.description }}
         <div class=" w-full p-2 border shadow-sm rounded-lg flex flex-row justify-between items-center">
             <div class=" flex flex-col gap-2">
-                <span>Пост создан: {{ postState.postItem?.createDate }} {{ postState.postItem?.createTime }}</span>
-                <span>Автор : {{ postState.postItem?.author || 'NoNameAuthor'  }}</span>
+                <span>Пост создан: {{ postData?.createDate }} {{ postData?.createTime }}</span>
+                <span>Автор : {{ postData?.author || 'NoNameAuthor'  }}</span>
             </div>
             <DeleteButton
-            @confirm="deletePostById(postState.postItem?.id)"/>
+            @confirm=""/>
 
         </div>
-        
-        
-        {{ postState.postItem?.author }}
-        <form @submit.prevent="onFormSubmit" class=" flex flex-col gap-5 mt-6">
-            {{ errors.files }}
+
+        <form @submit.prevent="onFormSubmit" class=" flex flex-col gap-5">
+            {{ errors.images }}
             <div class=" flex flex-row gap-5 h-10 ">
                 <span
                 v-if="isPublished"
@@ -85,7 +79,7 @@ const onFormSubmit = handleSubmit(async (values) => {
                 >Опубликовано</span>
                 <span
                 v-else
-                class="w-[150px] bg-red-500 text-white p-2 font-bold rounded-xl"
+                class="w-[150px] bg-red-500 text-white p-2 font-bold rounded-xl text-center"
                 >Не опубликовано</span>
             <Checkbox
             class="h-full"
@@ -94,14 +88,14 @@ const onFormSubmit = handleSubmit(async (values) => {
             v-model="isPublished"/>
 
             </div>
-
+<!-- 
             <div class=" flex flex-col gap-3 ">
                 <h3>Фотографии</h3>
 
                 <MultiImageUpload
-                :error="errors.files"
-                v-model:images="files"/>
-            </div>
+                :error="errors.images"
+                v-model:images="images"/>
+            </div> -->
             <div class=" flex flex-col gap-3 ">
                 <h3>Текст поста</h3>
                 <TextEditor
@@ -119,6 +113,7 @@ const onFormSubmit = handleSubmit(async (values) => {
 
 
         </form>
-        
+
+
     </MainLauout>
 </template>
