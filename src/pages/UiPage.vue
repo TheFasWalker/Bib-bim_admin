@@ -18,6 +18,7 @@ import ImageInput from '../components/forms/components/ImageInput.vue';
 import MultiImageUpload from '../components/forms/components/MultiImageUpload.vue';
 import TextEditor from '../components/forms/components/TextEditor.vue';
 import SortingByPublishing from '../components/SortingByPublishing.vue';
+import PreviewPhotoWithDelete from '../components/PreviewPhotoWithDelete.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
@@ -202,18 +203,34 @@ const state = SiteState()
 
             </div>
         </div>
-        <div class="">
-            <MultiImageUpload
-            v-model:images="form.images"/>
-            <div class="flex flex-col gap-2">
-                        <span>Название : MultiImageUpload </span>
-                        <div class="">
-                            <span>пропсы:</span>
-                            <ul>
-                                <li>v-model</li>
-                            </ul>
-                        </div>
-
+        <div class="grid grid-cols-2 gap-5">
+            <div class="">
+                <MultiImageUpload
+                v-model:images="form.images"/>
+                <div class="flex flex-col gap-2">
+                    <span>Название : MultiImageUpload </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>v-model</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <PreviewPhotoWithDelete
+                url="https://media.gettyimages.com/id/1127317526/nl/foto/scottish-fold-playing.jpg?s=612x612&amp;w=0&amp;k=20&amp;c=Rw8Er7CKOy8tTibwK0J_VuCCcz-yVM9AE-xBM6YUJKM="
+                />
+                <div class="flex flex-col gap-2">
+                    <span>Название : PreviewPhotoWithDelete </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>url: string</li>
+                            <li>@delete-image :при клике на крестик</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="">
