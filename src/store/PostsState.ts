@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
-import { IPost } from "../Types";
+import { IGetPostsList } from "../Types";
 
 export const PostsState = defineStore('postsList',{
     state:()=>({
-        postsList: null as IPost[] | null,
+        postsList: null as IGetPostsList | null,
     }),
     actions: {
         deletePostById(id: string) {

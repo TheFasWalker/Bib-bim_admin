@@ -51,4 +51,10 @@ export interface Iuser {
       description: string
       images: string[]
     }
+    export interface IGetPostsList{
+      items: IPost[],
+      pageNumber:number,
+      pageSize:number,
+      totalItems:number
+    }
 

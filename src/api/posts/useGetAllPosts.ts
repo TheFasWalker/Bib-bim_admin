@@ -8,6 +8,7 @@ export default function(){
             method:"GET"
         })
         .then((data)=>{
+            console.log(data)
             postsState.postsList = data
         })
 

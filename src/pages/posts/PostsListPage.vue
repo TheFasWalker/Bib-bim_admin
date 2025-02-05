@@ -41,9 +41,9 @@ watch(queryParams, (newQueryParams) => {
         @filter-change="handleFilterChange"
         :currentFilter="currentFilter"/>
     </SubHeader>
-        <div v-if="postsList.postsList" class="grid grid-cols-3 gap-3">
+        <div v-if="postsList.postsList?.items" class="grid grid-cols-3 gap-3">
             <PostPreview
-                v-for="post in postsList.postsList"
+                v-for="post in postsList.postsList.items"
                 :key="post.id"
                 :data="post"
                 v-bind="post"
@@ -51,7 +51,7 @@ watch(queryParams, (newQueryParams) => {
 
         </div>
         <div class="" v-else>
-            <h1>Упс постов нет</h1>
+            <h1>Упс постов нет</h1> 
         </div>
     </MainLauout>
 </template>
