@@ -12,6 +12,7 @@ import Checkbox from '../../components/forms/components/Checkbox.vue';
 import ButtonGreen from '../../components/ui/ButtonGreen.vue';
 import TextEditor from '../../components/forms/components/TextEditor.vue';
 import MultiImageUpload from '../../components/forms/components/MultiImageUpload.vue';
+import PreviewPhotoWithDelete from '../../components/PreviewPhotoWithDelete.vue';
 
 const { getPostById, postData} = useGetPostById()
 const postsState = PostsState()
@@ -27,11 +28,9 @@ const schema = useYupValidation({
     images:true
 })
 const { errors, defineField, handleSubmit,setErrors,resetForm } = useForm({
-    validationSchema:schema,
-    validateOnInput:true,
-    validateOnChange:true,  
+    validationSchema:schema, 
     initialValues:{
-        description: postData.value?.description,
+        description: '',
         is_published: false,
         images: []
     }
@@ -39,7 +38,10 @@ const { errors, defineField, handleSubmit,setErrors,resetForm } = useForm({
 const [isPublished] = defineField('is_published')
 const [description] = defineField('description')
 const [images] = defineField('images')
+const [newImages] = defineField('newImages')
+
 const onFormSubmit = handleSubmit(async (values) => {
+
 
 })
 watch(postData,()=>{
@@ -53,14 +55,17 @@ watch(postData,()=>{
         })
     }
 })
-
+const deletePhoto =(url)=>{
+    console.log('delete' + url)
+    console.log(images.value)
+    images.value = images.value.filter((image) => image !== url)
+}
 </script>
 
 <template>
     <MainLauout>
         <SubHeader title="Редактирование поста" nav="posts"/>
-{{ postData?.description }}
-        <div class=" w-full p-2 border shadow-sm rounded-lg flex flex-row justify-between items-center">
+        <div class=" w-full p-2 border shadow-sm rounded-lg flex flex-row justify-between items-center mb-5">
             <div class=" flex flex-col gap-2">
                 <span>Пост создан: {{ postData?.createDate }} {{ postData?.createTime }}</span>
                 <span>Автор : {{ postData?.author || 'NoNameAuthor'  }}</span>
@@ -71,7 +76,6 @@ watch(postData,()=>{
         </div>
 
         <form @submit.prevent="onFormSubmit" class=" flex flex-col gap-5">
-            {{ errors.images }}
             <div class=" flex flex-row gap-5 h-10 ">
                 <span
                 v-if="isPublished"
@@ -88,14 +92,28 @@ watch(postData,()=>{
             v-model="isPublished"/>
 
             </div>
-<!-- 
             <div class=" flex flex-col gap-3 ">
-                <h3>Фотографии</h3>
-
-                <MultiImageUpload
-                :error="errors.images"
-                v-model:images="images"/>
-            </div> -->
+                <div 
+                    v-if="images.length"
+                    class=" flex flex-col gap-2 p-2 shadow-lg rounded-md">
+                    <h3>Имеющиеся фотографии</h3>
+                    <div class=" grid grid-cols-3 gap-3">
+                        <PreviewPhotoWithDelete
+                        :key="image"
+                        @delete-image="deletePhoto(image)"
+                        v-for="image in images"
+                        :url="image"
+                        />
+                    </div>
+                </div>
+                <div class="shadow-lg rounded-md flex flex-col gap-2 p-2">
+                    <h2>Новые фотографии</h2>
+                    <MultiImageUpload
+                                :error="errors.newImages"
+                                v-model:newImages="newImages"/> 
+                </div>
+                
+            </div> 
             <div class=" flex flex-col gap-3 ">
                 <h3>Текст поста</h3>
                 <TextEditor
