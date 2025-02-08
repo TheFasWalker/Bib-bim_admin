@@ -7,7 +7,7 @@
     
         <div class="flex flex-col gap-2">
             <div class=" h-40 w-full">
-                <img class=" w-full h-full object-contain" :src="`${images[0]? images[0] : '/images/noimage.png'}`" alt="">
+                <img class=" w-full h-full object-contain" :src="`${urlEndpoint}/${images[0]? images[0] : '/images/noimage.png'}`" alt="">
             </div>
             <div class="h-30 overflow-hidden" v-html="description"></div>
         </div>
@@ -32,6 +32,7 @@
     import { IPost } from '../../Types';
     import DeleteButton from '../ui/DeleteButton.vue';
     import Icons from '../ui/Icons.vue';
+    const urlEndpoint = import.meta.env.VITE_API_PHOTOS_URL
 
     const {deletePostById} = useDeletePostById()
     defineProps<IPost>()
