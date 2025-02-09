@@ -29,27 +29,37 @@
         </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, watch, defineProps, defineEmits } from 'vue';
 import Icons from '../../ui/Icons.vue'
-const localImages = ref([]);
-const emit = defineEmits(['update:modelValue'])
+interface ImageData {
+  file: File;
+  preview: string;
+}
+interface Props{
+    modelValue:File[],
+    error:string
+}
+const props =defineProps<Props>()
+const emit = defineEmits<{(e: 'update:modelValue', value: File[]): void}>()
+const localImages = ref<ImageData[]>([]);
 
-const handleImageUpload = (event) => {
-const files = Array.from(event.target.files);
 
-files.forEach((file) => {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        localImages.value.push({
-            file: file,
-            preview: e.target.result,
-        });
-        emit('update:modelValue', localImages.value.map(image => image.file))
-    };
+const handleImageUpload = (event:Event) => {
+    const files = Array.from((event.target as HTMLInputElement).files as FileList);
 
-    reader.readAsDataURL(file);
-});
+    files.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            localImages.value.push({
+                file: file,
+                preview: e.target?.result as string,
+            });
+            emit('update:modelValue', localImages.value.map(image => image.file))
+        };
+
+        reader.readAsDataURL(file);
+    });
 };
 
 const removeImage = (index) => {
@@ -57,18 +67,7 @@ const removeImage = (index) => {
     emit('update:modelValue', localImages.value.map(image => image.file))
 };
 
-const props =defineProps({
-modelValue: {
-    type: Array,
-    default: () => {
-        return []
-    }
-    },
-    error: {
-    type:String,
-    default:''
-}
-})
+
 watch(() => props.modelValue, (newValue) => {
     localImages.value = newValue?.map(file => {
     return {
