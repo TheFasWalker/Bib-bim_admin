@@ -118,7 +118,7 @@ const deletePhoto =(url:string)=>{
                         :key="image"
                         @delete-image="deletePhoto(image)"
                         v-for="image in images"
-                        :url="image"
+                        :url="`${urlEndpoint}/${image}`"
                         />
                     </div>
                 </div>
