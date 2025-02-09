@@ -25,18 +25,20 @@ const handleFilterChange = (value: boolean | 'all') => {
   currentFilter.value = value;
   if (value === true) {
     publishingState.value = true
+    activePage.value = 1
   } else if(value === false){
     publishingState.value = false
+    activePage.value = 1
   } else {
     publishingState.value = ''
+    activePage.value = 1
   }
 };
 watch(queryParams, (newQueryParams) => {
     console.log('queryParams changed:', newQueryParams)
-  getAllPosts(newQueryParams);
+    getAllPosts(newQueryParams);
 });
 const handlePageChange =(newPage)=>{
-    console.log(newPage)
     activePage.value = newPage
 }
 </script>
