@@ -12,7 +12,7 @@ import useCreatePost from '../../api/posts/useCreatePost';
 import useGetPostById from '../../api/posts/useGetPostById';
 import useEditPost from '../../api/posts/useEditPost';
 import { useRouter } from 'vue-router';
-import { apiFethcWithFiles } from '../../utils/api/apiFetchWithFiles';
+import { apiPutFiteToMinio } from '../../utils/minio/apiPutFiteToMinio';
 import { getFileExtension } from '../../utils/GetFileExtention';
 
 const router = useRouter()
@@ -58,7 +58,7 @@ const onFormSubmit = handleSubmit(async (values) => {
                 photos.map((file:File)=>{
                     const imageName:string = `${postId}_${uuidv4()}${getFileExtension(file.name)}`
                     imageArray.push(`/feedpost/${imageName}`)
-                    apiFethcWithFiles('feedpost', file,imageName)
+                    apiPutFiteToMinio('feedpost', file,imageName)
                 })
             )
         })

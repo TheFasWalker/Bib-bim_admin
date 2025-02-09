@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import MainLauout from '../components/lauouts/MainLauout.vue';
 import { ref } from 'vue';
+import ButtonWhite from '../components/ui/ButtonWhite.vue';
 
 const fileInput = ref(null);
 const selectedFile = ref(null);
@@ -8,6 +9,7 @@ const uploadStatus = ref('');
 const acsesskeyString = import.meta.env.VITE_MINIO_ACCESS_KEY_ID
 const secretKeyString = import.meta.env.VITE_MINIO_SECRET_ACCESS_KEY
 const urlEndpoint = import.meta.env.VITE_API_PHOTOS_URL
+import { apiDeteteFileFromMinio } from '../utils/minio/apiDeteteFileFromMinio';
 const handleFileChange = (event) => {
   selectedFile.value = event.target.files[0];
 };
@@ -49,6 +51,11 @@ const uploadFile = async () => {
       uploadStatus.value = 'Ошибка загрузки: ' + error.message;
     }
 };
+const fileUrl = '/feedpost/211431af-f630-4261-b625-d73538b702d8_65b042d6-0d47-4c2d-9837-456fb4231e8b.jpg'
+const deleteElenemt =()=>{
+  console.log('deleteElem')
+  apiDeteteFileFromMinio(fileUrl)
+}
 </script>
 
 <template>
@@ -59,5 +66,8 @@ const uploadFile = async () => {
             <button @click="uploadFile" :disabled="!selectedFile">Загрузить</button>
             <p v-if="uploadStatus">{{ uploadStatus }}</p>
         </div>
+        <ButtonWhite
+        @click="deleteElenemt"
+        title="delete from minio"/>
     </MainLauout>
 </template>
