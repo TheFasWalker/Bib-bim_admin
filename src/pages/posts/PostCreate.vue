@@ -48,11 +48,12 @@ const onFormSubmit = handleSubmit(async (values) => {
     delete values.is_published
     values.images = []
 
-    const imageArray:string[] = ['/feedpost/211431af-f630-4261-b625-d73538b702d8_65b042d6-0d47-4c2d-9837-456fb4231e8b.jpg']
+    const imageArray:string[] = []
 
     createPost(values)
         .then((data)=>{
             postId = data
+            console.log('asdfaa')
             Promise.all(
                 photos.map((file:File)=>{
                     const imageName:string = `${postId}_${uuidv4()}${getFileExtension(file.name)}`
@@ -62,15 +63,12 @@ const onFormSubmit = handleSubmit(async (values) => {
             )
         })
         .then(()=>{
-            console.log(imageArray)
             values.images = imageArray
-            values.id = postId
-            values.is_published = publishingStatus
-            console.log(values)
-            const dataToSend = new URLSearchParams(values).toString()
-            editPost(dataToSend)
-
-        }).then(()=>{
+            delete values.author
+            values.isPublished = publishingStatus
+            editPost(values, postId)
+        })
+        .then(()=>{
             router.push({name:'posts'})
         })
 
