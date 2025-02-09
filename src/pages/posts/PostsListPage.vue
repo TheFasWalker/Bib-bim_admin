@@ -11,19 +11,24 @@ const itemsPerPage = import.meta.env.VITE_POST_TO_SHOW_AT_ONCE
 const postsList = PostsState()
 const { getAllPosts } = useGetAllPosts()
 const currentFilter = ref<boolean | 'all'>(true);
-const queryParams = ref(`?is_published=true&limit=${itemsPerPage}`)
+const activePage = ref<number>(1)
+const publishingState = ref<boolean | ''>(true)
+
+// const queryParams = ref(`?is_published=true&limit=${itemsPerPage}`)
+const queryParams = computed(()=>{
+    return `?is_published=${publishingState.value}&limit=${itemsPerPage}&offset=${activePage.value -1 }`
+})
 onMounted(()=>{
     getAllPosts(queryParams.value)
 })
 const handleFilterChange = (value: boolean | 'all') => {
   currentFilter.value = value;
-  console.log(itemsPerPage)
   if (value === true) {
-      queryParams.value = `?is_published=true&limit=${itemsPerPage}`
+    publishingState.value = true
   } else if(value === false){
-     queryParams.value = '?is_published=false&limit=6'
+    publishingState.value = false
   } else {
-       queryParams.value = ''
+    publishingState.value = ''
   }
 };
 watch(queryParams, (newQueryParams) => {
@@ -32,6 +37,7 @@ watch(queryParams, (newQueryParams) => {
 });
 const handlePageChange =(newPage)=>{
     console.log(newPage)
+    activePage.value = newPage
 }
 </script>
 
@@ -58,12 +64,8 @@ const handlePageChange =(newPage)=>{
             />
 
         </div>
-        <span>
-            Номер страницы {{ postsList.postsList.pageNumber }}
-        </span>
-        <span>Количество элементов на странице {{ postsList.postsList.pageSize }}</span>
-        <span> всего элементов{{ postsList.postsList.totalItems }}</span>
             <PaginationComponent
+            v-if="postsList.postsList.totalItems > postsList.postsList.pageSize"
             :active="postsList.postsList.pageNumber +1"
             :total="postsList.postsList.totalItems"
             :per-page="postsList.postsList.pageSize"
