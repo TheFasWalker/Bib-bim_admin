@@ -7,11 +7,13 @@ import MainLauout from '../../components/lauouts/MainLauout.vue';
 import ButtonGreen from '../../components/ui/ButtonGreen.vue';
 import { useForm } from 'vee-validate';
 import { useYupValidation } from '../../utils/useYupValidation';
+import { v4 as uuidv4 } from 'uuid';
 import useCreatePost from '../../api/posts/useCreatePost';
-import {v3 as uuid} from 'uuid'
 import useGetPostById from '../../api/posts/useGetPostById';
 import useEditPost from '../../api/posts/useEditPost';
 import { useRouter } from 'vue-router';
+import { apiFethcWithFiles } from '../../utils/api/apiFetchWithFiles';
+import { getFileExtension } from '../../utils/GetFileExtention';
 
 const router = useRouter()
 const{createPost} = useCreatePost()
@@ -46,23 +48,28 @@ const onFormSubmit = handleSubmit(async (values) => {
     delete values.is_published
     values.images = []
 
-    const imageArray = [
-        'https://img.freepik.com/free-photo/close-up-portrait-adorable-cats_23-2151917065.jpg?t=st=1738459333~exp=1738462933~hmac=0bd7b0fd568f11b801c29438cbff2f0b6bb35a512453a3dca818a7c0b1c7b8a7&w=1380',
-        'https://img.freepik.com/premium-photo/cute-kitten-cat-closeup_1026065-142280.jpg?w=1380'
-    ]
+    const imageArray:string[] = ['/feedpost/211431af-f630-4261-b625-d73538b702d8_65b042d6-0d47-4c2d-9837-456fb4231e8b.jpg']
 
     createPost(values)
         .then((data)=>{
             postId = data
-            console.log('получили postId = ' + postId)
-            console.log('тут будет редактирование названий картинок и залив в minio')
+            Promise.all(
+                photos.map((file:File)=>{
+                    const imageName:string = `${postId}_${uuidv4()}${getFileExtension(file.name)}`
+                    imageArray.push(`/feedpost/${imageName}`)
+                    apiFethcWithFiles('feedpost', file,imageName)
+                })
+            )
         })
         .then(()=>{
+            console.log(imageArray)
             values.images = imageArray
             values.id = postId
             values.is_published = publishingStatus
+            console.log(values)
             const dataToSend = new URLSearchParams(values).toString()
             editPost(dataToSend)
+
         }).then(()=>{
             router.push({name:'posts'})
         })

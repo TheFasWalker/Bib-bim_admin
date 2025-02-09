@@ -14,6 +14,8 @@ import TextEditor from '../../components/forms/components/TextEditor.vue';
 import MultiImageUpload from '../../components/forms/components/MultiImageUpload.vue';
 import PreviewPhotoWithDelete from '../../components/PreviewPhotoWithDelete.vue';
 import useEditPost from '../../api/posts/useEditPost';
+const urlEndpoint = import.meta.env.VITE_API_PHOTOS_URL
+
 
 const { getPostById, postData} = useGetPostById()
 const {editPost} = useEditPost()
@@ -23,6 +25,7 @@ const route = useRoute()
 const postId = route.params.id as string
 onBeforeMount(()=>{
     getPostById(postId)
+    console.log(images.value)
 })
 const schema = useYupValidation({
     isPublished:true,

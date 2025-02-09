@@ -6,7 +6,7 @@ const secretKeyString = import.meta.env.VITE_MINIO_SECRET_ACCESS_KEY
 const url = import.meta.env.VITE_API_PHOTOS_URL
 
 
-export async function apiFethcWithFiles(endpoint: string,file:File):Promise<any> {
+export async function apiFethcWithFiles(endpoint: string,file:File, imageName:string):Promise<any> {
     const siteState = SiteState()
     const userState = UserSate()
     const fileBlob = new Blob([file], { type: file.type })
@@ -19,7 +19,7 @@ export async function apiFethcWithFiles(endpoint: string,file:File):Promise<any>
         headerData['Authorization'] = `Bearer ${userState.getUserToken}`
     }
     try {
-        const response = await fetch(`${url}/${endpoint}/${file.name}`, {
+        const response = await fetch(`${url}/${endpoint}/${imageName}`, {
             method: 'PUT',
             body:fileBlob,
             headers: headerData
@@ -40,6 +40,6 @@ export async function apiFethcWithFiles(endpoint: string,file:File):Promise<any>
         siteState.errorText = error.message;
         throw error;
     } finally {
-
+        siteState.loadingFalse()
     }
 }
