@@ -39,7 +39,7 @@ const { errors, defineField, handleSubmit,setErrors,resetForm } = useForm({
         description: '',
         is_published: false,
         images: [],
-        newImages:{}
+        newImages:[]
     }
 })
 const [isPublished] = defineField('is_published')
@@ -67,7 +67,7 @@ watch(postData,()=>{
                 description: postData.value?.description,
                 is_published: postData.value?.isPublished,
                 images: postData.value?.images,
-                newImages:{}
+                newImages:[]
             }
         })
     }
@@ -126,7 +126,7 @@ const deletePhoto =(url:string)=>{
                     <h2>Новые фотографии</h2>
                     <MultiImageUpload
                         :error="errors.newImages"
-                        v-model:newImages="newImages"/> 
+                        v-model="newImages"/> 
                 </div>
                 
             </div> 

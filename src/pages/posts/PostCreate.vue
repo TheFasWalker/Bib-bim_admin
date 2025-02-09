@@ -110,7 +110,7 @@ const onFormSubmit = handleSubmit(async (values) => {
 
                 <MultiImageUpload
                 :error="errors.images"
-                v-model:images="images"/>
+                v-model="images"/>
             </div>
             <div class=" flex flex-col gap-3 ">
                 <h3>Текст поста</h3>

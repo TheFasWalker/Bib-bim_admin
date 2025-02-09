@@ -33,7 +33,7 @@
 import { ref, watch, defineProps, defineEmits } from 'vue';
 import Icons from '../../ui/Icons.vue'
 const localImages = ref([]);
-const emit = defineEmits(['update:images'])
+const emit = defineEmits(['update:modelValue'])
 
 const handleImageUpload = (event) => {
 const files = Array.from(event.target.files);
@@ -45,7 +45,7 @@ files.forEach((file) => {
             file: file,
             preview: e.target.result,
         });
-        emit('update:images', localImages.value.map(image => image.file))
+        emit('update:modelValue', localImages.value.map(image => image.file))
     };
 
     reader.readAsDataURL(file);
@@ -54,11 +54,11 @@ files.forEach((file) => {
 
 const removeImage = (index) => {
     localImages.value.splice(index, 1);
-    emit('update:images', localImages.value.map(image => image.file))
+    emit('update:modelValue', localImages.value.map(image => image.file))
 };
 
 const props =defineProps({
-images: {
+modelValue: {
     type: Array,
     default: () => {
         return []
@@ -69,7 +69,7 @@ images: {
     default:''
 }
 })
-watch(() => props.images, (newValue) => {
+watch(() => props.modelValue, (newValue) => {
     localImages.value = newValue?.map(file => {
     return {
         file: file,
