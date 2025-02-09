@@ -1,12 +1,23 @@
-## Что устанорвлено:
+# О проекте:
+веб интерфейс для мобильног оприложения на kotlin
+Разработка backend API происходит паралельно с Веб интерфейсом
+
+## Что есть в проекте:
+Основная часть это Vue3 + ts composition API с vite
 <ul>
-    <li>Vue3</li>
-    <li>pinia</li>
-    <li>ts</li>
-    <li>tailwindCss стили компонентов берутся c <a target="_blank" href="https://flowbite.com/">flowbite</a></li>
+    <li>Стейт менеджер : pinia</li>
+    <li>Работа с формами : vee-validate + yup</li>
+    <li>Стили : tailwindCss <a target="_blank" href="https://flowbite.com/">flowbite</a> + postcss</li>
+    <li>Дополнительные пакеты :<ol>
+    <li>quill</li>
+    <li>vue3-uuid</li>
+    <li>vue-router</li>
+    <li>vite-plugin-vue-devtools + vue/devtools-api + vitejs/plugin-vue</li>    
+    </ol></li>
+
 </ul>
 
-# Запуск проекта
+## Запуск проекта
 1. Сделать копию .env.example (в корне проекта) -> переименовать копию в .env
 2. Заполнить файл .env 
 3. npm install
