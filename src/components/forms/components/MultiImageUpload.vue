@@ -38,7 +38,7 @@ interface ImageData {
 }
 interface Props{
     modelValue:File[],
-    error:string
+    error?:string
 }
 const props =defineProps<Props>()
 const emit = defineEmits<{(e: 'update:modelValue', value: File[]): void}>()
