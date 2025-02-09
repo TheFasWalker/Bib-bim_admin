@@ -37,12 +37,12 @@ const { errors, defineField, handleSubmit,setErrors,resetForm } = useForm({
     validationSchema:schema, 
     initialValues:{
         description: '',
-        is_published: false,
+        isPublished: false,
         images: [],
         newImages:[]
     }
 })
-const [isPublished] = defineField('is_published')
+const [isPublished] = defineField('isPublished')
 const [description] = defineField('description')
 const [images] = defineField('images')
 const [newImages] = defineField('newImages')
@@ -54,10 +54,9 @@ const onFormSubmit = handleSubmit(async (values) => {
     const newImages = values.newImages
     delete values.newImages
 
-    values.id = postId
     console.log(values)
     const dataToSend = new URLSearchParams(values).toString()
-    editPost(dataToSend).then(()=> router.push({name:'posts'}))
+    editPost(values, postId).then(()=> router.push({name:'posts'}))
 
 })
 watch(postData,()=>{
@@ -65,7 +64,7 @@ watch(postData,()=>{
          resetForm({
             values:{
                 description: postData.value?.description,
-                is_published: postData.value?.isPublished,
+                isPublished: postData.value?.isPublished,
                 images: postData.value?.images,
                 newImages:[]
             }
@@ -104,7 +103,7 @@ const deletePhoto =(url:string)=>{
             <Checkbox
             class="h-full"
             title="статус публикации"
-            name="is_published"
+            name="isPublished"
             v-model="isPublished"/>
 
             </div>
