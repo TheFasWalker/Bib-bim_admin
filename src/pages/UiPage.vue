@@ -19,10 +19,12 @@ import MultiImageUpload from '../components/forms/components/MultiImageUpload.vu
 import TextEditor from '../components/forms/components/TextEditor.vue';
 import SortingByPublishing from '../components/SortingByPublishing.vue';
 import PreviewPhotoWithDelete from '../components/PreviewPhotoWithDelete.vue';
+import TogglerCheckbox from '../components/forms/components/TogglerCheckbox.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
 const loaderState = ref(false)
+const isToggleState = ref(false)
 const imageUrl = ref<string | null>(null);
     const currentFilter = ref<boolean | 'all'>(true);
     const handleFilterChange = (value: boolean | 'all') => {
@@ -151,6 +153,24 @@ const state = SiteState()
                     title="title"
                     name="name"
                     v-model="checkboxState"/>
+                    <div class="flex flex-col gap-2">
+                    <span>Название : Checkbox </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>title : String</li>
+                            <li>name : String</li>
+                            <li>v-model</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex flex-col gap-3">
+                <TogglerCheckbox
+                    title="title"
+                    name="toggler"
+                    v-model="isToggleState"/>
                     <div class="flex flex-col gap-2">
                     <span>Название : Checkbox </span>
                     <div class="">
