@@ -1,4 +1,4 @@
-import { UserSate } from "../../store/UserState"
+import { UserState } from "../../store/UserState"
 
 const url = import.meta.env.VITE_API_DB_URL
 import { SiteState } from "../../store/SiteState"
@@ -11,7 +11,7 @@ interface FethcOptions extends RequestInit {
 
 export async function apiFetch(endpoint:string, options:FethcOptions={}):Promise<any>{
     const siteState = SiteState();
-    const userState = UserSate();
+    const userState = UserState();
     siteState.cleanTextError();
     siteState.loadingTrue()
 

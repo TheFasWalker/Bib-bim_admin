@@ -2,11 +2,11 @@
 import { computed } from 'vue';
 import checkAcsessByRole from '../../utils/checkAcessByRole';
 import { SiteState } from '../../store/SiteState';
-import { UserSate } from '../../store/UserState';
+import { UserState } from '../../store/UserState';
 import SidebarMainLink from '../sidebar/SidebarMainLink.vue';
 import { UserRoles } from '../../Types';
 const store = SiteState()
-const userState = UserSate()
+const userState = UserState()
 
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE

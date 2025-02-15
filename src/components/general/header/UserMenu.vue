@@ -12,7 +12,7 @@
         :to="{name:'lk'}">
         My profile
       </router-link>
-        
+
       </li>
       <li>
         <a href="#"
@@ -33,9 +33,9 @@
 </template>
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { UserSate } from '../../../store/UserState';
+import { UserState } from '../../../store/UserState';
 
-const userStore = UserSate()
+const userStore = UserState()
 const router = useRouter()
 const logOut = () => {
   userStore.clearUserData()

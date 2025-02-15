@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import SubHeader from '../components/general/SubHeader.vue';
 import MainLauout from '../components/lauouts/MainLauout.vue';
-import { UserSate } from '../store/UserState';
+import { UserState } from '../store/UserState';
 import EditButton from '../components/ui/EditButton.vue'
 import ButtonBlue from '../components/ui/ButtonBlue.vue';
 import ButtonGreen from '../components/ui/ButtonGreen.vue';
@@ -13,7 +13,7 @@ import UserRole from '../components/users/userRole.vue';
 import EdittingPassword from '../components/forms/lk/EdittingPassword.vue';
 import { useYupValidation } from '../utils/useYupValidation';
 
-const userState = UserSate()
+const userState = UserState()
 const initialValues ={
     email:userState.getUserData?.email,
     name:userState.getUserData?.name ,
@@ -63,9 +63,9 @@ const toggleEdittindPassword =():void=>{
         <div class="grid grid-cols-[500px_1fr] gap-2">
         <div class=" w-full flex flex-col gap-5">
             <div class="flex flex-row gap-3">
-                        <EditButton 
+                        <EditButton
                         v-if="!editting"
-                        @click="editting = true" 
+                        @click="editting = true"
                         />
 
                         <ButtonBlue
@@ -119,7 +119,7 @@ const toggleEdittindPassword =():void=>{
                 title="Сохранить"
                 @click ="confirmPopupState=true" />
             </div>
- 
+
         </div>
         <div class="w-full flex flex-col shadow-md rounded-lg min-h-16 h-fit p-5 gap-6">
             <h2 class=" text-3xl font-bold items-center text-center">Дополнительная информация</h2>
@@ -129,7 +129,7 @@ const toggleEdittindPassword =():void=>{
                     <UserRole
                         :role="userState.getUserData?.role.role"
                     />
-                    
+
                 </div>
             </div>
         </div>

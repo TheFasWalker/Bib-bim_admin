@@ -62,7 +62,7 @@
         v-if="editUserData"
         @close-popup="editUserData = false"
     >
-        <UserEdit 
+        <UserEdit
         :userId="user.id"
         @close="editUserData = false"
         />
@@ -77,13 +77,13 @@ import UserRole from './userRole.vue';
 import PopUpLauout from '../lauouts/PopUpLauout.vue';
 import DeleteButton from '../ui/DeleteButton.vue';
 import useDeleteUser from '../../api/users/useDeleteUser';
-import { UserSate } from '../../store/UserState';
+import { UserState } from '../../store/UserState';
 import EditButton from '../ui/EditButton.vue';
 import UserEdit from './userEdit.vue';
 const showUserData = ref( false)
 const editUserData = ref(false)
 const {deleteUserById} = useDeleteUser()
-const userState = UserSate()
+const userState = UserState()
 const deleteElem = (id: string) => {
     showUserData.value = false
     deleteUserById(id)
