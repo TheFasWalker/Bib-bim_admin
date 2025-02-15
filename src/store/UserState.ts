@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { Iuser } from "../Types";
-export const UserSate = defineStore('userState',{
+export const UserState = defineStore('userState',{
     state: () => ({
         userRole: null as string | null,
         userId: null as string | null,

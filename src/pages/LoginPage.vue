@@ -59,7 +59,7 @@
     import ErrorToast from '../components/Toasts/ErrorToast.vue';
 
     import { SiteState } from '../store/SiteState';
-    import { UserSate } from '../store/UserState';
+    import { UserState } from '../store/UserState';
     import { useRouter } from 'vue-router';
     import useAuth from '../api/useAuth';
     import useUserData from '../api//users/useUserData';
@@ -69,7 +69,7 @@
     const rootPassword = import.meta.env.VITE_ROOT_AMIN_PASSWORD
     const devMode = import.meta.env.VITE_DEV_MODE
     const siteState = SiteState();
-    const userState = UserSate()
+    const userState = UserState()
     const router = useRouter()
 
     const schema = useYupValidation({

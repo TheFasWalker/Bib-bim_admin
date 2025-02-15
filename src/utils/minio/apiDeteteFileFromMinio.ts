@@ -1,4 +1,4 @@
-import { UserSate } from '../../store/UserState';
+import { UserState } from '../../store/UserState';
 import { SiteState } from '../../store/SiteState';
 import errorsToText from '../errorsToText';
 
@@ -7,9 +7,9 @@ const secretKeyString = import.meta.env.VITE_MINIO_SECRET_ACCESS_KEY
 const url = import.meta.env.VITE_API_PHOTOS_URL
 export async function apiDeteteFileFromMinio (fileUrl:string):Promise<any>{
     const siteState = SiteState()
-    const userState = UserSate()
+    const userState = UserState()
     const headers: Record<string, string> = {};
-    
+
     if (userState.getUserToken) {
         headers['Authorization'] = `Bearer ${userState.getUserToken}`;
     }
@@ -20,7 +20,7 @@ export async function apiDeteteFileFromMinio (fileUrl:string):Promise<any>{
         });
 
         const responseBody = await response.text();
-        
+
         if (!response.ok) {
             const errorMessage = errorsToText(responseBody);
             siteState.errorText = errorMessage;

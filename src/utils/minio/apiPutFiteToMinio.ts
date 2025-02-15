@@ -1,4 +1,4 @@
-import { UserSate } from '../../store/UserState';
+import { UserState } from '../../store/UserState';
 import { SiteState } from '../../store/SiteState';
 import errorsToText from '../errorsToText';
 const acsesskeyString = import.meta.env.VITE_MINIO_ACCESS_KEY_ID
@@ -8,7 +8,7 @@ const url = import.meta.env.VITE_API_PHOTOS_URL
 
 export async function apiPutFiteToMinio(endpoint: string,file:File, imageName:string):Promise<any> {
     const siteState = SiteState()
-    const userState = UserSate()
+    const userState = UserState()
     const fileBlob = new Blob([file], { type: file.type })
     const headerData = {
         'x-amz-acl': 'public-read',
