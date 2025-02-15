@@ -20,11 +20,27 @@ import TextEditor from '../components/forms/components/TextEditor.vue';
 import SortingByPublishing from '../components/SortingByPublishing.vue';
 import PreviewPhotoWithDelete from '../components/PreviewPhotoWithDelete.vue';
 import TogglerCheckbox from '../components/forms/components/TogglerCheckbox.vue';
+import RaidioDropDown from '../components/forms/components/RaidioDropDown.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
 const loaderState = ref(false)
 const isToggleState = ref(false)
+const selectedValue = ref('')
+const dataRadio = [
+  {
+    title: 'title1',
+    value:'val1'
+  },
+  {
+    title: 'title2',
+    value:'val2'
+  },
+  {
+    title: 'title3',
+    value:'val3'
+  }
+]
 const imageUrl = ref<string | null>(null);
     const currentFilter = ref<boolean | 'all'>(true);
     const handleFilterChange = (value: boolean | 'all') => {
@@ -216,6 +232,37 @@ const state = SiteState()
                         <span>пропсы:</span>
                         <ul>
                             <li>v-model</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="flex flex-col gap-3">
+                <RaidioDropDown
+                    title="title"
+                    :data="dataRadio"
+                    v-model:modelValue="selectedValue"
+                    name="radioName"
+                    baseText="Базовый текст"
+
+                />
+
+                <div class="flex flex-col gap-2">
+                    <span>Название : ImageInput </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>v-model</li>
+                            <li>title : strint</li>
+                            <li>data : array
+                                <ul class=" pl-8">
+                                <li>title:string </li>
+                                <li>value:string</li>
+                            </ul></li>
+                            <li>baseText?: string</li>
+                            <li>name:string</li>
+                            <li>error?:string</li>
                         </ul>
                     </div>
 

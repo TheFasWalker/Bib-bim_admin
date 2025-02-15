@@ -10,6 +10,7 @@ const acsesskeyString = import.meta.env.VITE_MINIO_ACCESS_KEY_ID
 const secretKeyString = import.meta.env.VITE_MINIO_SECRET_ACCESS_KEY
 const urlEndpoint = import.meta.env.VITE_API_PHOTOS_URL
 import { apiDeteteFileFromMinio } from '../utils/minio/apiDeteteFileFromMinio';
+import RaidioDropDown from '../components/forms/components/RaidioDropDown.vue';
 const handleFileChange = (event) => {
   selectedFile.value = event.target.files[0];
 };
@@ -21,14 +22,14 @@ const uploadFile = async () => {
 
     const fileBlob = new Blob([selectedFile.value], {type: selectedFile.value.type});
     // const formData = new FormData();
-    // formData.append('file', selectedFile.value); 
+    // formData.append('file', selectedFile.value);
     // formData.append('bucket', bucket);
     // formData.append('accessKey', acsesskeyString);
     // formData.append('secretKey', secretKeyString);
     uploadStatus.value = 'Загрузка...';
     try {
-        const response = await fetch(`${urlEndpoint}/feedpost/${selectedFile.value.name}`, { 
-           method: 'PUT', 
+        const response = await fetch(`${urlEndpoint}/feedpost/${selectedFile.value.name}`, {
+           method: 'PUT',
            body: fileBlob,
            headers: {
                 'x-amz-acl': 'public-read',
@@ -36,7 +37,7 @@ const uploadFile = async () => {
               'Content-Length': selectedFile.value.size.toString()
            }
         });
-        
+
         if (response.ok) {
           uploadStatus.value = 'Файл успешно загружен!';
           fileInput.value.value = '';
@@ -56,11 +57,33 @@ const deleteElenemt =()=>{
   console.log('deleteElem')
   apiDeteteFileFromMinio(fileUrl)
 }
+const data = [
+  {
+    title: 'title1',
+    value:'val1'
+  },
+  {
+    title: 'title2',
+    value:'val2'
+  },
+  {
+    title: 'title3',
+    value:'val3'
+  }
+]
+const selectedValue = ref('')
+
 </script>
 
 <template>
     <MainLauout>
         <h1>HomePage</h1>
+        <RaidioDropDown
+        :data="data"
+        v-model:modelValue="selectedValue"
+        name="radioName"
+        title="Статус радиоБатон"
+/>
         <div>
             <input type="file" @change="handleFileChange" ref="fileInput" />
             <button @click="uploadFile" :disabled="!selectedFile">Загрузить</button>
