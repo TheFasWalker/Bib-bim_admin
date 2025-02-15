@@ -14,8 +14,9 @@ import TextEditor from '../../components/forms/components/TextEditor.vue';
 import MultiImageUpload from '../../components/forms/components/MultiImageUpload.vue';
 import PreviewPhotoWithDelete from '../../components/PreviewPhotoWithDelete.vue';
 import useEditPost from '../../api/posts/useEditPost';
+import useDeletePostById from '../../api/posts/useDeletePostById';
 const urlEndpoint = import.meta.env.VITE_API_PHOTOS_URL
-
+const {deletePostById} = useDeletePostById()
 
 const { getPostById, postData} = useGetPostById()
 const {editPost} = useEditPost()
@@ -34,7 +35,7 @@ const schema = useYupValidation({
     newImages:false
 })
 const { errors, defineField, handleSubmit,setErrors,resetForm } = useForm({
-    validationSchema:schema, 
+    validationSchema:schema,
     initialValues:{
         description: '',
         isPublished: false,
@@ -75,6 +76,11 @@ const deletePhoto =(url:string)=>{
     elementsLinksToDelete.value.push(images.value.filter((image: string) => image === url))
     images.value = images.value.filter((image) => image !== url)
 }
+const deletePost = ( id:string) => {
+    deletePostById(id).then(() => {
+        router.push({name:'posts'})
+    })
+}
 </script>
 
 <template>
@@ -85,8 +91,9 @@ const deletePhoto =(url:string)=>{
                 <span>Пост создан: {{ postData?.createDate }} {{ postData?.createTime }}</span>
                 <span>Автор : {{ postData?.author || 'NoNameAuthor'  }}</span>
             </div>
+            {{ postData?.id }}
             <DeleteButton
-            @confirm=""/>
+            @confirm="deletePost(postData?.id)"/>
 
         </div>
 
@@ -108,7 +115,7 @@ const deletePhoto =(url:string)=>{
 
             </div>
             <div class=" flex flex-col gap-3 ">
-                <div 
+                <div
                     v-if="images.length"
                     class=" flex flex-col gap-2 p-2 shadow-lg rounded-md">
                     <h3>Имеющиеся фотографии</h3>
@@ -125,10 +132,10 @@ const deletePhoto =(url:string)=>{
                     <h2>Новые фотографии</h2>
                     <MultiImageUpload
                         :error="errors.newImages"
-                        v-model="newImages"/> 
+                        v-model="newImages"/>
                 </div>
-                
-            </div> 
+
+            </div>
             <div class=" flex flex-col gap-3 ">
                 <h3>Текст поста</h3>
                 <TextEditor
