@@ -1,7 +1,8 @@
 <template>
-    <li>
-      <a
-        href="#"
+    <li
+    :class ="{' opacity-[0.4]': activity}">
+      <button
+      :disabled="activity"
         :class="`flex items-center justify-center px-4 h-10 border ${
           activity
             ? 'text-blue-600 border-blue-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700'
@@ -9,7 +10,7 @@
         }`"
       >
         {{ number }}
-      </a>
+      </button>
     </li>
   </template>
   

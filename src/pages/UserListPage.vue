@@ -15,7 +15,6 @@ const { adminRoles } = useGetRoles()
 onMounted(() => {
     getUserList().then((data)=>{
         userListState.setUserList(data)
-        console.log(data)
     })
     if (userListState.userRolesList == null) {
 

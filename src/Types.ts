@@ -1,6 +1,4 @@
-import { EnumType } from "typescript";
-
-export type IconType = 'users' | 'info' | 'home' | 'help' | 'contacts' | 'exit' | 'left' | 'generate' | 'search' | 'trash' | 'gear';
+export type IconType = 'users' | 'info' | 'home' | 'help' | 'contacts' | 'exit' | 'left' | 'generate' | 'search' | 'trash' | 'gear' | 'download';
 export type UserRoles = 'RootAdmin' | 'ContentManager' | 'BussinesPartner'
 export interface IRoles {
   id:string,
@@ -37,3 +35,26 @@ export interface Iuser {
     email:string,
     password?:string
   }
+
+  export interface IPost {
+      id: string
+      author: any
+      createDate: string
+      createTime: string
+      isPublished: boolean
+      description: string
+      images: string[]
+    }
+    export interface ICreatePost {
+      author?: any
+      is_published: boolean
+      description: string
+      images: string[]
+    }
+    export interface IGetPostsList{
+      items: IPost[],
+      pageNumber:number,
+      pageSize:number,
+      totalItems:number
+    }
+

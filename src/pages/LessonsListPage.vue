@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Pagination from '../components/pagination/Pagination.vue';
 import SubHeader from '../components/general/SubHeader.vue';
 import MainLauout from '../components/lauouts/MainLauout.vue';
 import LessonPreview from '../components/lessons/LessonPreview.vue';
@@ -33,6 +32,6 @@ const data = [
 
 
         </div>
-        <Pagination/>
+
     </MainLauout>
 </template>

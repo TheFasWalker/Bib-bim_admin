@@ -15,12 +15,41 @@ import Icons from '../components/ui/Icons.vue';
 import DeleteButton from '../components/ui/DeleteButton.vue';
 import ButtonGreen from '../components/ui/ButtonGreen.vue';
 import ImageInput from '../components/forms/components/ImageInput.vue';
+import MultiImageUpload from '../components/forms/components/MultiImageUpload.vue';
+import TextEditor from '../components/forms/components/TextEditor.vue';
+import SortingByPublishing from '../components/SortingByPublishing.vue';
+import PreviewPhotoWithDelete from '../components/PreviewPhotoWithDelete.vue';
+import TogglerCheckbox from '../components/forms/components/TogglerCheckbox.vue';
+import RaidioDropDown from '../components/forms/components/RaidioDropDown.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
 const loaderState = ref(false)
-const imageUrl = ref<string|null>(null);
-
+const isToggleState = ref(false)
+const selectedValue = ref('')
+const dataRadio = [
+  {
+    title: 'title1',
+    value:'val1'
+  },
+  {
+    title: 'title2',
+    value:'val2'
+  },
+  {
+    title: 'title3',
+    value:'val3'
+  }
+]
+const imageUrl = ref<string | null>(null);
+    const currentFilter = ref<boolean | 'all'>(true);
+    const handleFilterChange = (value: boolean | 'all') => {
+  currentFilter.value = value;
+  console.log('Фильтр изменен на:', value);
+};
+const form = ref({
+      images: []
+    });
 const showLoader = () => {
     loaderState.value = true
     setTimeout(() => {
@@ -133,64 +162,160 @@ const state = SiteState()
     </div>
 </Toggler>
 <Toggler title="Элементы формы">
-    <div class="grid grid-cols-3 gap-3">
-        <div class="flex flex-col gap-3">
-            <Checkbox
-                title="title"
-                name="name"
-                v-model="checkboxState"/>
+    <div class="flex flex-col gap-3">
+        <div class="grid grid-cols-3 gap-3">
+            <div class="flex flex-col gap-3">
+                <Checkbox
+                    title="title"
+                    name="name"
+                    v-model="checkboxState"/>
+                    <div class="flex flex-col gap-2">
+                    <span>Название : Checkbox </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>title : String</li>
+                            <li>name : String</li>
+                            <li>v-model</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex flex-col gap-3">
+                <TogglerCheckbox
+                    title="title"
+                    name="toggler"
+                    v-model="isToggleState"/>
+                    <div class="flex flex-col gap-2">
+                    <span>Название : Checkbox </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>title : String</li>
+                            <li>name : String</li>
+                            <li>v-model</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex flex-col gap-3">
+                <InputField
+                    title="Название"
+                    name="title"
+                    type="text"
+                    placeholder="Название урока"
+                    v-model="textState"/>
+
+                    <div class="flex flex-col gap-2">
+                    <span>Название : InputField </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>title : String</li>
+                            <li>name : String</li>
+                            <li>placeholder : String</li>
+                            <li>v-model</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <div class="flex flex-col gap-3">
+                <ImageInput
+                v-model="imageUrl"
+                />
                 <div class="flex flex-col gap-2">
-                <span>Название : Checkbox </span>
-                <div class="">
-                    <span>пропсы:</span>
-                    <ul>
-                        <li>title : String</li>
-                        <li>name : String</li>
-                        <li>v-model</li>
-                    </ul>
+                    <span>Название : ImageInput </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>v-model</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="flex flex-col gap-3">
+                <RaidioDropDown
+                    title="title"
+                    :data="dataRadio"
+                    v-model:modelValue="selectedValue"
+                    name="radioName"
+                    baseText="Базовый текст"
+
+                />
+
+                <div class="flex flex-col gap-2">
+                    <span>Название : ImageInput </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>v-model</li>
+                            <li>title : strint</li>
+                            <li>data : array
+                                <ul class=" pl-8">
+                                <li>title:string </li>
+                                <li>value:string</li>
+                            </ul></li>
+                            <li>baseText?: string</li>
+                            <li>name:string</li>
+                            <li>error?:string</li>
+                        </ul>
+                    </div>
+
                 </div>
 
             </div>
         </div>
-        <div class="flex flex-col gap-3">
-            <InputField
-                title="Название"
-                name="title"
-                type="text"
-                placeholder="Название урока"
-                v-model="textState"/>
-
+        <div class="grid grid-cols-2 gap-5">
+            <div class="">
+                <MultiImageUpload
+                v-model:images="form.images"/>
                 <div class="flex flex-col gap-2">
-                <span>Название : InputField </span>
-                <div class="">
-                    <span>пропсы:</span>
-                    <ul>
-                        <li>title : String</li>
-                        <li>name : String</li>
-                        <li>placeholder : String</li>
-                        <li>v-model</li>
-                    </ul>
+                    <span>Название : MultiImageUpload </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>v-model</li>
+                        </ul>
+                    </div>
                 </div>
-
+            </div>
+            <div class="">
+                <PreviewPhotoWithDelete
+                url="https://media.gettyimages.com/id/1127317526/nl/foto/scottish-fold-playing.jpg?s=612x612&amp;w=0&amp;k=20&amp;c=Rw8Er7CKOy8tTibwK0J_VuCCcz-yVM9AE-xBM6YUJKM="
+                />
+                <div class="flex flex-col gap-2">
+                    <span>Название : PreviewPhotoWithDelete </span>
+                    <div class="">
+                        <span>пропсы:</span>
+                        <ul>
+                            <li>url: string</li>
+                            <li>@delete-image :при клике на крестик</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="flex flex-col gap-3">
-            <ImageInput
-            v-model="imageUrl"
-            />
+        <div class="">
+            <TextEditor/>
             <div class="flex flex-col gap-2">
-                <span>Название : ImageInput </span>
-                <div class="">
-                    <span>пропсы:</span>
-                    <ul>
-                        <li>v-model</li>
-                    </ul>
-                </div>
-
+                        <span>Название : TextEditor </span>
+                        <div class="">
+                            <span>пропсы:</span>
+                            <ul>
+                                <li>Пропсов пока нет</li>
+                            </ul>
+                        </div>
             </div>
 
         </div>
     </div>
+
+
 </Toggler>
 <Toggler title="Прочее">
     <div class="grid grid-cols-3 gap-3">
@@ -221,7 +346,32 @@ const state = SiteState()
 
             </div>
         </div>
+        <div class="flex flex-col gap-3">
+        <ButtonBlue
+            @click="state.sucsesMessage= 'Sucsess message'"
+            title="SucsessTost"/>
+        <div class="flex flex-col gap-2">
+                <span>Название : SucsessTost </span>
+                <div class="">
+                    <span>пропсов нет</span>
+                    <span>появляелся есть в стейте errorText !=' '</span>
+                </div>
 
+            </div>
+        </div>
+        <div class="flex flex-col gap-3">
+        <SortingByPublishing
+        @filter-change="handleFilterChange"
+        :currentFilter="currentFilter"/>
+        <div class="flex flex-col gap-2">
+                <span>Название : SortingByPublishing </span>
+                <div class="">
+                    <span>@filter-change : Эмит события</span>
+                    <span>пропс currentFilter : true| false| 'all'</span>
+                </div>
+
+            </div>
+        </div>
     </div>
 
 </Toggler>

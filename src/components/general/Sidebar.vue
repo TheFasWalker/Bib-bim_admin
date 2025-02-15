@@ -40,10 +40,10 @@ const userRole = computed<UserRoles | null>(() => {
           </li>
           <li>
             <SidebarMainLink
-            v-if="checkAcsessByRole(userRole,  [adminKey, managerKey])"
-              title="Уроки"
-              nav="lessons"
-              iconName="contacts"
+                        v-if="checkAcsessByRole(userRole, [adminKey, managerKey])"
+              title="Посты"
+              nav="posts"
+              iconName="generate"
               />
           </li>
           <li>
@@ -54,6 +54,15 @@ const userRole = computed<UserRoles | null>(() => {
               iconName="users"
               />
           </li>
+          <!-- <li>
+            <SidebarMainLink
+            v-if="checkAcsessByRole(userRole,  [adminKey, managerKey])"
+              title="Уроки"
+              nav="lessons"
+              iconName="contacts"
+              />
+          </li>
+
           <li>
             <SidebarMainLink
               title="О проекте"
@@ -68,15 +77,8 @@ const userRole = computed<UserRoles | null>(() => {
               nav="partners"
               iconName="home"
               />
-          </li>
-          <li>
-            <SidebarMainLink
-                        v-if="checkAcsessByRole(userRole, [adminKey, managerKey])"
-              title="Посты"
-              nav="posts"
-              iconName="generate"
-              />
-          </li>
+          </li> -->
+
           <li>
             <SidebarMainLink
             v-if="checkAcsessByRole(userRole, [adminKey])"
