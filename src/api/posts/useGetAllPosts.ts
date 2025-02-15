@@ -3,7 +3,7 @@ import { apiFetch } from "../../utils/api/apiFetch"
 
 export default function(){
     const postsState = PostsState()
-    const getAllPosts = async(query:string)=>{
+    const getAllPosts = async(query?:string)=>{
         return apiFetch(`/posts${query}`,{
             method:"GET"
         })
