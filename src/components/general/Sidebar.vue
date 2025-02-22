@@ -78,7 +78,14 @@ const userRole = computed<UserRoles | null>(() => {
               iconName="home"
               />
           </li> -->
-
+          <li>
+            <SidebarMainLink
+            v-if="checkAcsessByRole(userRole, [adminKey])"
+              title="serverSettings"
+              nav="settings"
+              iconName="gear"
+              />
+          </li>
           <li>
             <SidebarMainLink
             v-if="checkAcsessByRole(userRole, [adminKey])"

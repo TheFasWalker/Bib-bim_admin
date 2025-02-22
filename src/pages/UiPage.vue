@@ -21,6 +21,8 @@ import SortingByPublishing from '../components/SortingByPublishing.vue';
 import PreviewPhotoWithDelete from '../components/PreviewPhotoWithDelete.vue';
 import TogglerCheckbox from '../components/forms/components/TogglerCheckbox.vue';
 import RaidioDropDown from '../components/forms/components/RaidioDropDown.vue';
+import ButtonWithSubmit from '../components/ui/ButtonWithSubmit.vue';
+import PopoverComp from '../components/PopoverComp.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
@@ -132,6 +134,19 @@ const state = SiteState()
 
             </div>
         </div>
+        <div class="flex flex-col gap-3">
+            <ButtonWithSubmit
+            title="Текст кнопки"
+            @confirm = "console.log('asd')"/>
+            <div class="flex flex-col gap-2">
+                <span>Название : ButtonWithSubmit </span>
+                <div class="flex flex-col">
+                    <span>Действие с подтверждениемм</span>
+                    <span>Эмитит событие @confirm</span>
+                </div>
+
+            </div>
+        </div>
     </div>
 </Toggler>
 <Toggler title="Обертки">
@@ -187,12 +202,13 @@ const state = SiteState()
                     name="toggler"
                     v-model="isToggleState"/>
                     <div class="flex flex-col gap-2">
-                    <span>Название : Checkbox </span>
+                    <span>Название : TogglerCheckbox </span>
                     <div class="">
                         <span>пропсы:</span>
                         <ul>
                             <li>title : String</li>
                             <li>name : String</li>
+                            <li>desc? : string</li>
                             <li>v-model</li>
                         </ul>
                     </div>
@@ -248,7 +264,7 @@ const state = SiteState()
                 />
 
                 <div class="flex flex-col gap-2">
-                    <span>Название : ImageInput </span>
+                    <span>Название : RaidioDropDown </span>
                     <div class="">
                         <span>пропсы:</span>
                         <ul>
@@ -359,14 +375,27 @@ const state = SiteState()
             </div>
         </div>
         <div class="flex flex-col gap-3">
-        <SortingByPublishing
-        @filter-change="handleFilterChange"
-        :currentFilter="currentFilter"/>
-        <div class="flex flex-col gap-2">
+            <SortingByPublishing
+            @filter-change="handleFilterChange"
+            :currentFilter="currentFilter"/>
+            <div class="flex flex-col gap-2">
                 <span>Название : SortingByPublishing </span>
                 <div class="">
                     <span>@filter-change : Эмит события</span>
                     <span>пропс currentFilter : true| false| 'all'</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="flex flex-col gap-3">
+            <PopoverComp
+                text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, qui!"
+            />
+            <div class="flex flex-col gap-2">
+                <span>Название : PopoverComp </span>
+                <div class="">
+            
+                    <span>пропс text :string</span>
                 </div>
 
             </div>
