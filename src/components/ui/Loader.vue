@@ -15,7 +15,6 @@ import { SiteState } from '../../store/SiteState';
 const sidebarExists = ref(false);
 onMounted(() => {
     const sidebar = document.querySelector('.js-sidebar');
-    console.log(sidebar)
     if(!sidebar){
         sidebarExists.value = false
         }

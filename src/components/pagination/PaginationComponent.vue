@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import PaginationNext from '../pagination/PaginationNext.vue';
 import PaginationNumber from '../pagination/PaginationNumber.vue';
 import PaginationPrev from '../pagination/PaginationPrev.vue';
@@ -47,6 +47,11 @@ const totalPageCount = computed(() => {
 
 
 const active = ref(Math.min(props.active, totalPageCount.value));
+
+watch(() => props.active, (newActive) => {
+  active.value = Math.min(newActive, totalPageCount.value);
+});
+
 const ensureActiveWithinBounds = () => {
   active.value = Math.min(active.value, totalPageCount.value);
   active.value = Math.max(active.value, 1);
@@ -67,10 +72,10 @@ const visiblePages = computed(() => {
   let pages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
   if (start > 1) {
-    pages = [1, 'ellipsis-start', ...pages];
+    pages = [1, '...', ...pages];
   }
   if (end < total) {
-    pages = [...pages, 'ellipsis-start', total];
+    pages = [...pages, '...', total];
   }
 
   return pages;

@@ -1,4 +1,5 @@
 <template>
+  {{ currentFilter }}
 <div class=" relative">
                 <button
             class="flex items-center justify-center w-[190px] px-2 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg  focus:outline-none hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 "
@@ -49,7 +50,7 @@
         </div>
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 const props = defineProps({
   currentFilter: {
     type: [Boolean, String],
@@ -63,14 +64,21 @@ const handleFilterChange=(value: boolean | 'all') => {
     state.value = false
 }
 const filterText = computed(() => {
-    if (props.currentFilter === true) {
-        return 'Опубликованы'
-    } else if (props.currentFilter === false) {
-        return "Не опубликованы"
-    } else {
-        return "Все"
-    }
-})
+  if (props.currentFilter === true) {
+    return 'Опубликованы';
+  } else if (props.currentFilter === false) {
+    return 'Не опубликованы';
+  } else {
+    return 'Все';
+  } 
+});
+watch(
+  () => props.currentFilter,
+  (newFilter) => {
+    console.log('Текущий фильтр изменен:', newFilter);
+  }
+);
+
 const isNotPublishedButtonDisabled = computed(() => props.currentFilter === false);
 const isPublishedButtonDisabled = computed(() => props.currentFilter === true);
 const isAllButtonDisabled = computed(() => props.currentFilter === 'all');

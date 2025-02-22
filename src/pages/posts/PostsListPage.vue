@@ -13,24 +13,27 @@ const itemsPerPage = import.meta.env.VITE_POST_TO_SHOW_AT_ONCE
 const postsList = PostsState()
 const { getAllPosts } = useGetAllPosts()
 const currentFilter = computed(()=>{
-    const publisedState = route.query.is_published
-    if(publisedState == undefined ){
-        return true
-    }else if (publisedState == 'all'){
-        return 'all'
-    }else{
-        return false
-    }
+    const publishedState = route.query.is_published
+
+    if (publishedState === undefined) {
+    return true; 
+  } else if (publishedState === 'true') {
+    return true;
+  } else if (publishedState === 'false') {
+    return false;
+  } else if (publishedState === 'all' || publishedState === '') {
+    return 'all'; 
+  }
 
 })
 
 const route  = useRoute()
 const router = useRouter()
 const activePage = ref(Number(route.query.page) || 1)
-const publishingState = ref<boolean | ''>(
+const publishingState = ref<boolean | 'all'>(
     route.query.is_published === 'true' ? true :
     route.query.is_published === 'false' ? false :
-    route.query.is_published === '' ? '' :
+    route.query.is_published === '' ? 'all' :
     true
 )
 
@@ -45,32 +48,46 @@ onMounted(() => {
         activePage.value = pageFromUrl;
     }
     if (isPublishedFromUrl) {
-        publishingState.value = isPublishedFromUrl === 'true' ? true :isPublishedFromUrl === 'false' ? false : ''
+        publishingState.value = isPublishedFromUrl === 'true' ? true :isPublishedFromUrl === 'false' ? false : 'all'
     }
     getAllPosts(queryParams.value)
 })
 
 const handleFilterChange = (value: boolean | 'all') => {
   if (value === true) {
-    publishingState.value = true
-  } else if(value === false){
-    publishingState.value = false
+    publishingState.value = true;
+  } else if (value === false) {
+    publishingState.value = false;
   } else {
-    publishingState.value = ''
+    publishingState.value = 'all'; 
   }
-    activePage.value = 1
-    router.push({
-        query: {
-            ...route.query,
-            offset: activePage.value,
-            is_published: value,
-            limit:itemsPerPage
-        }
-    })
+  activePage.value = 1;
+
+  const isPublishedQuery = value === true ? 'true' : value === false ? 'false' : 'all';
+
+  router.push({
+    query: {
+      ...route.query,
+      offset: activePage.value,
+      is_published: isPublishedQuery, 
+      limit: itemsPerPage,
+    },
+  });
 };
 
 const handlePageChange = (newPage: number) => {
-    const isPublishedQuery = publishingState.value === '' ? null : publishingState.value;
+
+    let isPublishedQuery 
+    if(publishingState.value === true){
+        isPublishedQuery = true
+    }else if(publishingState.value === false){
+        isPublishedQuery = false
+    }else if(publishingState.value === 'all'){
+        isPublishedQuery = 'all'
+    }else{
+        isPublishedQuery= undefined
+    }
+
     activePage.value = newPage
     router.push({
         query: {
