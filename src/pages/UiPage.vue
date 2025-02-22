@@ -187,7 +187,7 @@ const state = SiteState()
                     name="toggler"
                     v-model="isToggleState"/>
                     <div class="flex flex-col gap-2">
-                    <span>Название : Checkbox </span>
+                    <span>Название : TogglerCheckbox </span>
                     <div class="">
                         <span>пропсы:</span>
                         <ul>
@@ -248,7 +248,7 @@ const state = SiteState()
                 />
 
                 <div class="flex flex-col gap-2">
-                    <span>Название : ImageInput </span>
+                    <span>Название : RaidioDropDown </span>
                     <div class="">
                         <span>пропсы:</span>
                         <ul>

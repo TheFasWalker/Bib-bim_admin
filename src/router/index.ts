@@ -10,6 +10,7 @@ import PartnersPage from "../pages/PartnersPage.vue";
 import UserPage from "../pages/UserPage.vue";
 import UiPage from "../pages/UiPage.vue";
 import { adminKey } from "./index__old";
+import SettingsPage from "../pages/SettingsPage.vue";
 
 const adminKey = import.meta.env.VITE_ADMIN_ROLE_CODE
 const managerKey = import.meta.env.VITE_MANAGER_ROLE_CODE
@@ -49,6 +50,12 @@ const router = createRouter({
             name: 'ui',
             component: UiPage,
             meta:{requireAuth:true,acsessRoles: [adminKey]}
+        },
+        {
+            path:'/settings',
+            name:'settings',
+            component:SettingsPage,
+            meta:{requireAuth:true,acsessRoles:[adminKey]}
         },
         {
             path: '/error505',
