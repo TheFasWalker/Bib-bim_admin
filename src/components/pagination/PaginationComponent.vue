@@ -17,7 +17,6 @@
         @click="goToNextPage"
       />
     </ul>
-    <span>Page count = {{ totalPageCount }}</span>
   </nav>
 </template>
 
@@ -42,7 +41,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['page-change']);
 
 const totalPageCount = computed(() => {
-  console.log(props.active)
+
   return Math.ceil(props.total / props.perPage);
 });
 

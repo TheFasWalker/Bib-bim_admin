@@ -58,7 +58,6 @@ const hideConfirm = () => {
     router.push({name:'users'})
 }
 onMounted(() => {
-    console.log('onmounted')
     if (userListState.userRolesList == null) {
         adminRoles().then((data)=>{
             userListState.userRolesList = data

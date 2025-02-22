@@ -12,8 +12,17 @@ import { useRoute, useRouter } from 'vue-router';
 const itemsPerPage = import.meta.env.VITE_POST_TO_SHOW_AT_ONCE
 const postsList = PostsState()
 const { getAllPosts } = useGetAllPosts()
-const currentFilter = ref<boolean | 'all'>(true);
+const currentFilter = computed(()=>{
+    const publisedState = route.query.is_published
+    if(publisedState == undefined ){
+        return true
+    }else if (publisedState == 'all'){
+        return 'all'
+    }else{
+        return false
+    }
 
+})
 
 const route  = useRoute()
 const router = useRouter()
@@ -42,8 +51,6 @@ onMounted(() => {
 })
 
 const handleFilterChange = (value: boolean | 'all') => {
-    const isPublishedQuery = publishingState.value === '' ? null : publishingState.value;
-  currentFilter.value = value;
   if (value === true) {
     publishingState.value = true
   } else if(value === false){
@@ -51,13 +58,12 @@ const handleFilterChange = (value: boolean | 'all') => {
   } else {
     publishingState.value = ''
   }
-  console.log('items to show at once = ' + itemsPerPage)
     activePage.value = 1
     router.push({
         query: {
             ...route.query,
             offset: activePage.value,
-            is_published: isPublishedQuery,
+            is_published: value,
             limit:itemsPerPage
         }
     })

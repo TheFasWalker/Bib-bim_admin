@@ -54,7 +54,6 @@ const uploadFile = async () => {
 };
 const fileUrl = '/feedpost/211431af-f630-4261-b625-d73538b702d8_65b042d6-0d47-4c2d-9837-456fb4231e8b.jpg'
 const deleteElenemt =()=>{
-  console.log('deleteElem')
   apiDeteteFileFromMinio(fileUrl)
 }
 const data = [

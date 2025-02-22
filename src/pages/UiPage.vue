@@ -45,7 +45,6 @@ const imageUrl = ref<string | null>(null);
     const currentFilter = ref<boolean | 'all'>(true);
     const handleFilterChange = (value: boolean | 'all') => {
   currentFilter.value = value;
-  console.log('Фильтр изменен на:', value);
 };
 const form = ref({
       images: []
