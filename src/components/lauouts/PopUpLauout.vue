@@ -6,7 +6,7 @@
     const missCkick =()=>{
         if(event?.target == popupContainer.value){
             emit('close-popup')
-            console.log('close')
+
         }
     }
     const handleEsc = (event:KeyboardEvent)=>{

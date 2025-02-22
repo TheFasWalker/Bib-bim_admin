@@ -86,7 +86,7 @@
     const [password, passwordAttrs]= defineField('password')
     const { makeAuth } = useAuth()
     const { getUserData } = useUserData()
-    console.log(devMode)
+
     const writeUserData = () => {
         if (devMode == "true") {
             login.value = rootLogin

@@ -3,21 +3,20 @@
   <nav class="w-full flex justify-center">
     <ul class="flex items-center -space-x-px h-10 text-base">
       <PaginationPrev :disabled="active === 1" @click="goToPreviousPage" />
-
-      <PaginationNumber
-        v-for="page in visiblePages"
-        :key="page"
-        :number="page"
-        :activity="page === active"
-        @click="goToPage(page)"
-      />
-
+      <template  v-for="page in visiblePages":key="page" >
+        <PaginationNumber
+          v-if="typeof page === 'number'"
+          :number="page"
+          :activity="page === active"
+          @click="goToPage(page)"
+        />
+        <span v-else class="px-4 py-2">...</span>
+    </template>
       <PaginationNext
         :disabled="active === totalPageCount"
         @click="goToNextPage"
       />
     </ul>
-    <span>Page count = {{ totalPageCount }}</span>
   </nav>
 </template>
 
@@ -42,7 +41,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits(['page-change']);
 
 const totalPageCount = computed(() => {
-  console.log(props.active)
+
   return Math.ceil(props.total / props.perPage);
 });
 
@@ -68,10 +67,10 @@ const visiblePages = computed(() => {
   let pages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
 
   if (start > 1) {
-    pages = [1, '...', ...pages];
+    pages = [1, 'ellipsis-start', ...pages];
   }
   if (end < total) {
-    pages = [...pages, '...', total];
+    pages = [...pages, 'ellipsis-start', total];
   }
 
   return pages;

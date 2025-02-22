@@ -26,7 +26,6 @@ const route = useRoute()
 const postId = route.params.id as string
 onBeforeMount(()=>{
     getPostById(postId)
-    console.log(images.value)
 })
 const schema = useYupValidation({
     isPublished:true,
@@ -55,7 +54,6 @@ const onFormSubmit = handleSubmit(async (values) => {
     const newImages = values.newImages
     delete values.newImages
 
-    console.log(values)
     const dataToSend = new URLSearchParams(values).toString()
     editPost(values, postId).then(()=> router.push({name:'posts'}))
 

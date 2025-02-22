@@ -53,7 +53,6 @@ const onFormSubmit = handleSubmit(async (values) => {
     createPost(values)
         .then((data)=>{
             postId = data
-            console.log('asdfaa')
             Promise.all(
                 photos.map((file:File)=>{
                     const imageName:string = `${postId}_${uuidv4()}${getFileExtension(file.name)}`
