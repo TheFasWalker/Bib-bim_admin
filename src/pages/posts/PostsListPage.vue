@@ -26,7 +26,7 @@ const publishingState = ref<boolean | ''>(
 )
 
 const queryParams = computed(()=>{
-    return `?is_published=${publishingState.value}&limit=${itemsPerPage}&offset=${activePage.value -1 }`
+    return `?offset=${activePage.value -1 }&limit=${itemsPerPage}&is_published=${publishingState.value}`
 })
 
 onMounted(() => {
@@ -51,12 +51,14 @@ const handleFilterChange = (value: boolean | 'all') => {
   } else {
     publishingState.value = ''
   }
+  console.log('items to show at once = ' + itemsPerPage)
     activePage.value = 1
     router.push({
         query: {
             ...route.query,
-            page: activePage.value,
-            is_published: isPublishedQuery
+            offset: activePage.value,
+            is_published: isPublishedQuery,
+            limit:itemsPerPage
         }
     })
 };
@@ -67,8 +69,9 @@ const handlePageChange = (newPage: number) => {
     router.push({
         query: {
             ...route.query,
-            page: newPage,
-            is_published:isPublishedQuery
+            offset: newPage,
+            is_published:isPublishedQuery,
+            limit:itemsPerPage
         }
     })
 }
