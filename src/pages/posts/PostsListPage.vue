@@ -8,16 +8,22 @@ import PostPreview from '../../components/posts/PostPreview.vue';
 import SortingByPublishing from '../../components/SortingByPublishing.vue';
 import PaginationComponent from '../../components/pagination/PaginationComponent.vue';
 import { useRoute, useRouter } from 'vue-router';
+
 const itemsPerPage = import.meta.env.VITE_POST_TO_SHOW_AT_ONCE
 const postsList = PostsState()
 const { getAllPosts } = useGetAllPosts()
 const currentFilter = ref<boolean | 'all'>(true);
-const publishingState = ref<boolean | ''>(true)
+
 
 const route  = useRoute()
 const router = useRouter()
 const activePage = ref(Number(route.query.page) || 1)
-
+const publishingState = ref<boolean | ''>(
+    route.query.is_published === 'true' ? true :
+    route.query.is_published === 'false' ? false :
+    route.query.is_published === '' ? '' :
+    true
+)
 
 const queryParams = computed(()=>{
     return `?is_published=${publishingState.value}&limit=${itemsPerPage}&offset=${activePage.value -1 }`
@@ -25,13 +31,18 @@ const queryParams = computed(()=>{
 
 onMounted(() => {
     const pageFromUrl = Number(route.query.page);
+    const isPublishedFromUrl = route.query.is_published?.toString()
     if (pageFromUrl) {
         activePage.value = pageFromUrl;
+    }
+    if (isPublishedFromUrl) {
+        publishingState.value = isPublishedFromUrl === 'true' ? true :isPublishedFromUrl === 'false' ? false : ''
     }
     getAllPosts(queryParams.value)
 })
 
 const handleFilterChange = (value: boolean | 'all') => {
+    const isPublishedQuery = publishingState.value === '' ? null : publishingState.value;
   currentFilter.value = value;
   if (value === true) {
     publishingState.value = true
@@ -41,20 +52,34 @@ const handleFilterChange = (value: boolean | 'all') => {
     publishingState.value = ''
   }
     activePage.value = 1
-  router.push({query:{...route.query,page:1}})
+    router.push({
+        query: {
+            ...route.query,
+            page: activePage.value,
+            is_published: isPublishedQuery
+        }
+    })
 };
 
-const handlePageChange =(newPage:number)=>{
+const handlePageChange = (newPage: number) => {
+    const isPublishedQuery = publishingState.value === '' ? null : publishingState.value;
     activePage.value = newPage
-    router.push({query:{...route.query,page:newPage}})
+    router.push({
+        query: {
+            ...route.query,
+            page: newPage,
+            is_published:isPublishedQuery
+        }
+    })
 }
 
 watch(queryParams, (newQueryParams) => {
     getAllPosts(newQueryParams);
 });
 
-watch(() => route.query.page, (newPage) => {
-    if (newPage) {
+watch(() => route.query, (newPage) => {
+
+    if (newPage.page) {
         activePage.value = Number(newPage)
         getAllPosts(queryParams.value)
     }
