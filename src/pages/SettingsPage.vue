@@ -45,6 +45,7 @@
                     <TogglerCheckbox
                     title="Настройка 1"
                     name="settingName1"
+                    desc="Подсказака за что отвечает данный параметр"
                     v-model="checkboxState1"/>
 
                     <TogglerCheckbox
@@ -65,6 +66,7 @@
                     <TogglerCheckbox
                     title="Настройка 5"
                     name="settingName5"
+                    desc="Подсказака за что отвечает данный параметр"
                     v-model="checkboxState5"/>
                 </div>
                 <div class="flex flex-col gap-2 py-4 shadow-md rounded-lg p-5 w-72">
