@@ -29,7 +29,7 @@ const currentFilter = computed(()=>{
 
 const route  = useRoute()
 const router = useRouter()
-const activePage = ref(Number(route.query.page) || 1)
+const activePage = ref(Number(route.query.offset) || 1)
 const publishingState = ref<boolean | 'all'>(
     route.query.is_published === 'true' ? true :
     route.query.is_published === 'false' ? false :
@@ -42,7 +42,7 @@ const queryParams = computed(()=>{
 })
 
 onMounted(() => {
-    const pageFromUrl = Number(route.query.page);
+    const pageFromUrl = Number(route.query.offset);
     const isPublishedFromUrl = route.query.is_published?.toString()
     if (pageFromUrl) {
         activePage.value = pageFromUrl;
