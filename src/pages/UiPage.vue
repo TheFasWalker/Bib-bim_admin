@@ -22,6 +22,7 @@ import PreviewPhotoWithDelete from '../components/PreviewPhotoWithDelete.vue';
 import TogglerCheckbox from '../components/forms/components/TogglerCheckbox.vue';
 import RaidioDropDown from '../components/forms/components/RaidioDropDown.vue';
 import ButtonWithSubmit from '../components/ui/ButtonWithSubmit.vue';
+import PopoverComp from '../components/PopoverComp.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
@@ -373,14 +374,27 @@ const state = SiteState()
             </div>
         </div>
         <div class="flex flex-col gap-3">
-        <SortingByPublishing
-        @filter-change="handleFilterChange"
-        :currentFilter="currentFilter"/>
-        <div class="flex flex-col gap-2">
+            <SortingByPublishing
+            @filter-change="handleFilterChange"
+            :currentFilter="currentFilter"/>
+            <div class="flex flex-col gap-2">
                 <span>Название : SortingByPublishing </span>
                 <div class="">
                     <span>@filter-change : Эмит события</span>
                     <span>пропс currentFilter : true| false| 'all'</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="flex flex-col gap-3">
+            <PopoverComp
+                text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor, qui!"
+            />
+            <div class="flex flex-col gap-2">
+                <span>Название : PopoverComp </span>
+                <div class="">
+            
+                    <span>пропс text :string</span>
                 </div>
 
             </div>
