@@ -8,7 +8,7 @@
                 <a href="#" class="inline-flex text-white bg-primary-600 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center my-4">Back to Homepage</a>
                 <router-link
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300  rounded-full  px-5 py-2.5 text-center me-2 mb-2 text-2xl font-bold"
-                    :to="{name:  'home' }"
+                    :to="{name:  'login' }"
                 >
                     На главную
                 </router-link>
