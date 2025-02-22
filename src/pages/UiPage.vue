@@ -208,6 +208,7 @@ const state = SiteState()
                         <ul>
                             <li>title : String</li>
                             <li>name : String</li>
+                            <li>desc? : string</li>
                             <li>v-model</li>
                         </ul>
                     </div>
