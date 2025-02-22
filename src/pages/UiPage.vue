@@ -21,6 +21,7 @@ import SortingByPublishing from '../components/SortingByPublishing.vue';
 import PreviewPhotoWithDelete from '../components/PreviewPhotoWithDelete.vue';
 import TogglerCheckbox from '../components/forms/components/TogglerCheckbox.vue';
 import RaidioDropDown from '../components/forms/components/RaidioDropDown.vue';
+import ButtonWithSubmit from '../components/ui/ButtonWithSubmit.vue';
 const popUpLauoutState = ref(false)
 const checkboxState = ref(false)
 const textState = ref('')
@@ -127,6 +128,19 @@ const state = SiteState()
                 <span>Название : DeleteButton </span>
                 <div class="flex flex-col">
                     <span>Удаление с подтверждением</span>
+                    <span>Эмитит событие @confirm</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="flex flex-col gap-3">
+            <ButtonWithSubmit
+            title="Текст кнопки"
+            @confirm = "console.log('asd')"/>
+            <div class="flex flex-col gap-2">
+                <span>Название : ButtonWithSubmit </span>
+                <div class="flex flex-col">
+                    <span>Действие с подтверждениемм</span>
                     <span>Эмитит событие @confirm</span>
                 </div>
 
